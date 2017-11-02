@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+      
+	<!-- HEAD -->
+	<ui:include src="../componentes/head/head.xhtml" />
+<h:body>
+	<!-- NAVBAR -->
+	<ui:include src="../componentes/header/navbarGrupo.xhtml" />
+
+	<div class="container">
+		
+		<!-- NOME DO GRUPO -->
+		<h3>Grupo:</h3>
+		<h:outputText value="#{controllerGrupos.grupo.nomeGrupo}"/>
+		
+		<!-- REPRESENTANTE -->
+		<h3>Representante:</h3>
+		<h:outputText value="#{controllerGrupos.grupo.representante}"/>
+		
+		<!-- INTEGRANTES -->
+		<c:if test="#{controllerGrupos.grupo.integrantes.length() > 1}">
+			<h3>Integrantes:</h3>
+			<h:outputText value="#{controllerGrupos.grupo.integrantes}"/>	
+		</c:if>
+		
+		<!-- OBSERVACOES -->
+		<c:if test="#{controllerGrupos.grupo.observacao.length() > 1}">
+			<h3>Obsevações</h3>
+			<h:outputText value="#{controllerGrupos.grupo.observacao}"/>
+		</c:if>
+		
+		<!-- ACOES TRABALHO -->
+		<h:form enctype="multipart/form-data">
+			<h3>Trabalho:</h3> 
+			
+			<!-- VISUALIZAR -->
+			<h:commandLink 
+				value="Visualizar" 
+				actionListener="#{controllerGrupos.download(false)}" 
+				target="_blank" 
+				class="btn btn-link"/>
+			
+			<!-- DOWNLOAD -->
+			<h:commandLink 
+				value="Baixar" 
+				actionListener="#{controllerGrupos.download(true)}" 
+				class="btn btn-link"/>
+			
+			<!-- ALTERAR -->
+			<span onclick="$('#alterar').toggle(500)" class="btn btn-link">Alterar</span>
+		</h:form>
+
+		<!-- DATA DA ULTIMA ATUALIZAÇÃO -->
+		<h5>Última atualização <h:outputText value="#{controllerGrupos.grupo.data}" /></h5>
+			
+		<!-- FORMULARIO PARA ATUALIZACAO DO TRABALHO -->
+		<h:form enctype="multipart/form-data" class="form-signin startHidden loading" id="alterar">
+			<h3>Alterar arquivo</h3>
+			<br/>
+			
+			<!-- UPLOAD DO PDF -->
+			<h:inputFile 
+				id="inputFile" 
+				value="#{controllerGrupos.grupo.arquivo}" 
+				required="true" 
+				a:accept=".pdf">
+				<!-- VALIDA O DOCUMENTO SUBMETIDO -->
+				<f:validator validatorId="FileValidator"/> 
+			</h:inputFile>
+		
+			<!-- MENSSAGEM DE ERRO (ARQUIVO SELECIONADO INVALIDO) -->
+			<br />
+			<h:messages id="messages" class="esc alert alert-danger"/>
+		
+			<!-- CAMPO PARA QUE O ALUNO FACA OBSERVACOES -->
+			<h:outputLabel value="Observações" for="observacoes"/>
+			<h:inputTextarea 
+				id="observacoes" 
+				value="#{controllerGrupos.grupo.observacao}" 
+				a:placeholder="Observações" 
+				class="form-control"/>
+		
+			<!-- BOTAO ENVIAR -->
+			<br/>
+			<h:commandButton 
+				value="Salvar" 
+				action="#{controllerGrupos.alterar}" 
+				class="btn btn-lg btn-primary btn-block"/>
+		</h:form>
+				
+		<!-- RESPOSTAS DOS PROFESSORES -->
+		<br/>
+		<div class="messages">
+		
+			<!-- MENSAGEM CASO TRABALHO AINDA NAO TENHA SIDO AVALIADO -->
+			<h3>Avaliação dos professores:</h3>
+			<c:if test="#{controllerAvaliacoes.getListaAvaliacoes(controllerGrupos.grupo.codigo).getRowCount() == 0}">
+				<h5>Até o momento nenhum professor avaliou o seu trabalho.</h5>
+			</c:if>
+			
+			<!-- AVALIACOES -->
+			<ui:repeat var="dados" value="#{controllerAvaliacoes.getListaAvaliacoes(controllerGrupos.grupo.codigo)}">
+				<div class="alert alert-info message">
+					<h:outputText value="Professor(a) #{dados.nomeProfessor}, disse: "/><br/>
+					<h:outputText value="#{dados.avaliacao}" /><br/>
+					<small><h:outputText value="#{dados.data}"/></small>
+				</div>
+			</ui:repeat>
+		</div>
+	</div>
+		
+	<!-- FOOTER -->
+	<ui:include src="../componentes/footer/footer.xhtml" />
+</h:body>
+</html>

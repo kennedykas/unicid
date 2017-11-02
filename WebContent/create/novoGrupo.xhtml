@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<!-- HEAD -->
+	<ui:include src="../componentes/head/head.xhtml" />
+<h:body class="grey lighten-4">
+	<!-- NAVBAR -->
+	<ui:include src="../componentes/header/navbarSemLinks.xhtml" />
+	
+	<div class="container">
+	    <div class="row center" style="margin:10vh 0 50px 0">
+	        <div class="z-depth-2 white login-form">
+	            
+	            <div class="row">
+	                <h5 class="center"><h:outputText value="#{msg['new.group']}"/></h5>
+	            </div>
+	            <div class="row"></div>
+	            
+	            <h:form class="loading">
+					
+					<!-- NOME DA EQUIPE -->
+		            <div class="input-field row">
+						<h:inputText 
+							id="nome" 
+							value="#{controllerGrupos.grupo.nomeGrupo}" 
+							a:maxlength="400" 
+							a:minlength="4" 
+							a:required="true" 
+							requiredMessage="#{msg['required.group.name']}"/>
+						<h:outputLabel value="#{msg['upper.group.name']}" for="nome" />
+					</div>
+					
+					<!-- REPRESENTANTE EQUIPE -->
+					<div class="input-field row">
+						<h:inputText
+							id="representante" 
+							value="#{controllerGrupos.grupo.representante}" 
+							class="numberField" 
+							a:maxlength="8" 
+							a:minlength="8" 
+							a:required="true" 
+							requiredMessage="#{msg['required.group.leader.ca']}">
+							<!-- VERIFICA SE O RGM DIGITADO ESTA CADASTRADO -->
+							<f:validator validatorId="AlunoValidator" />
+						</h:inputText>
+						<h:outputLabel value="#{msg['upper.group.leader']}" for="representante"/>
+					</div>
+					
+					<!-- DEMAIS INTEGRANTES -->
+					<div class="0 input-field row">
+						<h:inputText
+							id="integrantes" 
+							value="#{controllerGrupos.grupo.integrantesArray[0]}" 
+							class="numberField col s10" 
+							a:maxlength="8" 
+							a:minlength="8"/> 
+						<h:outputLabel value="#{msg['upper.group.members']}" for="integrantes"/>
+
+						<span class="1 startHidden">
+							<h:inputText 
+								value="#{controllerGrupos.grupo.integrantesArray[1]}" 
+								class="numberField col s10"  
+								a:maxlength="8" 
+								a:minlength="8"/> 
+						</span>
+						<span class="2 startHidden">
+							<h:inputText 
+								value="#{controllerGrupos.grupo.integrantesArray[2]}" 
+								class="numberField col s10" 
+								a:maxlength="8" 
+								a:minlength="8"/>
+						</span>
+						<span class="3 startHidden">
+							<h:inputText 
+								value="#{controllerGrupos.grupo.integrantesArray[3]}" 
+								class="numberField col s10" 
+								a:maxlength="8" 
+								a:minlength="8"/>
+						</span>
+						<span class="4 startHidden">
+							<h:inputText 
+								value="#{controllerGrupos.grupo.integrantesArray[4]}" 
+								class="numberField col s10" 
+								a:maxlength="8" 
+								a:minlength="8"/>
+						</span>
+						<span class="5 startHidden">
+							<h:inputText 
+								value="#{controllerGrupos.grupo.integrantesArray[5]}" 
+								class="numberField col s10" 
+								a:maxlength="8" 
+								a:minlength="8"/>
+						</span>
+						<span class="6 startHidden">
+							<h:inputText 
+								value="#{controllerGrupos.grupo.integrantesArray[6]}" 
+								class="numberField col s10" 
+								a:maxlength="8" 
+								a:minlength="8"/>
+						</span>
+						<span class="7 startHidden">
+							<h:inputText 
+								value="#{controllerGrupos.grupo.integrantesArray[7]}" 
+								class="numberField col s10" 
+								a:maxlength="8" 
+								a:minlength="8"/>
+						</span>
+						<span class="8 startHidden">
+							<h:inputText 
+								value="#{controllerGrupos.grupo.integrantesArray[8]}" 
+								class="numberField col s10" 
+								a:maxlength="8" 
+								a:minlength="8"/>
+						</span>
+						<span class="9 startHidden">
+							<h:inputText 
+								value="#{controllerGrupos.grupo.integrantesArray[9]}" 
+								class="numberField col s10" 
+								a:maxlength="8" 
+								a:minlength="8"/>
+						</span>
+						<span class="10 startHidden">
+							<h:inputText 
+								value="#{controllerGrupos.grupo.integrantesArray[10]}" 
+								class="numberField col s10" 
+								a:maxlength="8" 
+								a:minlength="8"/>
+						</span>
+						<span class="11 startHidden">
+							<h:inputText 
+								value="#{controllerGrupos.grupo.integrantesArray[11]}" 
+								class="numberField col s10" 
+								a:maxlength="8" 
+								a:minlength="8"/>
+						</span>
+						<span class="12 startHidden">
+							<h:inputText 
+								value="#{controllerGrupos.grupo.integrantesArray[12]}" 
+								class="numberField col s10" 
+								a:maxlength="8" 
+								a:minlength="8"/>
+						</span>
+						<span class="13 startHidden">
+							<h:inputText 
+								value="#{controllerGrupos.grupo.integrantesArray[13]}" 
+								class="numberField" 
+								a:maxlength="8" 
+								a:minlength="8"/>
+						</span>
+						<!-- MOSTRA O PROXIMO CAMPO COMECANDO PELO PRIMEIRO -->
+						<i class="material-icons right showNextMemberField teal-text lighten-]1 pointer" data-next="0">add_circle</i>
+					</div>
+		 
+					<!-- SENHA GRUPO -->
+					<div class="input-field row">
+						<h:inputSecret 
+							id="senha1" 
+							value="#{controllerGrupos.grupo.senhaGrupo}" 
+							class="password password1" 
+							a:minlength="4" 
+							a:required="true" 
+							requiredMessage="#{msg['required.password']}">
+							<f:validator validatorId="PasswordValidator" />
+						</h:inputSecret>
+						<h:outputLabel value="#{msg['upper.password']}" for="senha1"/>
+					</div>
+					
+					<!-- SENHA GRUPO -->
+					<div class="input-field row">
+						<h:inputSecret 
+							id="senha2" 
+							class="password password2" 
+							a:minlength="4" 
+							a:required="true" 
+							requiredMessage="#{msg['required.confirm.password']}"/>
+						<h:outputLabel value="#{msg['upper.confirm.password']}" for="senha2"/>
+					</div>
+					
+					<!-- UPLOAD DO PDF -->
+					<h:outputLabel value="#{msg['upper.group.file']}"/>
+					<div class="input-field row file-field">
+					    <div class="btn">
+					        <span><h:outputText value="#{msg['upper.file']}"/></span>
+							<h:inputFile 
+								id="inputFile" 
+								value="#{controllerGrupos.grupo.arquivo}" 
+								a:required="true" 
+								a:accept=".pdf" 
+								requiredMessage="#{msg['required.group.file']}">
+								<f:validator validatorId="FileValidator" /> 
+							</h:inputFile>
+				        </div>
+				      	<div class="file-path-wrapper">
+				        	<input class="file-path validate" type="text"/>
+				      	</div>
+					</div>
+			
+					<!-- CAMPO PARA QUE O ALUNO FACA OBSERVACOES -->
+					<div class="input-field row">
+						<h:inputTextarea 
+							id="observacoes" 
+							value="#{controllerGrupos.grupo.observacao}" 
+							class="materialize-textarea" /> 
+						<h:outputLabel value="#{msg['upper.comments']}" for="observacoes"/>
+					</div>
+					
+					<!-- GOOGLE CAPTCHA -->
+					<div class="row center-align">
+						<div class="g-recaptcha" id="captcha" data-sitekey="6LeCGicUAAAAAEdGDF365N0oG5n_4ATnDuqiwdPJ"/>
+					</div>
+					
+					<!-- MENSSAGENS DE ERRO -->
+					<h:messages id="messages" class="esc red-text text-darken-2"/>
+				
+					<!-- BOTAO ENVIAR -->
+					<div class="center">
+						<button type="submit" class="row btn waves-effect waves-light" 
+							onclick="return $(this.closest('form')).valid() ? $('#submit').click() : false;">
+							<h:commandButton 
+								action="#{controllerGrupos.save}" 
+								class="submit-button"
+								value="#{msg['upper.ready']}"/>
+							<i class="material-icons right">send</i>
+						</button>
+					</div>
+				</h:form>
+		    </div>
+		</div>
+	</div>
+
+	<!-- GOOGLE CAPTCHA -->
+	<script src="https://www.google.com/recaptcha/api.js"></script>
+		
+	<!-- FOOTER -->
+	<ui:include src="../componentes/footer/footer.xhtml" />
+</h:body>
+</html>

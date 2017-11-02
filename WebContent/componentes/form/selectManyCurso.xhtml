@@ -1,0 +1,22 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:h="http://xmlns.jcp.org/jsf/html" 
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+		
+	<!-- SELECT MANY CURSO -->
+	<div class="row">
+		<h:outputLabel value="#{label}" for="courses"/>
+		<div style="overflow-y:scroll;height:220px;">
+			<h:selectManyCheckbox 
+				id="courses"
+				styleClass="filled-in"
+				value="#{controllerCursos.curso.codigos}" 
+				layout="pageDirection">
+			    
+			    <f:selectItems value="#{controllerCursos.cursos()}"/>
+			</h:selectManyCheckbox>
+		</div>
+	</div>
+</ui:composition>

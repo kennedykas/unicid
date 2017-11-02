@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<!-- HEAD -->
+	<ui:include src="../componentes/head/head.xhtml" />
+
+<h:body class="grey lighten-4">
+	
+	<!-- NAVBAR -->
+	<ui:include src="../componentes/header/navbarSemLinks.xhtml" />
+	
+	<div class="container">
+        <div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
+            
+	        <div class="row">
+	            <h5 class="center">
+	            	<h:outputText value="#{msg['new.student']}"/>
+	           	</h5>
+	        </div>
+            
+            <h:form id="questao" class="loading row">
+			
+				<!-- FORM LEFT SIDE CONTAINER -->
+				<div class="col s12 m12 l6">
+				
+					<!-- NOME -->
+					<div class="input-field row">
+						<h:inputText 
+							id="nome" 
+							value="#{controllerAlunos.aluno.nome}" 
+							a:required="true" 
+							a:maxlength="350" 
+							a:minlenght="4" 
+							requiredMessage="#{msg['required.name']}"/>
+						<h:outputLabel value="#{msg['upper.name']}" for="nome"/>
+					</div>		
+					
+					<!-- RGM ALUNO -->
+					<div class="input-field row">
+						<h:inputText 
+							id="rgm" 
+							value="#{controllerAlunos.aluno.rgm}" 
+							class="numberField" 
+							a:required="true" 
+							a:maxlength="8" 
+							a:minlength="8" 
+							requiredMessage="#{msg['required.rgm']}"/>
+						<h:outputLabel value="#{msg['upper.rgm']}" for="rgm"/>
+					</div>
+					
+					<!-- EMAIL -->
+					<div class="input-field row">
+						<h:inputText 
+							id="email" 
+							value="#{controllerAlunos.aluno.email}" 
+							a:type="email" 
+							a:required="true" 
+							requiredMessage="#{msg['required.email']}"/>
+						<h:outputLabel value="#{msg['upper.email']}" for="email"/>
+					</div>
+					
+					<!-- SENHA -->
+					<div class="input-field row">
+						<h:inputSecret 
+							id="senha1" 
+							value="#{controllerAlunos.aluno.senha}" 
+							class="password password1" 
+							a:minlength="4" 
+							a:required="true" 
+							requiredMessage="#{msg['required.password']}">
+							<f:validator validatorId="PasswordValidator" />
+						</h:inputSecret>
+						<h:outputLabel value="#{msg['upper.password']}" for="senha1"/>
+					</div>
+					
+					<!-- CONFIRMAR SENHA -->
+					<div class="input-field row">
+						<h:inputSecret 
+							id="senha2" 
+							class="password password2" 
+							a:minlength="4" 
+							a:required="true" 
+							requiredMessage="#{msg['required.confirm.password']}"/>
+						<h:outputLabel value="#{msg['upper.confirm.password']}" for="senha2"/>
+					</div>		
+					
+					<!-- CPF -->
+					<div class="input-field row">
+						<h:inputText
+							id="cpf"
+							value="#{controllerAlunos.aluno.cpf}"		
+							class="cpf"/>
+						<h:outputLabel 
+							value="#{msg['upper.cpf'].concat(' ').concat(msg['upper.not.required'])}" 
+							for="cpf"/>
+					</div>
+					
+					<!-- CELULAR -->
+					<div class="input-field row">
+						<h:inputText
+							id="celular"
+							value="#{controllerAlunos.aluno.celular}"
+							class="celular"/>
+						<h:outputLabel 
+							value="#{msg['upper.cellphone'].concat(' ').concat(msg['upper.not.required'])}" 
+							for="celular"/>
+					</div>
+				</div>
+				
+				<!-- GAMBS NEED TO BE FIXED -->
+				<div class="hide-on-med-and-down col l5" style="width:100px;height:200px"></div>
+	
+				<!-- FORM RIGHT SIDE CONTAINER -->
+				<div class="col s12 m12 l5 right">
+					
+					<!-- CURSO -->
+					<ui:include src="../componentes/form/selectCurso.xhtml"/>
+					
+					<!-- GOOGLE CAPTCHA -->
+					<div class="input-field row">
+						<div class="g-recaptcha" id="captcha" data-sitekey="6LeCGicUAAAAAEdGDF365N0oG5n_4ATnDuqiwdPJ"/>
+					</div>		
+											
+					<!-- MENSSAGENS DE ERRO -->
+					<h:messages id="messages" class="esc red-text text-darken-2"/>
+					
+					<!-- BOTAO ENVIAR -->
+					<div class="center">
+						<button type="submit" class="row btn waves-effect waves-light" 
+							onclick="return $(this.closest('form')).valid() ? $('#submit').click() : false;">
+							<h:commandButton 
+								action="#{controllerAlunos.save}" 
+								class="submit-button"
+								value="#{msg['upper.ready']}"/>
+							<i class="material-icons right">send</i>
+						</button>
+					</div>
+				</div>
+			</h:form>
+	    </div>
+	</div>
+	
+	<!-- GOOGLE CAPTCHA -->
+	<div class="row center-align" style="text-align:-webkit-center">
+		<script src="https://www.google.com/recaptcha/api.js"></script>
+	</div>
+		
+	<!-- FOOTER -->
+	<ui:include src="../componentes/footer/footer.xhtml" />
+</h:body>
+</html>

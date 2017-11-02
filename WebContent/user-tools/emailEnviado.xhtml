@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<!-- HEAD -->
+	<ui:include src="../componentes/head/head.xhtml" />
+<h:body>
+	<!-- NAVBAR -->
+	<ui:include src="../componentes/header/navbarSemLinks.xhtml" />
+	
+	<div class="container">
+	    <div class="row center" style="margin:10vh 0 50px 0">
+	        <div class="z-depth-1 grey lighten-4 login-form">
+	            
+	            <div class="row"></div>
+	
+				<h:form class="loading"> 	
+			
+					<!-- TIPO DE USER ALUNO -->
+					<h:panelGroup rendered="#{controllerAlunos.renderEmailAluno}"> 
+						<h4>
+							Enviamos um email para 
+							<span class="red darken-1">
+								<strong><h:outputText value="#{controllerAlunos.aluno.email}"/></strong>,
+							</span> 
+							acesse-o clicando no icone abaixo para confirmar o seu cadastro.
+						</h4>
+						<br/>
+						
+						<div class="center-align">
+							<!-- GMAIL ICON -->
+							<h:commandLink 
+								onclick="window.open('http://www.gmail.com.br')" 
+								rendered="#{controllerAlunos.renderEmail('@gmail')}">
+								<h:graphicImage value="../resources/images/icons/gmail.png" alt="Gmail" title="Ir para o Gmail"/>
+							</h:commandLink>
+							<!-- OUTLOOK ICON -->
+							<h:commandLink 
+								onclick="window.open('http://www.outlook.com.br')" 
+								rendered="#{controllerAlunos.renderEmail('@outlook')}">
+								<h:graphicImage value="../resources/images/icons/outlook.png" alt="Outlook" title="Ir para o Outlook"/>
+							</h:commandLink>
+							<!-- YAHOO ICON -->
+							<h:commandLink 
+								onclick="window.open('https://mail.yahoo.com')" 
+								rendered="#{controllerAlunos.renderEmail('@yahoo')}">
+								<h:graphicImage value="../resources/images/icons/yahoo.png" alt="Yahoo" title="Ir para o Yahoo"/>
+							</h:commandLink>
+							<!-- BOL ICON -->
+							<h:commandLink 
+								onclick="window.open('https://email.bol.uol.com.br')" 
+								rendered="#{controllerAlunos.renderEmail('@bol')}">
+								<h:graphicImage value="../resources/images/icons/bol.png" alt="Bol" title="Ir para o Bol"/>
+							</h:commandLink>
+						</div>
+					</h:panelGroup>
+					
+					 <!-- TIPO DE USER PROFESSOR -->
+					<h:panelGroup rendered="#{controllerProfessores.renderEmailProfessor}">
+						<h4>
+							Enviamos um email para 
+							<span class="red darken-1">
+								<strong><h:outputText value="#{controllerProfessores.professor.emailProfessor}"/></strong>,
+							</span> 
+							acesse-o clicando no icone abaixo para confirmar o seu cadastro.
+						</h4>
+						<br/>
+		
+						<div class="center-align">
+							<!-- GMAIL ICON -->
+							<h:commandLink 
+								onclick="window.open('http://www.gmail.com.br')" 
+								rendered="#{controllerProfessores.renderEmail('@gmail')}">
+								<h:graphicImage value="../resources/images/icons/gmail.png" alt="Gmail" title="Ir para o Gmail"/>
+							</h:commandLink>
+							<!-- OUTLOOK ICON -->
+							<h:commandLink 
+								onclick="window.open('http://www.outlook.com.br')" 
+								rendered="#{controllerProfessores.renderEmail('@outlook')}">
+								<h:graphicImage value="../resources/images/icons/outlook.png" alt="Outlook" title="Ir para o Outlook"/>
+							</h:commandLink>
+							<!-- YAHOO ICON -->
+							<h:commandLink 
+								onclick="window.open('https://mail.yahoo.com')" 
+								rendered="#{controllerProfessores.renderEmail('@yahoo')}">
+								<h:graphicImage value="../resources/images/icons/yahoo.png" alt="Yahoo" title="Ir para o Yahoo"/>
+							</h:commandLink>
+							<!-- BOL ICON -->
+							<h:commandLink 
+								onclick="window.open('https://email.bol.uol.com.br')" 
+								rendered="#{controllerProfessores.renderEmail('@bol')}">
+								<h:graphicImage value="../resources/images/icons/bol.png" alt="Bol" title="Ir para o Bol"/>
+							</h:commandLink>
+						</div>	
+					</h:panelGroup>
+				</h:form>
+		    </div>
+		</div>
+	</div>
+		
+	<!-- FOOTER -->
+	<ui:include src="../componentes/footer/footer.xhtml" />
+</h:body>
+</html>

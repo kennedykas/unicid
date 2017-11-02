@@ -1,0 +1,96 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:h="http://xmlns.jcp.org/jsf/html" 
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+		
+   	<!-- TITULO -->
+    <div class="input-field row">
+	   	<h:inputText 
+	   		id="title"
+	   		value="#{controllerProvas.prova.titulo}" 
+	   		a:maxlength="70" 
+	   		a:required="true" 
+	   		requiredMessage="Dê um titulo a sua prova."/>
+		<h:outputLabel value="#{msg['upper.title']}" for="title"/>
+	</div>
+						    
+    <!-- VALOR PROVA -->
+    <div class="input-field row">
+	    <h:inputText 
+	    	id="value"
+	    	value="#{controllerProvas.prova.valorTotal}" 
+	    	class="numberField" 
+	    	a:type="number" 
+	    	a:min=".1" 
+	    	a:max="10" 
+	    	a:step=".1" 
+	    	a:required="true" 
+	    	requiredMessage="#{msg['required.test.value']}"/> 
+	    <h:outputLabel value="#{msg['upper.value']}" for="value"/>
+	</div>   
+	
+    <!-- TEMPO PARA REALIZAR PROVA -->
+    <div class="input-field row">
+	    <h:inputText
+	    	id="time" 
+	    	value="#{controllerProvas.prova.tempo}" 
+	    	class="numberField" 
+	    	a:type="number" 
+	    	a:min=".1" 
+	    	a:max="240" 
+	    	a:step=".1" 
+	    	a:required="true" 
+	    	requiredMessage="#{msg['required.test.time']}"/>
+	    <h:outputLabel value="#{msg['upper.test.time']}" for="time"/>
+	</div>		    	
+	     
+  	<!-- DATA EM QUE SERA POSSIVEL REALIZA LA -->
+   	<div class="input-field row">
+	   	<h:inputText
+	   		id="date" 
+	   		value="#{controllerProvas.prova.data}" 
+	   		class="date"
+	   		a:required="true"
+	   		requiredMessage="#{msg['required.test.date']}"/>
+	    <h:outputLabel value="#{msg['upper.date']}" for="date"/>
+	</div>	   		
+   	
+   	<!-- PERMITIR REALIZACAO APOS ESSE PERIODO -->
+   	<div class="input-field row">
+	   	<h:selectBooleanCheckbox 
+	   		id="allowAfterDate"
+	   		styleClass="filled-in" 
+	   		value="#{controllerProvas.prova.allowAfterDate}"/>
+	   	<h:outputLabel 
+	   		value="#{msg['info.allow.after.date']}" for="allowAfterDate"/>
+   	</div>
+
+   	<!-- PERMITIR MULTIPLAS TENTATIVAS -->
+   	<div class="input-field row">
+	   	<h:selectBooleanCheckbox 
+	   		id="allowMultipleAttempts" 
+	   		styleClass="filled-in" 
+	   		value="#{controllerProvas.prova.allowMultipleAttempts}"/>
+	   	<h:outputLabel 
+	   		for="allowMultipleAttempts"
+	   		value="#{msg['info.allow.multiple.attempts']}"/>
+	</div>      	
+	
+	<h:selectBooleanCheckbox 
+		id="#{'checkbox'.concat(table.rowIndex + 1)}" 
+		styleClass="filled-in">
+		<f:ajax listener="#{controllerProvas.addQuestion(dados.codigo)}"/>
+	</h:selectBooleanCheckbox>
+	<h:outputLabel for="#{'checkbox'.concat(table.rowIndex)}" value=""/>
+   	
+   	<!-- SELECT DISCIPLINA -->
+	<ui:include src="../selectDisciplina.xhtml">
+		<ui:param name="label" value="#{msg['upper.discipline.test']}"/>
+	</ui:include>
+      	
+   	<!-- MENSSAGENS DE ERRO -->
+	<h:messages id="messages" class="esc red-text text-darken-2"/>
+
+</ui:composition>

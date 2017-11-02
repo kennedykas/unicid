@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<!-- HEAD -->
+	<ui:include src="../componentes/head/head.xhtml" />
+<h:body>
+	<!-- NAVBAR -->
+	<ui:include src="../componentes/header/navbarSemLinks.xhtml" />
+
+	<div class="container">
+	    <div class="row center" style="margin:10vh 0 50px 0">
+	        <div class="z-depth-1 grey lighten-4 login-form">
+	            
+	            <div class="row">
+	                <h5 class="center"><h:outputText value="#{msg['student.area']}"/></h5>
+	            </div>
+	            <div class="row"></div>
+	            
+	            <h:form class="loading">
+			
+					<!-- NOME -->
+					<div class="input-field row">
+						<h:inputText 
+							id="nome" 
+							value="#{controllerAlunos.aluno.nome}" 
+							a:minlenght="4" 
+							a:required="true" 
+							a:maxlength="350" 
+							a:placeholder="#{msg['upper.name']}" 
+							requiredMessage="#{msg['required.name']}"/>
+						<h:outputLabel value="#{msg['upper.name']}" for="nome"/>																													
+					</div>
+					
+					<!-- RGM -->
+					<div class="input-field row">
+						<h:inputText 
+							id="rgm" 
+							value="#{controllerAlunos.aluno.rgm}" 
+							class="numberField" 
+							a:required="true" 
+							a:maxlength="8" 
+							a:minlength="8" 
+							a:placeholder="#{msg['upper.rgm']}" 
+							requiredMessage="#{msg['required.rgm']}"/>
+						<h:outputLabel value="#{msg['upper.rgm']}" for="rgm" />
+					</div>
+					
+					<!-- GOOGLE CAPTCHA -->
+					<div class="row">
+						<div class="g-recaptcha" id="captcha" data-sitekey="6LeCGicUAAAAAEdGDF365N0oG5n_4ATnDuqiwdPJ"/>
+					</div>
+					
+					<!-- MENSSAGENS DE ERRO -->
+					<h:messages id="messages" class="esc red-text text-darken-2"/>
+					
+					<!-- BOTAO ENVIAR -->
+					<div class="center">
+						<button type="submit" class="row btn waves-effect waves-light" 
+							onclick="return $(this.closest('form')).valid() ? $('#submit').click() : false;">
+							<h:commandButton 
+								action="#{controllerAlunos.recuperarSenha}"
+								class="submit-button"
+								value="#{msg['upper.send']}"/>
+							<i class="material-icons right">email</i>
+						</button>
+					</div>
+					
+					<!-- ALERTA -->
+					<p class="lime-text text-darken-2">
+						<i class="material-icons left">info</i>
+						<h:outputText value="#{msg['we.will.send.your.password']}"/>
+					</p>
+		
+				</h:form>
+		    </div>
+		</div>
+	</div>
+
+	<!-- GOOGLE CAPTCHA -->
+	<script src="https://www.google.com/recaptcha/api.js"></script>	
+		
+	<!-- FOOTER -->
+	<ui:include src="../componentes/footer/footer.xhtml" />
+</h:body>
+</html>

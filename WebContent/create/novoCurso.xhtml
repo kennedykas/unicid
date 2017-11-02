@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+	
+	<!-- HEAD -->
+	<ui:include src="../componentes/head/head.xhtml" />
+<h:body>
+	<!-- NAVBAR -->
+	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
+	
+	<div class="container">
+		<h2>Criar um novo curso</h2>
+		
+		<button>PÓS GRADUAÇÃO</button>	
+		<button>EXTENSÃO</button>	
+
+		<h:form enctype="multipart/form-data" class="form-signin loading" id="form">
+			<h:inputFile 
+				id="inputFile" 
+				value="#{controllerImagens.selectedImage}" 
+				a:required="true"
+				a:accept=".svg,.gif,.jpg,.jpeg,.png,.ico" 
+				required="true" 
+				requiredMessage="Selecione um arquivo PDF"
+			/>
+					
+			<h:commandButton value="Salvar" action="#{controllerImagens.save}" class="btn btn-lg btn-primary btn-block" /> 
+		</h:form>
+
+		<h:form styleClass="loading"> 		
+			
+			<!-- NOME DO CURSO -->
+			<h:outputLabel value="Nome do curso" for="nomeCurso"/>
+			<h:inputText 
+				id="nomeCurso" 
+				value="#{controllerCursos.curso.nome}" 
+				class="form-control" 
+				a:placeholder="Nome do curso" 
+				a:maxlength="300" 
+				a:required="true" 
+				requiredMessage="INFORME O NOME DO CURSO"/>
+			
+			<!-- MODULOS -->
+			<h:outputLabel value="Módulos" for="modulos"/>
+			<h:inputTextarea 
+				id="modulos" 
+				value="#{controllerCursos.curso.modulos}" 
+				class="form-control pos" 
+				rows="7" 
+				a:maxlength="3500" 
+				a:placeholder="MÓDULOS"/>
+				
+			<!-- EMENTA -->
+			<h:outputLabel value="Ementa" for="ementa"/>
+			<h:inputTextarea 
+				id="ementa" 
+				value="#{controllerCursos.curso.ementa}" 
+				class="form-control pos" 
+				rows="7" 
+				a:maxlength="3500" 
+				a:placeholder="EMENTA"/>
+
+			<!-- CERTIFICAÇÕES -->
+			<h:outputLabel value="Certificações" for="certificacoes"/>
+			<h:inputTextarea 
+				id="certificacoes" 
+				value="#{controllerCursos.curso.certificacoes}" 
+				class="form-control pos" 
+				rows="7" 
+				a:maxlength="3500" 
+				a:placeholder="CERTIFICAÇÕES"/>
+
+			<!-- OBJETIVOS -->
+			<h:outputLabel value="Objetivos" for="objetivo"/>
+			<h:inputTextarea 
+				id="objetivo" 
+				value="#{controllerCursos.curso.objetivo}" 
+				class="form-control extensao" 
+				rows="6" 
+				a:maxlength="2500" 
+				a:placeholder="OBJETIVOS"/>
+			
+			<!-- CONTEUDO PROGRAMATICO -->
+			<h:outputLabel value="Conteúdo programático" for="conteudo"/>
+			<h:inputTextarea 
+				id="conteudo" 
+				value="#{controllerCursos.curso.conteudoProgramatico}" 
+				class="form-control pos extensao"  
+				rows="7" 
+				a:maxlength="4000" 
+				a:placeholder="CONTEÚDO PROGRAMÁTICO"/>
+			
+			<!-- INVESTIMENTO -->
+			<h:outputLabel value="Investimento" for="investimento"/>
+			<h:inputText 
+				id="investimento" 
+				value="#{controllerCursos.curso.investimento}" 
+				class="form-control reais pos extensao"  
+				a:placeholder="VALOR EM R$"/>
+			
+			<!-- HORARIO -->
+			<h:outputLabel value="Horário" for="horario"/>
+			<h:inputText
+				id="horario" 
+				value="#{controllerCursos.curso.horario}" 
+				class="form-control pos" 
+				a:maxlength="400" 
+				a:placeholder="HORÁRIO"/>
+			
+			<!-- DURACAO -->
+			<h:outputLabel value="Duração" for="duracao"/>
+			<h:inputText
+				id="duracao" 
+				value="#{controllerCursos.curso.duracao}" 
+				class="form-control pos" 
+				a:maxlength="100" 
+				a:placeholder="DURAÇÃO"/>
+				
+			<!-- CARGA HORARIA-->
+			<h:outputLabel value="Carga Horária" for="cargaHoraria"/>
+			<h:inputText
+				id="cargaHoraria" 
+				value="#{controllerCursos.curso.cargaHoraria}" 
+				class="form-control pos extensao" 
+				a:maxlength="100" 
+				a:placeholder="CARGA HORÁRIA"/>
+				
+			<!-- TAXA DE INSCRICAO -->
+			<h:outputLabel value="Taxa de inscrição" for="taxaInscricao"/>
+			<h:inputText
+				id="taxaInscricao" 
+				value="#{controllerCursos.curso.taxaInscricao}" 
+				class="form-control pos" 
+				a:maxlength="100" 
+				a:placeholder="TAXA DE INSCRIÇÃO EM R$"/>
+				
+			<!-- BOTAO SALVAR -->
+			<br/>
+			<h:commandButton 
+				value="Salvar" 
+				action="#{controllerQuestoes.save(controllerProfessores.professor.getCodigo())}" 
+				class="submit btn btn-lg btn-primary btn-block"/> 
+			
+			<br/>
+		</h:form>
+	</div>
+		
+	<!-- FOOTER -->
+	<ui:include src="../componentes/footer/footer.xhtml" />
+</h:body>
+</html>

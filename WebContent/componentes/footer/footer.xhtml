@@ -1,0 +1,58 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:h="http://xmlns.jcp.org/jsf/html" 
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    
+<footer class="page-footer teal lighten-1">
+	<div class="container">
+		<div class="row">
+			<div class="col l6 s12">
+				<h5 class="white-text"><h:outputText value="#{msg['upper.unicid']}"/></h5>
+				<p class="grey-text text-lighten-4"><h:outputText value="#{msg['we.hope.you.like.it']}"/></p>
+			</div>
+			<div class="col l4 offset-l2 s12">
+				<h5 class="white-text"><h:outputText value="#{msg['links']}"/></h5>
+				<ul>
+					<li>
+						<a class="grey-text text-lighten-3" href="https://unicid.cruzeirodosulvirtual.com.br/webapps/login/?new_loc=%2Fwebapps%2Fportal%2Fexecute%2FdefaultTab">
+							<h:outputText value="#{msg['blackboard']}"/>
+						</a>
+					</li>
+					<li>
+						<a class="grey-text text-lighten-3" href="https://alunos.cruzeirodosul.edu.br/alunos/novo_login.jsp">
+							<h:outputText value="#{msg['student.area']}"/>
+						</a>
+					</li>
+					<li>
+						<a class="grey-text text-lighten-3" href="https://siaa.cruzeirodosul.edu.br/novo-siaa/login.jsf">
+							<h:outputText value="#{msg['teacher.area']}"/>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="footer-copyright">
+		<div class="container">
+			<h:outputText value="#{msg['report.problem']}"/>
+			<a class="grey-text text-lighten-4 right" href="#!"></a>
+		</div>
+	</div>
+
+	<!-- JQUERY -->
+	<h:outputScript name="/js/jquery-3.2.1.min.js"/>
+
+	<!-- MASCARAS PARA CAMPOS -->
+	<h:outputScript name="/js/mask.js"/>
+
+	<!-- SOME FUNCTIONS -->
+	<h:outputScript name="/js/util.js"/>
+
+	<!-- MATERIALIZE -->
+	<h:outputScript name="/materialize/js/materialize.min.js"/>
+
+</footer>
+
+</ui:composition>

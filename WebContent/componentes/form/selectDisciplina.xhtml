@@ -1,0 +1,20 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:h="http://xmlns.jcp.org/jsf/html" 
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+		
+	<!-- SELECT DISCIPLINA -->
+	<div class="row">
+		<h:outputLabel value="#{label}" for="selectDiscipline"/>
+		<h:selectOneMenu
+			value="#{controllerDisciplinas.disciplina.codigo}" 
+			id="selectDiscipline"
+			a:required="true" 
+			requiredMessage="#{msg['required.select.your.discipline']}">
+		    <f:selectItem itemValue="#{msg['upper.select.discipline']}" noSelectionOption="true"/> 
+		    <f:selectItems value="#{controllerDisciplinas.disciplinas(controllerProfessores.professor.codigo)}"/>
+		</h:selectOneMenu>
+	</div>
+</ui:composition>

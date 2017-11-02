@@ -1,0 +1,38 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:h="http://xmlns.jcp.org/jsf/html" 
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+		
+	<!-- NOME DISCIPLINA -->
+    <div class="input-field row">
+		<h:inputText 
+			id="nome" 
+			value="#{controllerDisciplinas.disciplina.nomeDisciplina}" 
+			a:maxlength="350" 
+			a:minlength="4" 
+			a:required="true" 
+			requiredMessage="#{msg['required.discipline.name']}"/>
+		<h:outputLabel value="#{msg['upper.discipline.name']}" for="nome" />
+	</div>
+	
+	<!-- CURSOS DISCIPLINA PERTENCE -->
+	<ui:include src="/componentes/form/selectManyCurso.xhtml">
+		<ui:param name="label" value="#{msg['upper.discipline.courses']}" />
+	</ui:include>
+	
+	<!-- OBSERVACOES -->
+	<div class="input-field row">
+		<h:inputTextarea 
+			id="observacoes" 
+			value="#{controllerDisciplinas.disciplina.observacoes}"
+			class="materialize-textarea"
+			a:maxlength="500"/> 
+		<h:outputLabel value="#{msg['upper.comments']}" for="observacoes"/>
+	</div>
+		
+	<!-- MENSSAGENS DE ERRO -->
+	<h:messages id="messages" class="esc red-text text-darken-2"/>
+	
+</ui:composition>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+      
+	<!-- HEAD -->
+	<ui:include src="../componentes/head/head.xhtml" />
+<h:body class="grey lighten-4">
+	<!-- NAVBAR -->
+	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
+	
+	<div class="container">
+	
+		<!-- FILTRO -->
+		<div class="form-inline pull-right">
+			<h:selectOneMenu styleClass="filtrarCurso form-control">
+			    <f:selectItem itemLabel="FILTRE AS QUEST�ES POR DISCIPLINA" itemDisabled="true"/>
+			    <f:selectItems value="#{controllerCursos.cursos()}"/>
+			</h:selectOneMenu>
+			<button class="limparFiltros btn btn-default btn-sm">LIMPAR FILTRO</button>
+		</div>
+	
+		<h:form styleClass="loading">		
+			<h2>Minhas disciplinas</h2>
+			
+			<!-- CRIAR DISCIPLINA -->
+			<a href="../create/novaDisciplina.xhtml">Adicionar disciplina</a>
+			
+			<h:dataTable 
+				value="#{controllerDisciplinas.getListaDisciplinas(controllerProfessores.professor.codigo)}" 
+				var="dados" 
+				class="table table-striped">
+				
+				<!-- NOME DISCIPLINA -->
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="NOME DISCIPLINA" />
+					</f:facet>
+					<h:outputText value="#{dados.nomeDisciplina}" />
+				</h:column>
+				
+				<!-- CURSO 
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="CURSO" />
+					</f:facet>
+					
+				</h:column>
+				-->
+					
+				<!-- OBSERVACOES -->
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="OBSERVA��ES" />
+					</f:facet>
+					<h:outputText value="#{dados.observacoes}" />
+				</h:column>
+	
+				<!-- ACOES -->
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="A��ES" />
+					</f:facet>
+					
+					<!-- EDIT BUTTON -->
+					<h:commandLink 
+						action="/update/alterarDisciplina" 
+						class="glyphicon glyphicon-pencil" 
+						title="Editar">
+						<f:actionListener 
+							binding="#{controllerDisciplinas.selecionarRegistro()}"/>
+    					<f:actionListener 
+    						binding="#{controllerDisciplinaCurso.obterCursosDisciplinaPertence(dados.codigo)}"/>
+					</h:commandLink>
+					
+					<span class="space"></span>
+					
+					<!-- DELETE BUTTON -->
+					<h:commandLink 
+						actionListener="#{controllerDisciplinas.selecionarRegistro}" 
+						action="#{controllerDisciplinas.excluir}" 
+						onclick="return confirm('Tem certeza que deseja remover est� disciplina? Ela n�o poder� ser recuperada depois!')" 
+						class="glyphicon glyphicon-trash" 
+						title="Excluir"/>
+				</h:column>
+			</h:dataTable>	
+		</h:form>
+	</div>
+		
+	<!-- FOOTER -->
+	<ui:include src="../componentes/footer/footer.xhtml" />
+</h:body>
+</html>

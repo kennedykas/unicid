@@ -1,0 +1,21 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:h="http://xmlns.jcp.org/jsf/html" 
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+		
+	<!-- SELECT CURSO -->
+	<div class="input-field row">
+		<h:selectOneMenu 
+			id="cursos"
+			value="#{controllerCursos.curso.codigo}" 
+			a:required="true"
+			requiredMessage="#{msg['required.select.your.course']}">
+		    
+		    <f:selectItem itemLabel="#{msg['upper.select.course']}" noSelectionOption="true"/>
+		    <f:selectItems value="#{controllerCursos.cursos()}"/>
+		</h:selectOneMenu>
+	    <h:outputLabel for="cursos" value="#{msg['upper.select.course']}"/>
+	</div>
+</ui:composition>

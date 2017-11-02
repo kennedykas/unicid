@@ -1,0 +1,39 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:h="http://xmlns.jcp.org/jsf/html" 
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+<nav class="teal lighten-1">
+	<div class="nav-wrapper">
+		<a 
+			href="http://www.unicid.com.br" 
+			class="brand-logo tooltipped" 
+			data-position="bottom" 
+			data-delay="50" 
+			data-tooltip="#{msg['upper.go.to.unicid.page']}">
+			
+			<h:outputText value="#{msg['upper.unicid']}"/>
+		</a>
+		<ul id="nav-mobile" class="right">
+			<li>
+				<a 
+					href="/wecti/index.jsp" 
+					class="tooltipped" 
+					data-position="bottom" 
+					data-delay="50" 
+					data-tooltip="#{msg['upper.come.back']}">
+					
+					<i class="material-icons left">arrow_back</i>
+					<h:outputText class="hide-on-med-and-down" value="#{msg['upper.come.back']}" />
+				</a>
+			</li>
+		</ul>
+	</div>
+</nav>
+
+<!-- LOADING -->
+<ui:include src="../loadingAnimation.xhtml" />
+
+</ui:composition>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+      
+	<!-- HEAD -->
+	<ui:include src="../componentes/head/head.xhtml" />
+<h:body>
+	<!-- NAVBAR -->
+	<ui:include src="../componentes/header/navbarAluno.xhtml" />
+	
+	<div class="container">
+		<h:form id="showProva" styleClass="loading">			
+		
+			<!-- TITULO -->
+			<h2><h:outputText value="#{controllerProvas.prova.titulo}"/></h2>
+			
+			<!-- QUESTOES -->
+			<h:dataTable 
+				binding="#{table}" 
+				value="#{controllerQuestoes.getListaQuestoes(controllerProvas.prova.questoes)}" 
+				var="dados"
+				class="table table-striped" >
+				
+				<h:column>
+					<!-- PERGUNTA E VALOR -->
+					<h5 style="padding:5px 15px 15px 5px">
+						<h:outputText 
+							value="VALOR: #{controllerProvas.prova.valorQuestoes} /  QUESTÃO #{table.rowIndex + 1}: " 
+							class="text-info"/>
+						<br/><br/>
+						<h:outputText value="#{dados.pergunta}"/>
+					</h5>
+					<br/>
+					<!-- ALTERNATIVAS -->
+					<h:selectOneRadio 
+						value="#{controllerProvas.selectedAnswer}" 
+						a:required="true" 
+						requiredMessage="Selecione uma alternativa." 
+						layout="pageDirection">
+						
+					   	<f:selectItem 
+					   		itemValue="A" 
+					   		itemLabel="A) #{dados.alternativaA}" 
+					   		itemDisabled="#{dados.alternativaA eq '' ? true : false}"/>
+					   	<f:selectItem 
+					   		itemValue="B" 
+					   		itemLabel="B) #{dados.alternativaB}" 
+					   		itemDisabled="#{dados.alternativaB eq '' ? true : false}"/>
+					   	<f:selectItem 
+					   		itemValue="C" 
+					   		itemLabel="C) #{dados.alternativaC}" 
+					   		itemDisabled="#{dados.alternativaC eq '' ? true : false}"/>
+					   	<f:selectItem 
+					   		itemValue="D" 
+					   		itemLabel="D) #{dados.alternativaD}" 
+					   		itemDisabled="#{dados.alternativaD eq '' ? true : false}"/>
+					   	<f:selectItem 
+					   		itemValue="E" 
+					   		itemLabel="E) #{dados.alternativaE}" 
+					   		itemDisabled="#{dados.alternativaE eq '' ? true : false}"/>
+						
+						<!-- GET ROW DATA ON QUESTOES MANAGED BEAN -->
+						<f:ajax listener="#{controllerQuestoes.selecionarRegistro()}" />
+						<!-- SET SELECTED ANSWER ON PROVAS MANAGED BEAN-->
+						<f:ajax onevent="change" listener="#{controllerProvas.setResposta(dados.codigo)}"/>
+						
+					</h:selectOneRadio>
+				</h:column>
+			</h:dataTable>
+						 
+			<!-- INICIANDO CRONOMETRO NO BACKBEAN-->
+			<f:event listener="#{controllerProvasRealizadas.startTimer()}" type="preRenderView"/>
+			
+			<!-- TEMPO/PONTOS -->
+			<div id="tempoRestante" class="alert-warning">
+				<p>VALOR</p>	
+				<h:outputText value="#{controllerProvas.prova.valorTotal}"/>
+				<hr/>
+				<p>TEMPO</p>
+				<h:inputHidden id="minutes" value="#{controllerProvas.prova.tempo}"/> 
+				<h:outputText id="countdown"/> 
+			</div>
+
+			<!-- FINALIZAR TESTE -->
+			<h:commandButton 
+				value="FINALIZAR" 
+				actionListener="#{controllerProvasRealizadas.save()}" 
+				action="/see/gabaritoAluno" 
+				class="btn btn-success finishTest"/>
+		</h:form> 
+	</div>
+		
+	<!-- FOOTER -->
+	<ui:include src="../componentes/footer/footer.xhtml" />
+</h:body>
+</html>

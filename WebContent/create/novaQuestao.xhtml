@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<!-- HEAD -->
+	<ui:include src="../componentes/head/head.xhtml" />
+<h:body class="grey lighten-4">
+	<!-- NAVBAR -->
+	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
+	
+	<div class="container">
+        <div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
+            
+	        <div class="row">
+	            <h5 class="center">
+	            	<h:outputText value="#{msg['new.question']}"/>
+	           	</h5>
+	        </div>
+            
+            <h:form id="questao" class="loading row">
+		
+				<!-- FORMULARIO DE QUESTAO -->
+				<ui:include src="../componentes/form/professor/formQuestao.xhtml" />
+				
+				<!-- BOTAO SALVAR -->
+    			<div class="fixed-action-btn tooltipped" 
+    				data-position="left" data-delay="50" data-tooltip="#{msg['upper.save']}">
+					<button type="submit" 
+						class="btn-floating btn-large waves-effect waves-light deep-purple pulse" 
+						onclick="return $(this.closest('form')).valid() ? $('#submit').click() : false;">
+						<i class="material-icons right">save</i>
+						<h:commandButton class="submit-button"
+							action="#{controllerQuestoes.save(controllerProfessores.professor.getCodigo())}"/>
+					</button>
+       			</div>
+			</h:form>
+	    </div>
+	</div>
+
+	<!-- FOOTER -->
+	<ui:include src="../componentes/footer/footer.xhtml" />
+</h:body>
+</html>

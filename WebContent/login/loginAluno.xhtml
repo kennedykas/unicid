@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<!-- HEAD -->
+	<ui:include src="../componentes/head/head.xhtml" />
+<h:body class="grey lighten-4">
+	<!-- NAVBAR -->
+	<ui:include src="../componentes/header/navbarSemLinks.xhtml" />
+
+	<div class="container">
+	    <div class="row center" style="margin:10vh 0 50px 0">
+	        <div class="z-depth-2 white login-form">
+	            
+	            <div class="row">
+	                <h5 class="center"><h:outputText value="#{msg['student.area']}"/></h5>
+	            </div>
+	            <div class="row"></div>
+	            
+	            <h:form class="loading">
+		          
+		            <!-- RGM -->
+		            <div class="input-field row">
+						<h:inputText 
+							id="rgm" 
+							value="#{controllerAlunos.aluno.rgm}" 
+							class="numberField" 
+							a:required="true" 
+							a:maxlength="8" 
+							a:minlength="8" 
+							requiredMessage="#{msg['required.rgm']}"/>
+						<h:outputLabel value="#{msg['upper.rgm']}" for="rgm" />
+					</div>
+					
+					<!-- SENHA -->
+					<div class="input-field row">
+						<h:inputSecret 
+							id="senha" 
+							value="#{controllerAlunos.aluno.senha}" 
+							a:minlength="4" 
+							a:required="true" 
+							requiredMessage="#{msg['required.password']}"/>
+						<h:outputLabel value="#{msg['upper.password']}" for="senha"/>
+					</div>
+					
+					<!-- MENSSAGENS DE ERRO -->
+					<h:messages id="messages" class="esc red-text text-darken-2"/>
+					
+					<!-- BOTAO ENVIAR -->
+					<div class="center">
+						<button type="submit" class="row btn waves-effect waves-light" 
+							onclick="return $(this.closest('form')).valid() ? $('#submit').click() : false;">
+							<h:commandButton 
+								action="#{controllerProfessores.login}"
+								class="submit-button"
+								value="#{msg['upper.get.in']}"/>
+							<i class="material-icons right">send</i>
+						</button>
+					</div>
+				</h:form>
+
+				<div class="center s12">
+					<!-- RECUPERAR SENHA -->
+					<h:link outcome="/user-tools/recuperarSenhaAluno">
+						<h:outputText value="#{msg['forgot.password']}"/>
+					</h:link>
+					<br/>
+					
+					<!-- NOVO ALUNO --> 
+					<h:link outcome="/create/novoAluno">
+						<h:outputText value="#{msg['new.user']}"/>
+					</h:link>
+				</div>
+		    </div>
+		</div>
+	</div>
+		
+	<!-- FOOTER -->
+	<ui:include src="../componentes/footer/footer.xhtml" />
+</h:body>
+</html>

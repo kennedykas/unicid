@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+      
+	<!-- HEAD -->
+	<ui:include src="../componentes/head/head.xhtml" />
+<h:body>
+	<!-- NAVBAR -->
+	<ui:include src="../componentes/header/navbarAluno.xhtml" />
+	
+	<div class="container">
+		<h2>Essas são as provas que você ja fez.</h2>
+		
+		<h:form styleClass="loading">
+			<h:dataTable 
+				value="#{controllerProvasRealizadas.getProvasRealizadas(controllerAlunos.aluno.codigo)}" 
+				var="dados" 
+				class="table table-striped">
+				
+				<!-- TITULO --> 
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="TITULO DA PROVA" />
+					</f:facet>
+					<h:outputText value="#{controllerProvas.getTitulo(dados.codProva)}" />
+				</h:column>
+
+				<!-- VALOR TOTAL --> 
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="VALOR TOTAL" />
+					</f:facet>
+					<h:outputText value="#{controllerProvas.getValorTotal(dados.codProva)}" />
+				</h:column>
+				
+				<!-- NOTA -->
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="NOTA" />
+					</f:facet>
+					<h:outputText value="#{dados.nota}" />
+				</h:column>
+				
+				<!-- TEMPO -->
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="TEMPO" />
+					</f:facet>
+					<h:outputText value="#{dados.tempo}" />
+				</h:column>
+	
+				<!-- DATA -->
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="DATA. REALIZAÇÃO" />
+					</f:facet>
+					<h:outputText value="#{dados.data}"/>
+				</h:column>
+			</h:dataTable>
+		</h:form>
+	</div>
+		
+	<!-- FOOTER -->
+	<ui:include src="../componentes/footer/footer.xhtml" />
+</h:body>
+</html>

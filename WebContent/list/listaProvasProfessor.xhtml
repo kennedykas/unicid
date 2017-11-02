@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui">
+      
+	<!-- HEAD -->
+	<ui:include src="../componentes/head/head.xhtml" />
+<h:body>
+	<!-- NAVBAR -->
+	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
+	
+	<div class="container">
+		<!-- LISTA DE PROVAS -->
+		<h:form id="provas" styleClass="loading">
+			
+			<h2>Minhas provas</h2>
+			<h:link outcome="/list/listaQuestoes" class="link">
+				Selecione as questoes para criar uma nova prova
+			</h:link>
+			
+			<h:dataTable value="#{controllerProvas.getListaProvas()}" var="dados" class="table table-striped">
+			
+				<!-- TITULO -->
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="TÍTULO" />
+					</f:facet>
+					<h:outputText value="#{dados.titulo}" />
+				</h:column>
+	
+				<!-- DISCIPLINA -->
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="DISCIPLINA" />
+					</f:facet>
+					<h:outputText value="#{controllerDisciplinas.nomeDisciplina(dados.codDisciplina)}" />
+				</h:column>
+	
+				<!-- NUMERO DE QUESTOES -->
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Nº QUESTÕES" />
+					</f:facet>
+					<h:outputText value="#{controllerProvas.numberQuestions(dados.questoes)}" />
+				</h:column>
+	
+				<!-- VALOR TOTAL -->
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="VALOR TOTAL" />
+					</f:facet>
+					<h:outputText value="#{dados.valorTotal}" />
+				</h:column>
+
+				<!-- VALOR INDIVIDUAL -->
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="VALOR QUESTÃO" />
+					</f:facet>
+					<h:outputText value="#{dados.valorQuestoes}" />
+				</h:column>
+
+				<!-- TEMPO -->
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="TEMPO MIN." />
+					</f:facet>
+					<h:outputText value="#{dados.tempo} min." title="Tempo máximo #{dados.tempo} minutos"/>
+				</h:column>
+	
+				<!-- HORARIO -->
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="DATA. REALIZAÇÃO" />
+					</f:facet>
+					<h:outputText value="#{dados.data eq ''? '???' : dados.data}"/>
+				</h:column>
+				
+				<!-- REALIZAR APOS DATA -->
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="FAZER APÓS DATA" />
+					</f:facet>
+					<h:outputText value="#{dados.permitir eq false ? 'NÃO' : 'SIM'}"/>
+				</h:column>
+				
+				<!-- MULTIPLAS TENTATIVAS -->
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="MULTIPLAS TENTATIVAS" />
+					</f:facet>
+					<h:outputText value="#{dados.allowMultipleAttempts eq false ? 'NÃO' : 'SIM'}"/>
+				</h:column>
+				
+				<!-- ACOES -->
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="AÇÕES" />
+					</f:facet>
+			
+					<!-- VISUALIZAR -->
+					<h:commandLink 
+						actionListener="#{controllerProvas.selecionarRegistro}" 
+						action="/see/gabaritoProfessor" 
+						class="glyphicon glyphicon-list-alt" 
+						title="Visualizar"/>
+					
+					<span class="space"/>
+			
+					<!-- ALTERAR INFORMACOES -->
+			  		<p:commandLink 
+			  			styleClass="glyphicon glyphicon-edit" 
+			  			data-toggle="modal" 
+			  			data-target="#myModal" 
+			  			title="Alterar informações" 
+			  			onclick="$('#myModal').modal('show');">
+			  			
+			  			<f:ajax listener="#{controllerProvas.selecionarRegistro}"/>
+			  		</p:commandLink>
+					<span class="space"/>
+			
+					<!-- EXCLUIR -->
+					<h:commandLink 
+						actionListener="#{controllerProvas.selecionarRegistro}" 
+						action="#{controllerProvas.excluir}" 
+						onclick="return confirm('Tem certeza que deseja remover está prova? Ela não podera ser recuperada depois!')" 
+						class="glyphicon glyphicon-trash" 
+						title="Excluir"/>
+				</h:column>
+			</h:dataTable>
+		</h:form>
+		
+		<!-- MODAL INFO PROVA -->
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog modal-sm">
+		    	<div class="modal-content">
+		    		<h:form id="formInfoProva">
+		    			
+		    			<!-- MODAL HEADER -->
+				        <div class="modal-header">
+				        	<button type="button" class="close" data-dismiss="modal">&times;</button>
+				         	<h4 class="modal-title">Alterar informações da prova.</h4>
+				         	<h6>
+				         		<span class="glyphicon glyphicon-info-sign" />
+				         		O aluno poderá começar a avaliação até 10 minutos antes, mas nem um minuto depois!				  
+				         	</h6>
+				        </div>
+				        
+				        <!-- FORM INFORMACOES PROVA -->
+						<ui:include src="../componentes/form/professor/formInformacoesProva.xhtml" />
+				        
+				        <!-- MODAL FOOTER -->
+				        <div class="modal-footer">
+				        	<!-- SUBMIT -->
+				        	<h:commandButton 
+				        		action="#{controllerProvas.alterarInformacoes}" 
+				        		class="form-control btn btn-default" 
+				        		data-dismiss="modal" 
+				        		value="Alterar informações"/>
+				        </div>
+		    		</h:form>
+				</div>
+			</div>
+		</div>
+
+	</div>
+		
+	<!-- FOOTER -->
+	<ui:include src="../componentes/footer/footer.xhtml" />
+</h:body>
+</html>

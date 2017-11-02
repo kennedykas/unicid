@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+      
+	<!-- HEAD -->
+	<ui:include src="../componentes/head/head.xhtml" />
+<h:body class="grey lighten-4">
+	<!-- NAVBAR -->
+	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
+
+	<!-- FILTRO DE QUESTOES -->
+	<div class="row">
+		<div class="input-field col s12">
+			<h:selectOneMenu 
+				prependId="false"
+				id="filtrarQuestoesPorDisciplina"
+				styleClass="filtrarQuestoesPorDisciplina col s9 m5 l5">
+				
+				<f:selectItem noSelectionOption="true"
+					itemValue="#{msg['upper.filter.questions.by.discipline']}" />
+			    
+				<f:selectItems 
+					value="#{controllerDisciplinas.disciplinas(controllerProfessores.professor.codigo)}"/>
+			</h:selectOneMenu>
+			<button class="btn limparFiltros tooltipped red" 
+				data-position="bottom" data-delay="50" data-tooltip="#{msg['upper.clear.filter']}">
+				<i class="material-icons">clear</i>
+			</button>
+		</div>
+	</div>
+	
+	<div class="container">
+       	<div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
+           
+	        <div class="row">
+	            <h5 class="center">
+	            	<h:outputText value="#{msg['my.questions']}"/>
+	           	</h5>
+	        </div>
+
+			<h:form id="questionList" styleClass="loading">
+				
+				<h:dataTable 
+					value="#{controllerQuestoes.getListaQuestoes(controllerProfessores.professor.codigo)}" 
+					var="dados" 
+					binding="#{table}"
+					class="bordered">
+				
+					<h:column>
+						<!-- ACOES -->
+						<div class="right">
+							<!-- EXCLUIR -->
+							<span class="tooltipped" data-position="left" 
+								data-delay="50" data-tooltip="#{msg['upper.delete']}">
+								<h:commandLink 
+									actionListener="#{controllerQuestoes.selecionarRegistro}" 
+									action="#{controllerQuestoes.excluir}"
+									onclick="return confirm('Tem certeza que deseja remover está questão? Ela não poderá ser recuperada depois!')"> 
+									<i class="material-icons right">delete</i>
+								</h:commandLink>
+							</span>
+
+							<!-- EDITAR -->
+							<span class="tooltipped" data-position="left" 
+								data-delay="50" data-tooltip="#{msg['upper.edit']}">
+								<h:commandLink 
+									actionListener="#{controllerQuestoes.selecionarRegistro}"
+									action="/update/alterarQuestao">
+									<i class="material-icons right">mode_edit</i>
+								</h:commandLink>
+							</span>
+						</div>
+		
+						<!-- CHECKBOX (QUANDO UMA QUESTAO E SELECIONADA O COD DELA E ARMAZENADO NO MANAGEDBEAN)-->
+						<span class="tooltipped" 
+							data-position="top" 
+							data-delay="50" 
+							data-tooltip="#{msg['upper.add.question.to.test']}">
+							<h:selectBooleanCheckbox 
+								id="#{'checkbox'.concat(table.rowIndex + 1)}" 
+								styleClass="filled-in">
+								<f:ajax listener="#{controllerProvas.addQuestion(dados.codigo)}"/>
+							</h:selectBooleanCheckbox>
+							<h:outputLabel for="#{'checkbox'.concat(table.rowIndex)}" value=""/>
+						</span>
+						
+						<!-- DISCIPLINA -->
+						<h:outputText styleClass="disciplina red-text" 
+							value="#{controllerDisciplinas.nomeDisciplina(dados.disciplina)}" />
+						<br/>
+						
+						<!-- PERGUNTA -->
+						<h:outputText value="#{dados.pergunta}" />
+						<br/>
+						
+						<div style="margin:10px 0 0 0">
+							<!-- ALTERNATIVA A -->
+							<h:outputText 
+								value="A) " 
+								styleClass="#{dados.alternativaCorreta eq 'A'? 'green-text' : 'red-text'}"/>
+							<h:outputText 
+								value="#{dados.alternativaA}" 
+								styleClass="#{dados.alternativaCorreta eq 'A'? 'green-text' : ''}"/>
+							<br/>
+							
+							<!-- ALTERNATIVA B -->
+							<h:outputText 
+								value="B) " 
+								styleClass="#{dados.alternativaCorreta eq 'B'? 'green-text' : 'red-text'}"/>
+							<h:outputText 
+								value="#{dados.alternativaB}" 
+								styleClass="#{dados.alternativaCorreta eq 'B'? 'green-text' : ''}"/>
+							<br/>
+							
+							<!-- ALTERNATIVA C -->
+							<h:outputText 
+								value="C) " 
+								styleClass="#{dados.alternativaCorreta eq 'C'? 'green-text' : 'red-text'}"/>
+							<h:outputText 
+								value="#{dados.alternativaC}" 
+								styleClass="#{dados.alternativaCorreta eq 'C'? 'green-text' : ''}"/>
+							<br/>
+
+							
+							<!-- ALTERNATIVA D -->
+							<h:outputText 
+								value="D) " 
+								styleClass="#{dados.alternativaCorreta eq 'D'? 'green-text' : 'red-text'}"/>
+							<h:outputText 
+								value="#{dados.alternativaD}" 
+								styleClass="#{dados.alternativaCorreta eq 'D'? 'green-text' : ''}"/>
+							<br/>
+														
+							<!-- ALTERNATIVA E -->
+							<h:outputText 
+								value="E) " 
+								styleClass="#{dados.alternativaCorreta eq 'E'? 'green-text' : 'red-text'}"/>
+							<h:outputText 
+								value="#{dados.alternativaE}" 
+								styleClass="#{dados.alternativaCorreta eq 'E'? 'green-text' : ''}"/>
+							<br/>							
+						</div>
+					</h:column>
+				</h:dataTable>
+			</h:form>	
+		</div>
+			
+		<!-- TOGGLE FORMULARIO PARA GERAR A PROVA -->
+		<div class="fixed-action-btn" style="bottom:102px">
+			<a class="btn-floating btn-large waves-effect waves-light deep-purple tooltipped"
+				data-position="left" data-delay="50" data-tooltip="#{msg['upper.generate.test']}" 
+				onclick="return checkQuestions() ? $('#myModal').modal('show') : '';">
+				<i class="material-icons right">save</i>
+			</a>
+		</div>
+
+		<!-- CRIAR QUESTAO -->
+		<div class="fixed-action-btn tooltipped" 
+			data-position="left" data-delay="50" data-tooltip="#{msg['upper.new.question']}">
+			<h:commandLink 
+				actionListener="#{controllerQuestoes.init()}" 
+				action="/create/novaQuestao" 
+				styleClass="btn-floating btn-large waves-effect waves-light light-green accent-4"> 
+				<i class="material-icons right">add</i>
+			</h:commandLink>
+		</div>
+	
+	    <!-- MODAL COM O FORMULARIO PARA GERAR A PROVA -->
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog modal-sm">
+		    	<div class="modal-content">
+		    		<h:form class="loading">
+		    			<!-- MODAL HEADER -->
+				        <div class="modal-header">
+				        	<button type="button" class="close" data-dismiss="modal">&times;</button>
+				         	<h4 class="modal-title">Sï¿½ mais umas coisinhas...</h4>
+				         	<h6>
+				         		<span class="glyphicon glyphicon-info-sign" />
+				         		O aluno poderï¿½ comeï¿½ar a avaliaï¿½ï¿½o atï¿½ 10 minutos antes, mas nem um minuto depois!				  
+				         	</h6>
+				        </div>
+				        
+				        <!-- FORM INFORMACOES PROVA -->
+						<ui:include src="../componentes/form/professor/formInformacoesProva.xhtml" />
+						
+						<!-- MODAL FOOTER -->
+				        <div class="modal-footer">
+				        	<!-- SUBMIT -->
+				        	<h:commandButton 
+				        		action="#{controllerProvas.save}" 
+				        		class=" btn btn-default" 
+				        		data-dismiss="modal" 
+				        		value="Gerar Prova"/>
+						</div>
+		    		</h:form>
+				</div>
+			</div>
+		</div>
+		<!-- Modal Trigger -->
+		<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+		
+		<!-- TEST INFO MODAL -->
+		<div id="modal1" class="modal modal-fixed-footer">
+			<h:form class="loading">
+				<div class="modal-content">
+					<h4><h:outputText value="#{msg['test.informations']}"/></h4>
+					<p class="lime-text text-darken-2">
+						<i class="material-icons left">info</i>
+	         			<h:outputText value="#{msg['info.student.test.begin']}"/>
+					</p>			  
+			        <!-- FORM INFORMACOES PROVA -->
+					<ui:include src="../componentes/form/professor/formInformacoesProva.xhtml" />
+				</div>
+				<div class="modal-footer">
+					<!-- CANCEL -->
+		        	<a class="modal-action modal-close waves-effect waves-red btn-flat">
+		        		<h:outputText value="#{msg['upper.cancel']}"/>
+		        	</a>
+					<!-- SUBMIT -->
+		        	<h:commandButton 
+		        		action="#{controllerProvas.save}" 
+		        		class="modal-action modal-close waves-effect waves-green btn-flat " 
+		        		value="#{msg['upper.generate.test']}"/>
+				</div>
+    		</h:form>
+		</div>
+	</div>			
+	<!-- FOOTER -->
+	<ui:include src="../componentes/footer/footer.xhtml" />
+</h:body>
+</html>

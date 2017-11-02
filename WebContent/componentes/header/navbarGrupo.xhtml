@@ -1,0 +1,71 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:h="http://xmlns.jcp.org/jsf/html" 
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<nav class="nav-extended teal lighten-1">
+		<div class="nav-wrapper">
+			<a href="http://www.unicid.com.br" 
+				class="brand-logo tooltipped" 
+				data-position="bottom" 
+				data-delay="50" 
+				data-tooltip="#{msg['upper.go.to.unicid.page']}">
+				
+				<h:outputText value="#{msg['upper.unicid']}"/>
+			</a>
+			
+			<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+			
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<h:form>
+					<li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="#{msg['upper.settings']}">
+						<h:commandLink action="#{controllerGrupos.quit()}">
+							<i class="material-icons">settings</i>
+						</h:commandLink>
+					</li>
+					<li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="#{msg['upper.quit']}">
+						<h:commandLink action="#{controllerGrupos.quit()}">
+							<i class="material-icons">exit_to_app</i>
+						</h:commandLink>
+					</li>
+				</h:form>
+			</ul>
+			<ul class="side-nav" id="mobile-demo">
+				<h:form>
+					<li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="#{msg['upper.settings']}">
+						<h:commandLink action="#{controllerGrupos.quit()}"> 
+							<i class="material-icons">settings</i>
+							<h:outputText value="#{msg['upper.settings']}"/>
+						</h:commandLink>
+					</li>
+					<li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="#{msg['upper.quit']}">
+						<h:commandLink action="#{controllerGrupos.quit()}">
+							<i class="material-icons">exit_to_app</i>
+							<h:outputText value="#{msg['upper.quit']}"/>
+						</h:commandLink>
+					</li>
+				</h:form>
+			</ul>
+	    </div>
+	    <div class="nav-content">
+			<ul class="tabs tabs-transparent">
+<!-- 				<li class="tab"> -->
+<!-- 					<h:link outcome="/list/listaProvasAluno" class="link"> -->
+<!-- 						<h:outputText value="#{msg['upper.tests.to.do']}"/> -->
+<!-- 					</h:link> -->
+<!-- 				</li> -->
+<!-- 				<li class="tab"> -->
+<!-- 					<h:link outcome="/list/listaProvasRealizadasAluno" class="link"> -->
+<!-- 						<h:outputText value="#{msg['upper.made.tests']}"/> -->
+<!-- 					</h:link> -->
+<!-- 				</li> -->
+			</ul>
+		</div>
+	</nav>
+    
+	<!-- LOADING -->
+	<ui:include src="../loadingAnimation.xhtml" />
+    
+</ui:composition>

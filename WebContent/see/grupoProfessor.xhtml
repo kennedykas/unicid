@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+	
+	<!-- HEAD -->
+	<ui:include src="../componentes/head/head.xhtml" />
+<h:body>
+	<!-- NAVBAR -->
+	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
+	
+	<div class="container">
+	
+		<!-- NOME DO GRUPO -->
+		<h3>Grupo:</h3>
+		<h:outputText value="#{controllerGrupos.grupo.nomeGrupo}"/>
+		
+		<!-- REPRESENTANTE -->
+		<h3>Representante:</h3>
+		<h:outputText value="#{controllerGrupos.grupo.representante}" />
+		
+		<!-- INTEGRANTES -->
+		<c:if test="#{controllerGrupos.grupo.integrantes.length() > 1}">
+			<h3>Integrantes:</h3>
+			<h:outputText value="#{controllerGrupos.grupo.integrantes}" />	
+		</c:if>
+
+		<!-- OBSERVACOES -->
+		<c:if test="#{controllerGrupos.grupo.observacao.length() > 1}">
+			<h3>Obsevações</h3>
+			<h:outputText value="#{controllerGrupos.grupo.observacao}" />
+		</c:if>
+		
+		<!-- ACOES -->
+		<h:form id="formDetalhes" class="form-signin loading">
+			<!-- TRABALHO -->
+			<h3>Trabalho:</h3>
+			
+			<!-- VISULAIZAR --> 
+			<h:commandLink 
+				value="Visualizar" 
+				actionListener="#{controllerGrupos.download(false)}" 
+				target="_blank" 
+				class="btn btn-link"/>
+			
+			<!-- DOWNLOAD -->
+			<h:commandLink 
+				value="Baixar" 
+				actionListener="#{controllerGrupos.download(true)}" 
+				class="btn btn-link"/>
+		
+			<!-- DATA DA ULTIMA ATUALIZAÇÃO -->
+			<h5>Última atualização <h:outputText value="#{controllerGrupos.grupo.data}" /></h5>
+
+			<!-- RESPONDER -->
+			<br/>
+			<h:outputLabel value="Responder" for="textArea"/>
+			<h:inputTextarea 
+				id="textArea" 
+				value="#{controllerAvaliacoes.avaliacao.avaliacao}" 
+				class="form-control" 
+				a:required="true"/>
+			<br/>
+			<h:commandLink 
+				value="Responder grupo" 
+				action="#{controllerAvaliacoes.responder(controllerProfessores.professor.nomeProfessor, controllerGrupos.grupo.codigo)}" 
+				class="btn btn-lg btn-success btn-block"/>
+		</h:form>
+				
+		<!-- RESPOSTAS DOS PROFESSORES -->
+		<div class="messages">
+		
+			<h3>Avaliação dos professores:</h3>
+			
+			<!-- MENSAGEM CASO TRABALHO AINDA NAO TENHA SIDO AVALIADO -->
+			<c:if test="#{controllerAvaliacoes.getListaAvaliacoes(controllerGrupos.grupo.codigo).getRowCount() == 0}">
+				<h5>Até o momento nenhum professor avaliou o trabalho.</h5>
+			</c:if>
+		
+			<!-- AVALIACOES DOS PROFESSORES -->
+			<ui:repeat var="dados" value="#{controllerAvaliacoes.getListaAvaliacoes(controllerGrupos.grupo.codigo)}">
+				<div class="alert alert-info message">
+					<h:outputText value="Professor(a) #{dados.nomeProfessor}, disse: "/><br/>
+					<h:outputText value="#{dados.avaliacao}" /><br/>
+					<small><h:outputText value="#{dados.data}"/></small>
+				</div>
+			</ui:repeat>
+		</div>
+	</div>
+		
+	<!-- FOOTER -->
+	<ui:include src="../componentes/footer/footer.xhtml" />
+</h:body>
+</html>
