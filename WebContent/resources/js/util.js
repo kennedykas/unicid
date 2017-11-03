@@ -1,82 +1,61 @@
-//-------------------------------------- 
-//         PAGE LOADING ANIMATION 
-//--------------------------------------
-$(document).ready(function(){
-    $('.loaderContainer').fadeOut(0);
-});
-$(".loading").on("submit", function() {
-	$('.loaderContainer').fadeIn(2800);
-});
-
-//------------------------------------------------
-//     INICIALIZE THE MOBILE MENU AND MODALS
-//------------------------------------------------
-$(document).ready(function(){
-	$(".button-collapse").sideNav();
-	$('select').material_select();
+//--------------------------------- 
+//           DOM READY
+//---------------------------------
+$(document).ready(function() {
 	
+	// hide everything with this class
+	$(".startHidden").hide();
+	
+	// inicialize the mobile menu
+	$(".button-collapse").sideNav();
+	// inicialize selects
+	$('select').material_select();
 	//initialize all modals           
 	$('.modal').modal();
-});
 
-//-------------------------------------------------- 
-//       FACEMESSAGE LINKS (making they work)
-//--------------------------------------------------
-$(document).ready(function() {
+	// masking the fields
+	$(".number") .val(null); // the null here is to prevent the default value
+	$(".date")   .mask("99/99/9999-99:99",{placeholder:"DD/MM/AAAA-HH:MM"});
+	$(".celular").mask("(99) 99999-9999");
+	$(".cpf")    .mask("999.999.999-99");
+
+	// facemessage links (making they work)
     $(".esc").each(function(i) {
         var h = $(this).html();                
         h = h.replace(/&lt;/gi, "<");
         h = h.replace(/&gt;/gi, ">");
         $(this).html(h);
     });
-});
-
-//------------------------------------------------- 
-//           EMAIL FIELD (.emailField)
-//-------------------------------------------------
-$(document).ready(function($) {
+	
+	// set the current page as selected on navbar
+    var url = window.location; // GET CURRENT URL
+    // remove last active item
+    $('.navItem').find('.active').removeClass('active'); 
+    $('.navItem').each(function () { 
+        if (this.href == url) // SETA ATIVO ITEM COM URL IGUAL A ATUAL
+            $(this).addClass('active');
+    }); 
+    
+	// email field (.emailField)
 	var testEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    $('.emailField').bind('input propertychange', function() {
-    	if (testEmail.test(jQuery(this).val())) {
-    		$(this).css({ 'border':'1px solid green'}); // valid
-    		$('button.validate').prop("disabled",false);
-    	} else 
-    		$(this).css({ 'border':'1px solid red'}); // invalid
- 	});
+	$('.emailField').bind('input propertychange', function() {
+	if (testEmail.test(jQuery(this).val())) {
+		$(this).css({ 'border':'1px solid green'}); // valid
+		$('button.validate').prop("disabled", false);
+	} else 
+		$(this).css({ 'border':'1px solid red'}); // invalid
+	});
+	
+	// HIDE PAGE LOADING ANIMATION 
+	$('.loaderContainer').fadeOut(0);
+	
 });
 
-//---------------------------------------------------- 
-//             NUMBER FIELD (.numberField)
-//----------------------------------------------------
-$(document).ready(function() {
-	$(".numberField").val(null); // avoiding default value (0)
- $(".numberField").keydown(function (e) {
-     // Allow: backspace, delete, tab, escape, enter and .
-     if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
-          // Allow: Ctrl/cmd+A
-         (e.keyCode == 65 && (e.ctrlKey === true || e.metaKey === true)) ||
-          // Allow: Ctrl/cmd+C
-         (e.keyCode == 67 && (e.ctrlKey === true || e.metaKey === true)) ||
-          // Allow: Ctrl/cmd+X
-         (e.keyCode == 88 && (e.ctrlKey === true || e.metaKey === true)) ||
-          // Allow: home, end, left, right
-         (e.keyCode >= 35 && e.keyCode <= 39)) {
-              // let it happen, don't do anything
-              return;
-     }
-     // Ensure that it is a number and stop the keypress
-     if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) 
-         e.preventDefault();
- });
-});
-
-//----------------------------------------------- 
-//               MASKS FOR FIELDS
-//-----------------------------------------------
-jQuery(function($){
-   $(".date")   .mask("99/99/9999-99:99",{placeholder:"DD/MM/AAAA-HH:MM"});
-   $(".celular").mask("(99) 99999-9999");
-   $(".cpf")    .mask("999.999.999-99");
+//---------------------------------------------
+//        SHOW PAGE LOADING ANIMATION
+//---------------------------------------------
+$(".loading").on("submit", function(){
+	$('.loaderContainer').fadeIn(2800);
 });
 
 //--------------------------------------------- 
@@ -121,7 +100,7 @@ $(".cpf").on("keyup", function(){
 //--------------------------------------------------------------------------- 
 //     CHECA SE PASSWORDS CORRESPONDEM NOS DOIS CAMPOS (logins, newUsers)
 //---------------------------------------------------------------------------
-$(".password").on("keyup", function() { 
+$(".password").on("keyup", function(){
 	if($('.password1').val() != $('.password2').val()) {
 		$('.password1, .password2').css({ 'border':'1px solid red'});
 		$('.submit').prop("disabled",true);
@@ -131,17 +110,10 @@ $(".password").on("keyup", function() {
 	}
 });
 
-//--------------------------------------------------------------------- 
-//         ESCONDENDO CAMPOS DE INTEGRANTES (novoGrupo.xhtml)
-//---------------------------------------------------------------------
-$(document).ready(function() {
-    $(".startHidden").hide();
-});
-
 //--------------------------------------------------------------
 //         MOSTRAR CAMPO INTEGRANTE (novoGrupo.xhtml)
 //--------------------------------------------------------------
-$(".showNextMemberField").on("click", function() {
+$(".showNextMemberField").on("click", function(){
 	
 	// make the input take all available space
 	$("." + $(this).data("next") + " > input").removeClass('s10');
@@ -213,7 +185,7 @@ setInterval(function() {
 //----------------------------------------------------------------------
 //             FILTRO DISCIPLINAS (listaQuestoes.xhtml)
 //----------------------------------------------------------------------
-$(".filtrarQuestoesPorDisciplina").on("click", function() {
+$(".filtrarQuestoesPorDisciplina").on("click", function(){
 	
 	// OBTEM DISCIPLINA SELECIONADA
 	var disciplinaSelecionada = $("#filtrarQuestoesPorDisciplina option:selected").text(); 
@@ -232,30 +204,18 @@ $(".filtrarQuestoesPorDisciplina").on("click", function() {
 //----------------------------------------------------------------------
 //               FILTRO CURSOS (listaDisciplinas.xhtml)               MANUTENCAO
 //----------------------------------------------------------------------
-$(".filtrarCurso").on("click", function() { 
+$(".filtrarCurso").on("click", function(){
 	var cursoSelecionado = $("select option:selected").text(); // OBTENHO CURSO SELECIONADO
 	$("tbody tr").hide(300); // ESCONDO TODOS OS CURSOS	
 	$("td").each(function() {
-    if ($(this).text().indexOf(cursoSelecionado) >= 0)  // MOSTRO APENAS AS LINHAS QUE CONTEM O CURSO SELECIONADO
-    	$(this).parents("tr").show(300);
+	    if ($(this).text().indexOf(cursoSelecionado) >= 0)  // MOSTRO APENAS AS LINHAS QUE CONTEM O CURSO SELECIONADO
+	    	$(this).parents("tr").show(300);
 	});
 });
 
 //----------------------------------------------------------------------
 //      LIMPAR FILTRO (listaDisciplinas.xhtml, listaCursos.xhtml)
 //----------------------------------------------------------------------
-$(".limparFiltros").on("click", function() {
-  $("tr").show(300);
-});
-
-//----------------------------------------------------
-//          SET SELECTED OPTION ON NAVBAR
-//----------------------------------------------------
-$(document).ready(function () {
-    var url = window.location; // GET CURRENT URL
-    $('nav > div > ul > li > a').find('.active').removeClass('active'); // REMOVE LAST ACTIVE ITEM 
-    $('nav > div > ul > li > a').each(function () { 
-        if (this.href == url) // SETA ATIVO ITEM COM URL IGUAL A ATUAL
-            $(this).parent().addClass('active');
-    }); 
+$(".limparFiltros").on("click", function(){
+	$("tr").show(300);
 });

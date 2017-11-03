@@ -21,7 +21,7 @@
 	    <h:inputText 
 	    	id="value"
 	    	value="#{controllerProvas.prova.valorTotal}" 
-	    	class="numberField" 
+	    	class="number" 
 	    	a:type="number" 
 	    	a:min=".1" 
 	    	a:max="10" 
@@ -36,7 +36,7 @@
 	    <h:inputText
 	    	id="time" 
 	    	value="#{controllerProvas.prova.tempo}" 
-	    	class="numberField" 
+	    	class="number" 
 	    	a:type="number" 
 	    	a:min=".1" 
 	    	a:max="240" 
@@ -58,32 +58,27 @@
 	</div>	   		
    	
    	<!-- PERMITIR REALIZACAO APOS ESSE PERIODO -->
-   	<div class="input-field row">
-	   	<h:selectBooleanCheckbox 
-	   		id="allowAfterDate"
-	   		styleClass="filled-in" 
-	   		value="#{controllerProvas.prova.allowAfterDate}"/>
-	   	<h:outputLabel 
-	   		value="#{msg['info.allow.after.date']}" for="allowAfterDate"/>
-   	</div>
+	<span class="row"> 
+		<h:selectBooleanCheckbox 
+			id="allowAfterDate" 
+			value="#{controllerProvas.prova.allowAfterDate}"
+			styleClass="filled-in">
+		</h:selectBooleanCheckbox>
+		<h:outputLabel for="allowAfterDate"	value="#{msg['info.allow.after.date']}"/>
+	</span>
+
+	<!-- GAMBIARRA PARA QUE O ALINHAMENTO DOS CHECKBOXES NAO QUEBRE -->
+	<div></div>
 
    	<!-- PERMITIR MULTIPLAS TENTATIVAS -->
-   	<div class="input-field row">
-	   	<h:selectBooleanCheckbox 
+	<span class="row"> 
+		<h:selectBooleanCheckbox 
 	   		id="allowMultipleAttempts" 
-	   		styleClass="filled-in" 
-	   		value="#{controllerProvas.prova.allowMultipleAttempts}"/>
-	   	<h:outputLabel 
-	   		for="allowMultipleAttempts"
-	   		value="#{msg['info.allow.multiple.attempts']}"/>
-	</div>      	
-	
-	<h:selectBooleanCheckbox 
-		id="#{'checkbox'.concat(table.rowIndex + 1)}" 
-		styleClass="filled-in">
-		<f:ajax listener="#{controllerProvas.addQuestion(dados.codigo)}"/>
-	</h:selectBooleanCheckbox>
-	<h:outputLabel for="#{'checkbox'.concat(table.rowIndex)}" value=""/>
+			value="#{controllerProvas.prova.allowMultipleAttempts}"
+			styleClass="filled-in">
+		</h:selectBooleanCheckbox>
+		<h:outputLabel for="allowMultipleAttempts" value="#{msg['info.allow.multiple.attempts']}"/>
+	</span>      	
    	
    	<!-- SELECT DISCIPLINA -->
 	<ui:include src="../selectDisciplina.xhtml">

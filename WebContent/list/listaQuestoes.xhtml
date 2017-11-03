@@ -13,152 +13,168 @@
 	<!-- NAVBAR -->
 	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
 
-	<!-- FILTRO DE QUESTOES -->
-	<div class="row">
-		<div class="input-field col s12">
-			<h:selectOneMenu 
-				prependId="false"
-				id="filtrarQuestoesPorDisciplina"
-				styleClass="filtrarQuestoesPorDisciplina col s9 m5 l5">
-				
-				<f:selectItem noSelectionOption="true"
-					itemValue="#{msg['upper.filter.questions.by.discipline']}" />
-			    
-				<f:selectItems 
-					value="#{controllerDisciplinas.disciplinas(controllerProfessores.professor.codigo)}"/>
-			</h:selectOneMenu>
-			<button class="btn limparFiltros tooltipped red" 
-				data-position="bottom" data-delay="50" data-tooltip="#{msg['upper.clear.filter']}">
-				<i class="material-icons">clear</i>
-			</button>
-		</div>
-	</div>
+  	<div class="container valign-wrapper">
+
+		<!-- LISTA VAZIA -->
+  		<h:panelGroup 
+  			rendered="#{controllerQuestoes.getListaQuestoes(controllerProfessores.professor.codigo).getRowCount() eq 0 ? true : false}">
+ 			
+ 			<h:outputText
+ 				class="grey-text" 
+ 				value="#{msg['questions.not.found']}" 
+ 				style="font-size:1.5em"/>
+  		</h:panelGroup>
+  		
+		<!-- LISTA DE QUESTOES -->
+  		<h:panelGroup rendered="#{controllerQuestoes.getListaQuestoes(controllerProfessores.professor.codigo).getRowCount() eq 0 ? false : true}">
+	       	<div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
+				<h:form id="questionList" styleClass="loading">
+					
+					<h:dataTable
+						rendered="#{controllerQuestoes.getListaQuestoes(controllerProfessores.professor.codigo).getRowCount() eq 0 ? false : true}" 
+						value="#{controllerQuestoes.getListaQuestoes(controllerProfessores.professor.codigo)}" 
+						var="dados" 
+						binding="#{table}"
+						binding="#{index}"
+						class="bordered">
+					
+						<h:column>
+							<!-- ACOES -->
+							<div class="right">
+								<!-- EXCLUIR -->
+								<span class="tooltipped" data-position="left" 
+									data-delay="50" data-tooltip="#{msg['upper.delete']}">
+									<h:commandLink 
+										actionListener="#{controllerQuestoes.selecionarRegistro}" 
+										action="#{controllerQuestoes.excluir}"
+										onclick="return confirm('Tem certeza que deseja remover estÃ¡ questÃ£o? Ela nÃ£o poderÃ¡ ser recuperada depois!')"> 
+										<i class="material-icons right">delete</i>
+									</h:commandLink>
+								</span>
 	
-	<div class="container">
-       	<div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
-           
-	        <div class="row">
-	            <h5 class="center">
-	            	<h:outputText value="#{msg['my.questions']}"/>
-	           	</h5>
-	        </div>
-
-			<h:form id="questionList" styleClass="loading">
-				
-				<h:dataTable 
-					value="#{controllerQuestoes.getListaQuestoes(controllerProfessores.professor.codigo)}" 
-					var="dados" 
-					binding="#{table}"
-					class="bordered">
-				
-					<h:column>
-						<!-- ACOES -->
-						<div class="right">
-							<!-- EXCLUIR -->
-							<span class="tooltipped" data-position="left" 
-								data-delay="50" data-tooltip="#{msg['upper.delete']}">
-								<h:commandLink 
-									actionListener="#{controllerQuestoes.selecionarRegistro}" 
-									action="#{controllerQuestoes.excluir}"
-									onclick="return confirm('Tem certeza que deseja remover está questão? Ela não poderá ser recuperada depois!')"> 
-									<i class="material-icons right">delete</i>
-								</h:commandLink>
-							</span>
-
-							<!-- EDITAR -->
-							<span class="tooltipped" data-position="left" 
-								data-delay="50" data-tooltip="#{msg['upper.edit']}">
-								<h:commandLink 
-									actionListener="#{controllerQuestoes.selecionarRegistro}"
-									action="/update/alterarQuestao">
-									<i class="material-icons right">mode_edit</i>
-								</h:commandLink>
-							</span>
-						</div>
-		
-						<!-- CHECKBOX (QUANDO UMA QUESTAO E SELECIONADA O COD DELA E ARMAZENADO NO MANAGEDBEAN)-->
-						<span class="tooltipped" 
-							data-position="top" 
-							data-delay="50" 
-							data-tooltip="#{msg['upper.add.question.to.test']}">
-							<h:selectBooleanCheckbox 
-								id="#{'checkbox'.concat(table.rowIndex + 1)}" 
-								styleClass="filled-in">
-								<f:ajax listener="#{controllerProvas.addQuestion(dados.codigo)}"/>
-							</h:selectBooleanCheckbox>
-							<h:outputLabel for="#{'checkbox'.concat(table.rowIndex)}" value=""/>
-						</span>
-						
-						<!-- DISCIPLINA -->
-						<h:outputText styleClass="disciplina red-text" 
-							value="#{controllerDisciplinas.nomeDisciplina(dados.disciplina)}" />
-						<br/>
-						
-						<!-- PERGUNTA -->
-						<h:outputText value="#{dados.pergunta}" />
-						<br/>
-						
-						<div style="margin:10px 0 0 0">
-							<!-- ALTERNATIVA A -->
-							<h:outputText 
-								value="A) " 
-								styleClass="#{dados.alternativaCorreta eq 'A'? 'green-text' : 'red-text'}"/>
-							<h:outputText 
-								value="#{dados.alternativaA}" 
-								styleClass="#{dados.alternativaCorreta eq 'A'? 'green-text' : ''}"/>
-							<br/>
-							
-							<!-- ALTERNATIVA B -->
-							<h:outputText 
-								value="B) " 
-								styleClass="#{dados.alternativaCorreta eq 'B'? 'green-text' : 'red-text'}"/>
-							<h:outputText 
-								value="#{dados.alternativaB}" 
-								styleClass="#{dados.alternativaCorreta eq 'B'? 'green-text' : ''}"/>
-							<br/>
-							
-							<!-- ALTERNATIVA C -->
-							<h:outputText 
-								value="C) " 
-								styleClass="#{dados.alternativaCorreta eq 'C'? 'green-text' : 'red-text'}"/>
-							<h:outputText 
-								value="#{dados.alternativaC}" 
-								styleClass="#{dados.alternativaCorreta eq 'C'? 'green-text' : ''}"/>
-							<br/>
-
-							
-							<!-- ALTERNATIVA D -->
-							<h:outputText 
-								value="D) " 
-								styleClass="#{dados.alternativaCorreta eq 'D'? 'green-text' : 'red-text'}"/>
-							<h:outputText 
-								value="#{dados.alternativaD}" 
-								styleClass="#{dados.alternativaCorreta eq 'D'? 'green-text' : ''}"/>
-							<br/>
-														
-							<!-- ALTERNATIVA E -->
-							<h:outputText 
-								value="E) " 
-								styleClass="#{dados.alternativaCorreta eq 'E'? 'green-text' : 'red-text'}"/>
-							<h:outputText 
-								value="#{dados.alternativaE}" 
-								styleClass="#{dados.alternativaCorreta eq 'E'? 'green-text' : ''}"/>
-							<br/>							
-						</div>
-					</h:column>
-				</h:dataTable>
-			</h:form>	
-		</div>
+								<!-- EDITAR -->
+								<span class="tooltipped" data-position="left" 
+									data-delay="50" data-tooltip="#{msg['upper.edit']}">
+									<h:commandLink 
+										actionListener="#{controllerQuestoes.selecionarRegistro}"
+										action="/update/alterarQuestao">
+										<i class="material-icons right">mode_edit</i>
+									</h:commandLink>
+								</span>
+							</div>
 			
+							<!-- CHECKBOX (QUANDO UMA QUESTAO E SELECIONADA O COD DELA E ARMAZENADO NO MANAGEDBEAN)-->
+							<span class="tooltipped" 
+								data-position="top" 
+								data-delay="50" 
+								data-tooltip="#{msg['upper.add.question.to.test']}">
+								<h:selectBooleanCheckbox 
+									id="#{'checkbox'.concat(table.rowIndex)}" 
+									styleClass="filled-in">
+									<f:ajax listener="#{controllerProvas.addQuestion(dados.codigo)}"/>
+								</h:selectBooleanCheckbox>
+								<!-- DISCIPLINA -->
+								<h:outputLabel 
+									for="#{'checkbox'.concat(index.rowIndex)}" 
+									styleClass="disciplina grey-text text-darken-1 truncate" 
+									value="#{controllerDisciplinas.nomeDisciplina(dados.disciplina)}"/>
+							</span>
+							<br/>
+							
+							<!-- PERGUNTA -->
+							<h:outputText value="#{dados.pergunta}" />
+							<br/>
+							
+							<div style="margin:10px 0 0 0">
+								<!-- ALTERNATIVA A -->
+								<h:outputText 
+									value="A) " 
+									styleClass="#{dados.alternativaCorreta eq 'A'? 'green-text' : 'red-text'}"/>
+								<h:outputText 
+									value="#{dados.alternativaA}" 
+									styleClass="#{dados.alternativaCorreta eq 'A'? 'green-text' : ''}"/>
+								<br/>
+								
+								<!-- ALTERNATIVA B -->
+								<h:outputText 
+									value="B) " 
+									styleClass="#{dados.alternativaCorreta eq 'B'? 'green-text' : 'red-text'}"/>
+								<h:outputText 
+									value="#{dados.alternativaB}" 
+									styleClass="#{dados.alternativaCorreta eq 'B'? 'green-text' : ''}"/>
+								<br/>
+								
+								<!-- ALTERNATIVA C -->
+								<h:outputText 
+									value="C) " 
+									styleClass="#{dados.alternativaCorreta eq 'C'? 'green-text' : 'red-text'}"/>
+								<h:outputText 
+									value="#{dados.alternativaC}" 
+									styleClass="#{dados.alternativaCorreta eq 'C'? 'green-text' : ''}"/>
+								<br/>
+	
+								
+								<!-- ALTERNATIVA D -->
+								<h:outputText 
+									value="D) " 
+									styleClass="#{dados.alternativaCorreta eq 'D'? 'green-text' : 'red-text'}"/>
+								<h:outputText 
+									value="#{dados.alternativaD}" 
+									styleClass="#{dados.alternativaCorreta eq 'D'? 'green-text' : ''}"/>
+								<br/>
+															
+								<!-- ALTERNATIVA E -->
+								<h:outputText 
+									value="E) " 
+									styleClass="#{dados.alternativaCorreta eq 'E'? 'green-text' : 'red-text'}"/>
+								<h:outputText 
+									value="#{dados.alternativaE}" 
+									styleClass="#{dados.alternativaCorreta eq 'E'? 'green-text' : ''}"/>
+								<br/>							
+							</div>
+						</h:column>
+					</h:dataTable>
+				</h:form>	
+			</div>
+
+			<!-- NUMERO DE QUESTOES SELECIONADAS PARA O TESTE -->
+			<div style="position:fixed;top:40vh;left:0" class="teal">
+				<h:outputText value="#{controllerProvas.getQuestionsSize()}">
+				</h:outputText>
+			</div>
+		</h:panelGroup>
+		
+
+		<!-- LIMPA OS FILTROS -->
+		<div class="fixed-action-btn limparFiltros" style="bottom:240px;right:32px">
+			<a class="btn-floating waves-effect waves-light red tooltipped"
+				data-position="left" 
+				data-delay="50" 
+				data-tooltip="#{msg['upper.clear.filter']}">
+				<i class="material-icons right">clear</i>
+			</a>
+		</div>
+
+		<!-- TOGGLE FILTER MODAL -->
+		<div class="fixed-action-btn" style="bottom:181px;right:32px">
+			<a class="btn-floating waves-effect waves-light blue tooltipped"
+				data-position="left" 
+				data-delay="50" 
+				data-tooltip="#{msg['upper.filter.questions.by.discipline']}" 
+				onclick="$('#filterModal').modal('open');">
+				<i class="material-icons right">filter_list</i>
+			</a>
+		</div>
+
 		<!-- TOGGLE FORMULARIO PARA GERAR A PROVA -->
 		<div class="fixed-action-btn" style="bottom:102px">
 			<a class="btn-floating btn-large waves-effect waves-light deep-purple tooltipped"
 				data-position="left" data-delay="50" data-tooltip="#{msg['upper.generate.test']}" 
-				onclick="return checkQuestions() ? $('#myModal').modal('show') : '';">
+				onclick="return checkQuestions() ? $('#testInfoModal').modal('open') : '';">
 				<i class="material-icons right">save</i>
 			</a>
 		</div>
-
+		
 		<!-- CRIAR QUESTAO -->
 		<div class="fixed-action-btn tooltipped" 
 			data-position="left" data-delay="50" data-tooltip="#{msg['upper.new.question']}">
@@ -169,44 +185,34 @@
 				<i class="material-icons right">add</i>
 			</h:commandLink>
 		</div>
-	
-	    <!-- MODAL COM O FORMULARIO PARA GERAR A PROVA -->
-		<div class="modal fade" id="myModal" role="dialog">
-			<div class="modal-dialog modal-sm">
-		    	<div class="modal-content">
-		    		<h:form class="loading">
-		    			<!-- MODAL HEADER -->
-				        <div class="modal-header">
-				        	<button type="button" class="close" data-dismiss="modal">&times;</button>
-				         	<h4 class="modal-title">Sï¿½ mais umas coisinhas...</h4>
-				         	<h6>
-				         		<span class="glyphicon glyphicon-info-sign" />
-				         		O aluno poderï¿½ comeï¿½ar a avaliaï¿½ï¿½o atï¿½ 10 minutos antes, mas nem um minuto depois!				  
-				         	</h6>
-				        </div>
-				        
-				        <!-- FORM INFORMACOES PROVA -->
-						<ui:include src="../componentes/form/professor/formInformacoesProva.xhtml" />
-						
-						<!-- MODAL FOOTER -->
-				        <div class="modal-footer">
-				        	<!-- SUBMIT -->
-				        	<h:commandButton 
-				        		action="#{controllerProvas.save}" 
-				        		class=" btn btn-default" 
-				        		data-dismiss="modal" 
-				        		value="Gerar Prova"/>
-						</div>
-		    		</h:form>
+		
+		<!-- MODAL DE FILTROS -->
+		<div id="filterModal" class="modal bottom-sheet">
+			<div class="modal-content">
+				<h5><h:outputText value="#{msg['upper.filter.questions.by.discipline']}"/></h5>
+				<div>
+					<h:selectManyCheckbox 
+						id="courses"
+						styleClass="filled-in"
+						value="" 
+						layout="pageDirection">
+					    
+					    <f:selectItems 
+							value="#{controllerDisciplinas.disciplinas(controllerProfessores.professor.codigo)}"/>
+					</h:selectManyCheckbox>
 				</div>
 			</div>
+		    <div class="modal-footer">
+      			<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    		</div>
 		</div>
-		<!-- Modal Trigger -->
-		<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+<!-- 			prependId="false" -->
+<!-- 			id="filtrarQuestoesPorDisciplina" -->
+<!-- 			styleClass="filtrarQuestoesPorDisciplina col s9 m5 l5"> -->
 		
 		<!-- TEST INFO MODAL -->
-		<div id="modal1" class="modal modal-fixed-footer">
-			<h:form class="loading">
+		<div id="testInfoModal" class="modal modal-fixed-footer">
+			<h:form id="testInfo" class="loading">
 				<div class="modal-content">
 					<h4><h:outputText value="#{msg['test.informations']}"/></h4>
 					<p class="lime-text text-darken-2">
@@ -224,8 +230,8 @@
 					<!-- SUBMIT -->
 		        	<h:commandButton 
 		        		action="#{controllerProvas.save}" 
-		        		class="modal-action modal-close waves-effect waves-green btn-flat " 
-		        		value="#{msg['upper.generate.test']}"/>
+		        		class="modal-action waves-effect waves-green btn-flat" 
+		        		value="#{msg['upper.save']}"/>
 				</div>
     		</h:form>
 		</div>
