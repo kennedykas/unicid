@@ -15,33 +15,45 @@
 	
 	<div class="container">
         <div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
-            
-	        <div class="row">
-	            <h5 class="center">
-	            	<h:outputText value="#{msg['new.question']}"/>
-	           	</h5>
-	        </div>
-            
-            <h:form id="questao" class="loading row">
-		
+	        	          
+		    <div class="row">
+		        <h5 class="center">
+		        	<h:outputText value="#{msg['new.question']}"/>
+		       	</h5>
+		    </div>
+		          
+		    <h:form id="questao" class="loading row" onsubmit="verifyValidity(this)">
+		          
+			  	<!-- LIMPA O BEAN DE QUESTOES -->
+				<f:event listener="#{controllerQuestoes.init()}" type="preRenderView"/>
+			
 				<!-- FORMULARIO DE QUESTAO -->
 				<ui:include src="../componentes/form/professor/formQuestao.xhtml" />
 				
 				<!-- BOTAO SALVAR -->
     			<div class="fixed-action-btn tooltipped" 
-    				data-position="left" data-delay="50" data-tooltip="#{msg['upper.save']}">
-					<button type="submit" 
-						class="btn-floating btn-large waves-effect waves-light deep-purple pulse" 
-						onclick="return $(this.closest('form')).valid() ? $('#submit').click() : false;">
+    				 data-position="left" 
+    				 data-delay="50" 
+    				 data-tooltip="#{msg['upper.save']}">
+					
+					<!-- BOTAO USADO APENAS PARA DAR UM TRIGGER NA VALIDACAO DO HTML 5 -->
+					<button type="submit" class="startHidden"/>
+
+					<button  
+						onclick="verifyValidity(this.closest('form'))"
+						class="btn-floating btn-large waves-effect waves-light deep-purple pulse">
+						
 						<i class="material-icons right">save</i>
-						<h:commandButton class="submit-button"
-							action="#{controllerQuestoes.save(controllerProfessores.professor.getCodigo())}"/>
 					</button>
+
+					<h:commandButton
+						styleClass="startHidden formActionButton" 
+						action="#{controllerQuestoes.save(controllerProfessores.professor.getCodigo())}"/>
        			</div>
 			</h:form>
-	    </div>
+		</div>
 	</div>
-
+		
 	<!-- FOOTER -->
 	<ui:include src="../componentes/footer/footer.xhtml" />
 </h:body>

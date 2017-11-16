@@ -316,9 +316,6 @@ public class ControllerProvas {
 	public void setSelectedAnswer(String selectedAnswer) {
 		this.selectedAnswer = selectedAnswer;
 	}
-	public int getQuestionsSize() {
-		return questions.size();
-	}
 	public ControllerDisciplinas getDisciplinaBean() {
 		return disciplinaBean;
 	}

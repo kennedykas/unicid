@@ -1,10 +1,21 @@
 //--------------------------------- 
 //           DOM READY
 //---------------------------------
-$(document).ready(function() {
-	
-	// hide everything with this class
-	$(".startHidden").hide();
+//$(document).ready(function() {
+$(document).ready(function(){
+	init();	
+});
+
+//---------------------------------------------------------------
+//   AFTER CONTENT LOAD RECALL INIT FOR MATERIALIZE COMPONENTS 
+//---------------------------------------------------------------
+function loadContent(content) {
+	$( ".mainContent" ).load( content, function() {
+	  init();
+	});
+}
+
+function init(){
 	
 	// inicialize the mobile menu
 	$(".button-collapse").sideNav();
@@ -12,44 +23,61 @@ $(document).ready(function() {
 	$('select').material_select();
 	//initialize all modals           
 	$('.modal').modal();
-
+	
 	// masking the fields
-	$(".number") .val(null); // the null here is to prevent the default value
-	$(".date")   .mask("99/99/9999-99:99",{placeholder:"DD/MM/AAAA-HH:MM"});
-	$(".celular").mask("(99) 99999-9999");
 	$(".cpf")    .mask("999.999.999-99");
-
+	$(".date")   .mask("99/99/9999-99:99",{placeholder:"DD/MM/AAAA-HH:MM"});
+	$(".number") .val(null); // the null here is to prevent the default value
+	$(".celular").mask("(99) 99999-9999");
+	
 	// facemessage links (making they work)
-    $(".esc").each(function(i) {
-        var h = $(this).html();                
-        h = h.replace(/&lt;/gi, "<");
-        h = h.replace(/&gt;/gi, ">");
-        $(this).html(h);
-    });
+	$(".esc").each(function(i) {
+		var h = $(this).html();                
+		h = h.replace(/&lt;/gi, "<");
+		h = h.replace(/&gt;/gi, ">");
+		$(this).html(h);
+	});
 	
 	// set the current page as selected on navbar
-    var url = window.location; // GET CURRENT URL
-    // remove last active item
-    $('.navItem').find('.active').removeClass('active'); 
-    $('.navItem').each(function () { 
-        if (this.href == url) // SETA ATIVO ITEM COM URL IGUAL A ATUAL
-            $(this).addClass('active');
-    }); 
-    
+	var url = window.location; // GET CURRENT URL
+	// remove last active item
+	$('.navItem').find('.active').removeClass('active'); 
+	$('.navItem').each(function () { 
+		if (this.href == url) // SETA ATIVO ITEM COM URL IGUAL A ATUAL
+			$(this).addClass('active');
+	}); 
+	
 	// email field (.emailField)
 	var testEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 	$('.emailField').bind('input propertychange', function() {
-	if (testEmail.test(jQuery(this).val())) {
-		$(this).css({ 'border':'1px solid green'}); // valid
-		$('button.validate').prop("disabled", false);
-	} else 
-		$(this).css({ 'border':'1px solid red'}); // invalid
+		if (testEmail.test(jQuery(this).val())) {
+			$(this).css({ 'border':'1px solid green'}); // valid
+			$('button.validate').prop("disabled", false);
+		} else 
+			$(this).css({ 'border':'1px solid red'}); // invalid
 	});
 	
 	// HIDE PAGE LOADING ANIMATION 
-	$('.loaderContainer').fadeOut(0);
+	document.getElementsByClassName('loaderContainer')[0].style.display = 'none';
+	//$('.loaderContainer').fadeOut(0);
+}
+
+//---------------------------------------------
+//   VERIFY IS A FORM IS VALID BEFORE SUBMIT
+//  
+//   @param  the form that will be validated
+//   @usedIn novaQuestao.xhtml
+//---------------------------------------------
+function verifyValidity(form) {
 	
-});
+	// if the form isn't right filled the submit button 
+	// click will be fired to show html5 form validation 
+	if(!form[0].checkValidity())
+		form.find(':submit').click();
+	else
+		// when the form is ok the button with the controller action is fired
+		$('.formActionButton').click(); 
+}
 
 //---------------------------------------------
 //        SHOW PAGE LOADING ANIMATION
@@ -57,6 +85,30 @@ $(document).ready(function() {
 $(".loading").on("submit", function(){
 	$('.loaderContainer').fadeIn(2800);
 });
+
+//---------------------------------------------
+//          UPDATE QUESTIONS COUNTER
+//
+//	@usedIn listaQuestoes.xhtml
+//---------------------------------------------
+function updateCounter() {
+	
+	// get all selected questions
+	let numberOfSelectedQuestions = 
+		document.getElementsByClassName('bordered')[0]
+			.querySelectorAll('input[type=checkbox]:checked').length;
+	
+	// get the counter element
+	let counter = document.getElementById('selectedQuestionsCounter');
+	
+	counter.innerHTML = numberOfSelectedQuestions;
+	
+	if(numberOfSelectedQuestions > 0)
+		counter.style.display = 'block';
+	else
+		counter.style.display = 'none';
+	
+}
 
 //--------------------------------------------- 
 //                VALIDA CPF
@@ -185,6 +237,26 @@ setInterval(function() {
 //----------------------------------------------------------------------
 //             FILTRO DISCIPLINAS (listaQuestoes.xhtml)
 //----------------------------------------------------------------------
+function filterQuestionsByDiscipline() {
+
+	let questions = document.getElementsByClassName('questionContainer');
+	let selectedDisciplines = 
+		document.getElementById('disciplines').getElementsByTagName('input'); 
+	
+	if(selectedDisciplines.length > 0) {
+	
+		for(let j = 0; j < questions.length; j++) {
+			for(let k = 0; k < selectedDisciplines.length; k++) {
+				
+				console.log('j: ' + j +'k: ' + k)
+				if(!questions[j].classlist.contains(selectedDisciplines[k].value))
+					questions[j].style.display = 'none';
+				else
+					questions[j].style.display = 'block';
+			}
+		}
+	}
+}
 $(".filtrarQuestoesPorDisciplina").on("click", function(){
 	
 	// OBTEM DISCIPLINA SELECIONADA

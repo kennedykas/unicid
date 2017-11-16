@@ -1,7 +1,9 @@
+/* --- HIDE EVERYTHING WITH THIS CLASS --- */
+.startHidden { display: none }
+
 /* -------------- BODY ADJUSTS --------------- */
-body {
-	min-height: 100vh
-}
+body { min-height: 100vh }
+
 .login-form {
 	display: inline-block;
 	width: 450px;
@@ -21,16 +23,8 @@ body {
 	margin-left: 10%
 }
 .message:nth-child(2n+1) {margin-left: 25%}
-.space{margin-right: 20px}
+.space{ margin-right: 20px }
 input[type="radio"]{margin-left: 30px}
-.correta{
- 	background-color:#DFF0D8;
- 	color:#3C763D
-}
-.errada{
- 	background-color:#efaaa5;
- 	color:#fc220f
-}
 #tempoRestante {
  	position: fixed;
  	right: 0;
@@ -43,12 +37,19 @@ input[type="radio"]{margin-left: 30px}
  	margin-left: 30%;
  	margin-bottom: 60px
  }
-.selectTeacher {margin-left: 0}
+.selectTeacher { margin-left: 0 }
 .pointer { cursor: pointer }
 
 /* ------- CONTAINER ------- */
 body > .container { min-height: 78vh }
 
+/* --- SELECTED QUESTIONS COUNTER --- */
+#selectedQuestionsCounter {
+	top: 45vh; 
+	left: 10px;
+	padding-top: 0;
+	font-weight: bold;
+	font-size: 20px }
 
 /* ----------- ALERTS ---------- */
 .alert { list-style: none }
