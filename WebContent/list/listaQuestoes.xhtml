@@ -11,9 +11,6 @@
 	<ui:include src="../componentes/head/head.xhtml" />
 <h:body class="grey lighten-4">
 
-	<!-- LOAD PROPERTIES FILE -->
-	<f:loadBundle basename="br.edu.unicid.hook.unicid-hook" var="msg"/>
-
 	<!-- NAVBAR -->
 	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
 
@@ -239,15 +236,12 @@
 				</div>
 			</div>
 		    <div class="modal-footer">
-      			<a href="#!" onclick="filterQuestionsByDiscipline()" 
-    				class="modal-action modal-close waves-effect waves-green btn-flat">
+      			<a href="#!" 
+      				class="modal-action modal-close waves-effect waves-green btn-flat filterQuestionsByDiscipline">
 					<h:outputText value="#{msg['upper.filter']}"/>
 				</a>
     		</div>
 		</div>
-<!-- 			prependId="false" -->
-<!-- 			id="filtrarQuestoesPorDisciplina" -->
-<!-- 			styleClass="filtrarQuestoesPorDisciplina col s9 m5 l5"> -->
 		
 		<!-- TEST INFO MODAL -->
 		<div id="testInfoModal" class="modal modal-fixed-footer">

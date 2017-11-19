@@ -44,7 +44,7 @@ public class ControllerDisciplinas {
 	}
 	
 	// SAVE
-	public void save() throws Exception {
+	public void saveDisciplineAndPrepareDisciplineCourse() {
 		this.disciplina.setCodProfessor(this.professorBean.getProfessor().getCodigo()); // SET COD PROFESSOR
 		this.dao = new DisciplinaDAO();
 
@@ -52,7 +52,8 @@ public class ControllerDisciplinas {
 		
 		if(codigoDisciplina > 0) {
 			this.disciplinaCursoBean.getDisciplinaCurso().setCodDisciplina(codigoDisciplina);
-			this.disciplinaCursoBean.getDisciplinaCurso().setCursos(this.cursoBean.getCurso().getCodigos());
+			this.disciplinaCursoBean.getDisciplinaCurso()
+				.setCoursesThatDisciplineBelongTo(this.cursoBean.getCurso().getCodigos());
 		}
 	}
 		
@@ -91,7 +92,7 @@ public class ControllerDisciplinas {
 	public DataModel<Disciplina> getListaDisciplinas(int codProfessor) {
 		this.dao = new DisciplinaDAO();
 		List<Disciplina> lista = this.dao.todasDisciplinas(codProfessor);
-		this.listaDisciplina = new ListDataModel<Disciplina>(lista);
+		this.listaDisciplina = new ListDataModel<>(lista);
 		return this.listaDisciplina;
 	}
 	

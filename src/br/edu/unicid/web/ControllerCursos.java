@@ -31,21 +31,17 @@ public class ControllerCursos {
 		this.dao = new CursoDAO();
 		List<Curso> cursoList = this.dao.cursos();
 
-		for(Curso curso: cursoList)
+		for(Curso curso : cursoList)
 	    	itens.add(new SelectItem(curso.getCodigo(), curso.getNome()));
 	    
 		return itens;
 	}
 	
 	// NOMES CURSOS
-	public String nomesCursos(String codsCursos) throws Exception {
-		try {
-			this.dao = new CursoDAO(); 
-			return this.dao.nomesCursos(codsCursos);
-		} catch (Exception e) { 
-			e.printStackTrace();
-		}
-		return "Nenhum curso selecionado :(";
+	public String findCoursesNamesByCodes(int[] codsCursos) {
+
+		this.dao = new CursoDAO(); 
+		return this.dao.obterNomesDosCursos(codsCursos);
 	}
 	
 	// GETTERS AND SETTERS

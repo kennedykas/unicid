@@ -58,8 +58,7 @@ function init(){
 	});
 	
 	// HIDE PAGE LOADING ANIMATION 
-	document.getElementsByClassName('loaderContainer')[0].style.display = 'none';
-	//$('.loaderContainer').fadeOut(0);
+	$('.loaderContainer').hide();
 }
 
 //---------------------------------------------
@@ -237,40 +236,40 @@ setInterval(function() {
 //----------------------------------------------------------------------
 //             FILTRO DISCIPLINAS (listaQuestoes.xhtml)
 //----------------------------------------------------------------------
-function filterQuestionsByDiscipline() {
+$(".filterQuestionsByDiscipline").on('click', function(){
 
 	let questions = document.getElementsByClassName('questionContainer');
-	let selectedDisciplines = 
+	let disciplinesAvailableToChoose = 
 		document.getElementById('disciplines').getElementsByTagName('input'); 
 	
-	if(selectedDisciplines.length > 0) {
-	
+	if(disciplinesAvailableToChoose.length) {
+
 		for(let j = 0; j < questions.length; j++) {
-			for(let k = 0; k < selectedDisciplines.length; k++) {
+
+			$(questions[j]).closest('td').css('display', 'none');
+			
+			for(let k = 0; k < disciplinesAvailableToChoose.length; k++) {
 				
-				console.log('j: ' + j +'k: ' + k)
-				if(!questions[j].classlist.contains(selectedDisciplines[k].value))
-					questions[j].style.display = 'none';
-				else
-					questions[j].style.display = 'block';
+				if(disciplinesAvailableToChoose[k].checked && 
+						questions[j].classList.contains(disciplinesAvailableToChoose[k].value))
+	
+					$(questions[j]).closest('td').css('display', 'table-cell');
 			}
 		}
 	}
-}
-$(".filtrarQuestoesPorDisciplina").on("click", function(){
+});
+
+$('.clearFilter').on('click', function(){
 	
-	// OBTEM DISCIPLINA SELECIONADA
-	var disciplinaSelecionada = $("#filtrarQuestoesPorDisciplina option:selected").text(); 
+	let questions = document.getElementsByClassName('questionContainer')
+	let disciplinesAvailableToChoose = 
+		document.getElementById('disciplines').getElementsByTagName('input') 
 	
-	$("tbody tr").hide(300); // ESCONDE TODAS AS DISCIPLINAS
+	for (let i = 0; i < questions.length; i++)  
+		$(questions[i]).closest('td').css('display', 'table-cell')
 	
-	// PERCORRE TODAS AS CELULAS
-	$(".disciplina").each(function() {
-		
-		// SHOW APENAS AS ROWS CUJO TEXTO DA CELULA SEJA IDENTICO AO SELECIONADO
-	    if ($(this).text() == disciplinaSelecionada) 
-	    	$(this).parents("tr").show(350);
-	});
+	for (let i = 0; i < disciplinesAvailableToChoose.length; i++)
+		disciplinesAvailableToChoose[i].checked = false
 });
 
 //----------------------------------------------------------------------

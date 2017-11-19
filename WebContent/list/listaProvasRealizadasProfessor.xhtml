@@ -9,84 +9,100 @@
       
 	<!-- HEAD -->
 	<ui:include src="../componentes/head/head.xhtml" />
-<h:body>
+<h:body class="grey lighten-4">
+
 	<!-- NAVBAR -->
 	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
 	
 	<div class="container">
-		<!-- ALUNOS QUE JA REALIZARAM A PROVA -->
-		<h:form styleClass="loading">
-		
-			<h2>Alunos que já realizaram as provas</h2>
-		
-			<h:dataTable 
-				value="#{controllerProvasRealizadas.getListaProvasRealizadas(controllerProfessores.professor.codigo)}" 
-				var="dados" 
-				class="table table-striped">
-		
-				<!-- RGM ALUNO -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="RGM" />
-					</f:facet>
-					<h:outputText value="#{controllerAlunos.getRgm(dados.codAluno)}"/>
-				</h:column>
 	
-				<!-- NOME ALUNO -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="NOME" />
-					</f:facet>
-					<h:outputText value="#{controllerAlunos.getNome(dados.codAluno)}"/>
-				</h:column>
+		<!-- LISTA VAZIA -->
+  		<h:panelGroup rendered="#{controllerProvasRealizadas.getListaProvasRealizadas(controllerProfessores.professor.codigo).getRowCount() eq 0 ? true : false}">
+ 			
+ 			<h:outputText
+ 				class="grey-text" 
+ 				value="#{msg['nothing.found']}" 
+ 				style="font-size:1.5em"/>
+  		</h:panelGroup>
+		
+		<!-- LISTA DE ALUNOS QUE JA REALIZARAM OS TESTES -->		
+		<h:panelGroup rendered="#{controllerProvasRealizadas.getListaProvasRealizadas(controllerProfessores.professor.codigo).getRowCount() eq 0 ? false : true}">
+			<div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
+				<h:form styleClass="loading">		
+		
+					<h:dataTable 
+						value="#{controllerProvasRealizadas.getListaProvasRealizadas(controllerProfessores.professor.codigo)}" 
+						var="dados" 
+						class="striped">
 				
-				<!-- TITULO --> 
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="TITULO DA PROVA" />
-					</f:facet>
-					<h:outputText value="#{controllerProvas.getTitulo(dados.codProva)}" />
-				</h:column>
-	
-				<!-- NOTA -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="NOTA" />
-					</f:facet>
-					<h:outputText value="#{dados.nota}" />
-				</h:column>
+						<!-- RGM ALUNO -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.rgm']}"/>
+							</f:facet>
+							<h:outputText value="#{controllerAlunos.getRgm(dados.codAluno)}"/>
+						</h:column>
+			
+						<!-- NOME ALUNO -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.name']}"/>
+							</f:facet>
+							<h:outputText value="#{controllerAlunos.getNome(dados.codAluno)}"/>
+						</h:column>
+						
+						<!-- TITULO --> 
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.test.title']}" />
+							</f:facet>
+							<h:outputText value="#{controllerProvas.getTitulo(dados.codProva)}" />
+						</h:column>
+			
+						<!-- NOTA -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.grade']}"/>
+							</f:facet>
+							<h:outputText value="#{dados.nota}" />
+						</h:column>
+		
+						<!-- TEMPO -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.time']}"/>
+							</f:facet>
+							<h:outputText value="#{dados.tempo}"/>
+						</h:column>
+		
+						<!-- DATA -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.date']}"/>
+							</f:facet>
+							<h:outputText value="#{dados.data}"/>
+						</h:column>
+			
+						<!-- ACOES -->
+						<h:column>
 
-				<!-- TEMPO -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="TEMPO"/>
-					</f:facet>
-					<h:outputText value="#{dados.tempo}"/>
-				</h:column>
-
-				<!-- DATA -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="DATA" />
-					</f:facet>
-					<h:outputText value="#{dados.data}"/>
-				</h:column>
-	
-				<!-- ACOES -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="AÇÕES" />
-					</f:facet>
-					<!-- EXCLUIR -->
-					<h:commandLink 
-						actionListener="#{controllerProvasRealizadas.selecionarRegistro}" 
-						action="#{controllerProvasRealizadas.excluir()}" 
-						onclick="return confirm('Tem certeza que deseja remover o resultado deste aluno? Nem ele nem você poderam ver ou recuperar esses dados novamente! Caso este teste permita a realização após a data o aluno poderá realiazá-lo novamente!')" 
-						class="glyphicon glyphicon-trash" 
-						title="EXCLUIR"/>
-				</h:column>
-			</h:dataTable>	
-		</h:form>
+							<!-- EXCLUIR -->
+							<span class="tooltipped" data-position="left" 
+								data-delay="50" data-tooltip="#{msg['upper.delete']}">
+								
+								<h:commandLink 
+									actionListener="#{controllerProvasRealizadas.selecionarRegistro}" 
+									action="#{controllerProvasRealizadas.excluir()}"
+									onclick="return confirm('Tem certeza que deseja remover o resultado deste aluno? Nem ele nem você poderam ver ou recuperar esses dados novamente! Caso este teste permita a realização após a data o aluno poderá realiazá-lo novamente!')">
+  									
+  									<i class="material-icons right">delete</i>
+  								</h:commandLink>
+							</span>
+						</h:column>
+					</h:dataTable>
+				</h:form>
+			</div>	
+		</h:panelGroup>
 	</div>
 		
 	<!-- FOOTER -->

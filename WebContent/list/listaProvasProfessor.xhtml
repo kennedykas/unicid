@@ -4,136 +4,156 @@
       xmlns:f="http://java.sun.com/jsf/core" 
       xmlns:h="http://xmlns.jcp.org/jsf/html" 
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:jsf="http://xmlns.jcp.org/jsf"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
       
 	<!-- HEAD -->
-	<ui:include src="../componentes/head/head.xhtml" />
-<h:body>
+	<ui:include src="../componentes/head/head.xhtml"/>
+<h:body class="grey lighten-4">
+
 	<!-- NAVBAR -->
-	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
+	<ui:include src="../componentes/header/navbarProfessor.xhtml"/>
 	
 	<div class="container">
-		<!-- LISTA DE PROVAS -->
-		<h:form id="provas" styleClass="loading">
+	
+		<!-- LISTA VAZIA -->
+  		<h:panelGroup rendered="#{controllerProvas.getListaProvas().getRowCount() eq 0 ? true : false}">
+ 			
+ 			<h:outputText
+ 				class="grey-text" 
+ 				value="#{msg['nothing.found']}" 
+ 				style="font-size:1.5em"/>
+  		</h:panelGroup>		
 			
-			<h2>Minhas provas</h2>
-			<h:link outcome="/list/listaQuestoes" class="link">
-				Selecione as questoes para criar uma nova prova
-			</h:link>
-			
+		<h:panelGroup rendered="#{controllerProvas.getListaProvas().getRowCount() eq 0 ? false : true}">
 			<h:dataTable value="#{controllerProvas.getListaProvas()}" var="dados" class="table table-striped">
+				<div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
+					<h:form styleClass="loading">		
+				
+						<!-- TITULO -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.title']}"/>
+							</f:facet>
+							<h:outputText value="#{dados.titulo}"/>
+						</h:column>
 			
-				<!-- TITULO -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="TÍTULO" />
-					</f:facet>
-					<h:outputText value="#{dados.titulo}" />
-				</h:column>
-	
-				<!-- DISCIPLINA -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="DISCIPLINA" />
-					</f:facet>
-					<h:outputText value="#{controllerDisciplinas.nomeDisciplina(dados.codDisciplina)}" />
-				</h:column>
-	
-				<!-- NUMERO DE QUESTOES -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Nº QUESTÕES" />
-					</f:facet>
-					<h:outputText value="#{controllerProvas.numberQuestions(dados.questoes)}" />
-				</h:column>
-	
-				<!-- VALOR TOTAL -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="VALOR TOTAL" />
-					</f:facet>
-					<h:outputText value="#{dados.valorTotal}" />
-				</h:column>
-
-				<!-- VALOR INDIVIDUAL -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="VALOR QUESTÃO" />
-					</f:facet>
-					<h:outputText value="#{dados.valorQuestoes}" />
-				</h:column>
-
-				<!-- TEMPO -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="TEMPO MIN." />
-					</f:facet>
-					<h:outputText value="#{dados.tempo} min." title="Tempo máximo #{dados.tempo} minutos"/>
-				</h:column>
-	
-				<!-- HORARIO -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="DATA. REALIZAÇÃO" />
-					</f:facet>
-					<h:outputText value="#{dados.data eq ''? '???' : dados.data}"/>
-				</h:column>
-				
-				<!-- REALIZAR APOS DATA -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="FAZER APÓS DATA" />
-					</f:facet>
-					<h:outputText value="#{dados.permitir eq false ? 'NÃO' : 'SIM'}"/>
-				</h:column>
-				
-				<!-- MULTIPLAS TENTATIVAS -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="MULTIPLAS TENTATIVAS" />
-					</f:facet>
-					<h:outputText value="#{dados.allowMultipleAttempts eq false ? 'NÃO' : 'SIM'}"/>
-				</h:column>
-				
-				<!-- ACOES -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="AÇÕES" />
-					</f:facet>
+						<!-- DISCIPLINA -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.discipline']}"/>
+							</f:facet>
+							<h:outputText value="#{controllerDisciplinas.nomeDisciplina(dados.codDisciplina)}"/>
+						</h:column>
 			
-					<!-- VISUALIZAR -->
-					<h:commandLink 
-						actionListener="#{controllerProvas.selecionarRegistro}" 
-						action="/see/gabaritoProfessor" 
-						class="glyphicon glyphicon-list-alt" 
-						title="Visualizar"/>
+						<!-- NUMERO DE QUESTOES -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.number.of.questions']}"/>
+							</f:facet>
+							<h:outputText value="#{controllerProvas.numberQuestions(dados.questoes)}"/>
+						</h:column>
+			
+						<!-- VALOR TOTAL -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.total.value']}"/>
+							</f:facet>
+							<h:outputText value="#{dados.valorTotal}"/>
+						</h:column>
+		
+						<!-- VALOR INDIVIDUAL -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.questions.value']}"/>
+							</f:facet>
+							<h:outputText value="#{dados.valorQuestoes}"/>
+						</h:column>
+		
+						<!-- TEMPO -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.test.time']}"/>
+							</f:facet>
+							<h:outputText value="#{dados.tempo} min."/>
+						</h:column>
+			
+						<!-- HORARIO -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.realization.date']}"/>
+							</f:facet>
+							<h:outputText value="#{dados.data eq ''? '???' : dados.data}"/>
+						</h:column>
+						
+						<!-- REALIZAR APOS DATA -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.allow.after.date']}"/>
+							</f:facet>
+							<h:outputText value="#{dados.permitir eq false ? msg['upper.not'] : msg['upper.yes']}"/>
+						</h:column>
+						
+						<!-- MULTIPLAS TENTATIVAS -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.multiple.attempts']}"/>
+							</f:facet>
+							<h:outputText value="#{dados.allowMultipleAttempts eq false ? msg['upper.not'] : msg['upper.yes']}"/>
+						</h:column>
+						
+						<!-- ACOES -->
+						<h:column>
+							<!-- VISUALIZAR -->
+							<span class="tooltipped" data-position="left" 
+								data-delay="50" data-tooltip="#{msg['upper.see']}">
+								<h:commandLink 
+									actionListener="#{controllerProvas.selecionarRegistro}" 
+									action="/see/gabaritoProfessor">
+									<i class="material-icons right">format_list_numbered</i>
+								</h:commandLink>
+							</span>							
 					
-					<span class="space"/>
-			
-					<!-- ALTERAR INFORMACOES -->
-			  		<p:commandLink 
-			  			styleClass="glyphicon glyphicon-edit" 
-			  			data-toggle="modal" 
-			  			data-target="#myModal" 
-			  			title="Alterar informações" 
-			  			onclick="$('#myModal').modal('show');">
-			  			
-			  			<f:ajax listener="#{controllerProvas.selecionarRegistro}"/>
-			  		</p:commandLink>
-					<span class="space"/>
-			
-					<!-- EXCLUIR -->
-					<h:commandLink 
-						actionListener="#{controllerProvas.selecionarRegistro}" 
-						action="#{controllerProvas.excluir}" 
-						onclick="return confirm('Tem certeza que deseja remover está prova? Ela não podera ser recuperada depois!')" 
-						class="glyphicon glyphicon-trash" 
-						title="Excluir"/>
-				</h:column>
+							<!-- ALTERAR INFORMACOES -->
+					  		<p:commandLink 
+					  			styleClass="glyphicon glyphicon-edit" 
+					  			data-toggle="modal" 
+					  			data-target="#myModal" 
+					  			title="Alterar informações" 
+					  			onclick="$('#myModal').modal('show');">
+					  			asdfsad
+					  			<f:ajax listener="#{controllerProvas.selecionarRegistro}"/>
+					  		</p:commandLink>
+								
+							<!-- EDITAR -->
+							<span class="tooltipped" data-position="left" 
+								data-delay="50" data-tooltip="#{msg['upper.edit']}">
+								<h:commandLink 
+									action="/update/alterarDisciplina">
+									
+									<f:actionListener binding="#{controllerDisciplinas.selecionarRegistro()}"/>
+		    						<f:actionListener binding="#{controllerDisciplinaCurso.obterCursosDisciplinaPertence(dados.codigo)}"/>
+									
+									<i class="material-icons right">mode_edit</i>
+								</h:commandLink>
+							</span>
+
+							<!-- EXCLUIR -->
+							<span class="tooltipped" data-position="left" 
+								data-delay="50" data-tooltip="#{msg['upper.delete']}">
+								
+								<h:commandLink 
+									actionListener="#{controllerProvas.selecionarRegistro}" 
+									action="#{controllerProvas.excluir}" 
+									onclick="return confirm('Tem certeza que deseja remover está prova? Ela não podera ser recuperada depois!')">
+  									<i class="material-icons right">delete</i>
+  								</h:commandLink>
+							</span>
+						</h:column>
+					</h:form>
+				</div>
 			</h:dataTable>
-		</h:form>
+		</h:panelGroup>
 		
 		<!-- MODAL INFO PROVA -->
 		<div class="modal fade" id="myModal" role="dialog">
@@ -146,13 +166,13 @@
 				        	<button type="button" class="close" data-dismiss="modal">&times;</button>
 				         	<h4 class="modal-title">Alterar informações da prova.</h4>
 				         	<h6>
-				         		<span class="glyphicon glyphicon-info-sign" />
+				         		<span class="glyphicon glyphicon-info-sign"/>
 				         		O aluno poderá começar a avaliação até 10 minutos antes, mas nem um minuto depois!				  
 				         	</h6>
 				        </div>
 				        
 				        <!-- FORM INFORMACOES PROVA -->
-						<ui:include src="../componentes/form/professor/formInformacoesProva.xhtml" />
+						<ui:include src="../componentes/form/professor/formInformacoesProva.xhtml"/>
 				        
 				        <!-- MODAL FOOTER -->
 				        <div class="modal-footer">
@@ -169,8 +189,11 @@
 		</div>
 
 	</div>
+			<h:link outcome="/list/listaQuestoes" class="link">
+				Selecione as questoes para criar uma nova prova
+			</h:link>
 		
 	<!-- FOOTER -->
-	<ui:include src="../componentes/footer/footer.xhtml" />
+	<ui:include src="../componentes/footer/footer.xhtml"/>
 </h:body>
 </html>

@@ -33,22 +33,25 @@ public class CursoDAO {
 	}
 	
 	// RETORNA LISTA COM NOMES DOS CURSOS ATRAVES DOS CODIGOS 
-	public String nomesCursos(String codsCursos) {
+	public String obterNomesDosCursos(int[] codsCursos) {
 		
 		TransactionManager txManager = new TransactionManager();
 	    return txManager.doInTransactionWithReturn((connection) -> {
 
-	    	String[]cods = codsCursos.split(","); // SEPARANDO OS CODIGOS PASSADOS
-	    	String result = ""; 
+	    	StringBuilder nomesDosCursos = new StringBuilder(); 
 		
-	    	for (String i : cods) { // PERCORRE TODOS OS CODIGOS PASSADOS BUSCANDO O NOME 
+	    	for (int codigo : codsCursos) { 
 				ps = connection.prepareStatement("SELECT nome FROM curso WHERE codigo=?");
-				ps.setInt(1, Integer.parseInt(i));
+				ps.setInt(1, codigo);
 				rs = ps.executeQuery();
-				if (rs.next()) 
-					result += rs.getString(1) + ", "; // ARMAZENA NOME ENCONTRADO
+				if (rs.next()) {
+					if(nomesDosCursos.length() > 0)
+						nomesDosCursos.append(", ");
+					nomesDosCursos.append(rs.getString(1));
+				}
 			}
-			return result;
+	    		
+			return nomesDosCursos.toString();
 		});
 	}
 }

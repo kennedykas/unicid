@@ -22,7 +22,7 @@
 	            </div>
 	            <div class="row"></div>
 	            
-	            <h:form class="loading" id="login-form">
+	            <h:form class="loading" id="login-form" onsubmit="verifyValidity(this)">
 	            
 					<!-- E-MAIL PROFESSOR -->
 		            <div class="input-field row">
@@ -51,16 +51,22 @@
 					<h:messages id="messages" class="esc red-text text-darken-2"/>
 					
 					<!-- BOTAO ENVIAR -->
-					<div class="center">
-						<button type="submit" class="row btn waves-effect waves-light"
-							onclick="return $(this.closest('form')).valid() ? $('.submit-button').click() : false;">
-							<h:commandButton 
-								action="#{controllerProfessores.login}"
-								class="submit-button"
-								value="#{msg['upper.get.in']}"/>
+	    			<div class="center"> 
+						
+						<!-- BOTAO USADO APENAS PARA DAR UM TRIGGER NA VALIDACAO DO HTML 5 -->
+						<button type="submit" class="startHidden"/>
+	
+						<button  
+							onclick="verifyValidity(this.closest('form'))"
+							class="row btn waves-effect waves-light">
+							<h:outputText value="#{msg['upper.get.in']}"/>
 							<i class="material-icons right">send</i>
 						</button>
-					</div>
+	
+						<h:commandButton
+							styleClass="startHidden formActionButton" 
+							action="#{controllerProfessores.login}"/>
+	       			</div>
 				</h:form>
 
 				<div class="center s12">

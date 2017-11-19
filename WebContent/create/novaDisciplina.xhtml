@@ -24,24 +24,32 @@
 	            </div>
 	            <div class="row"></div>
 	            
-	            <h:form class="loading">
+	            <h:form class="loading" onsubmit="verifyValidity(this)">
 					
 					<!-- FORMULARIO DISCIPLINA -->  
 					<ui:include src="../componentes/form/professor/formDisciplina.xhtml" />
 			
 					<!-- BOTAO SALVAR -->
 	    			<div class="fixed-action-btn tooltipped" 
-	    				data-position="left" data-delay="50" data-tooltip="#{msg['upper.save']}">
-						<button type="submit" 
-							class="btn-floating btn-large waves-effect waves-light deep-purple pulse" 
-							onclick="return $(this.closest('form')).valid() ? $('#submit').click() : false;">
+	    				 data-position="left" 
+	    				 data-delay="50" 
+	    				 data-tooltip="#{msg['upper.save']}">
+						
+						<!-- BOTAO USADO APENAS PARA DAR UM TRIGGER NA VALIDACAO DO HTML 5 -->
+						<button type="submit" class="startHidden"/>
+	
+						<button  
+							onclick="verifyValidity(this.closest('form'))"
+							class="btn-floating btn-large waves-effect waves-light deep-purple pulse">
+							
 							<i class="material-icons right">save</i>
-							<h:commandButton class="submit-button"
-								action="#{controllerDisciplinaCurso.save()}"/>
 						</button>
+	
+						<h:commandButton
+							styleClass="startHidden formActionButton"
+							actionListener="#{controllerDisciplinas.saveDisciplineAndPrepareDisciplineCourse()}"
+							action="#{controllerDisciplinaCurso.save()}"/>
 	       			</div>
-	       			<h:commandButton class="submit-button"
-								action="#{controllerDisciplinaCurso.save()}">adfasdf</h:commandButton>
 				</h:form>
 			</div>
 		</div>

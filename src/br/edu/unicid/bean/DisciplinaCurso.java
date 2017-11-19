@@ -5,8 +5,7 @@ public class DisciplinaCurso {
 	private int codigo;
 	private int codCurso;
 	private int codDisciplina;
-//	private ArrayList<Integer> cursos;
-	private int[] cursos;
+	private int[] coursesThatDisciplineBelongTo;
 	
 	public DisciplinaCurso() {}
 	
@@ -14,6 +13,10 @@ public class DisciplinaCurso {
 		this.codigo        = codigo;
 		this.codCurso      = codCurso;
 		this.codDisciplina = codDisciplina;
+	}
+	public DisciplinaCurso(int codDisciplina, int[] coursesThatDisciplineBelongTo) {
+		this.codDisciplina = codDisciplina;
+		this.coursesThatDisciplineBelongTo = coursesThatDisciplineBelongTo;
 	}
 	
 	// GETTERS AND SETTERS
@@ -29,17 +32,11 @@ public class DisciplinaCurso {
 	public void setCodCurso(int codCurso) {
 		this.codCurso = codCurso;
 	}
-//	public ArrayList<Integer> getCursos() {
-//		return cursos;
-//	}
-//	public void setCursos(ArrayList<Integer> cursos) {
-//		this.cursos = cursos;
-//	}
-	public int[] getCursos() {
-		return cursos;
+	public int[] getCoursesThatDisciplineBelongTo() {
+		return coursesThatDisciplineBelongTo;
 	}
-	public void setCursos(int[] cursos) {
-		this.cursos = cursos;
+	public void setCoursesThatDisciplineBelongTo(int[] coursesThatDisciplineBelongTo) {
+		this.coursesThatDisciplineBelongTo = coursesThatDisciplineBelongTo;
 	}
 	public int getCodDisciplina() {
 		return codDisciplina;

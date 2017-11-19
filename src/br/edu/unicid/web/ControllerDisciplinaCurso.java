@@ -1,6 +1,7 @@
 package br.edu.unicid.web;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -15,8 +16,9 @@ import br.edu.unicid.dao.DisciplinaCursoDAO;
 public class ControllerDisciplinaCurso {
 
 	private DisciplinaCursoDAO dao;
-	private DisciplinaCurso disciplinaCurso ;
-	
+	private DisciplinaCurso    disciplinaCurso ;
+	private int[] codigos; // CODS DOS CURSOS QUE DETERMINADA DISCIPLINA PERTENCE
+		
 	// BEAN CURSOS
 	@ManagedProperty(value="#{controllerCursos}")
 	private ControllerCursos cursosBean;
@@ -31,7 +33,7 @@ public class ControllerDisciplinaCurso {
 	// SAVE
 	public String save() {
 		this.dao = new DisciplinaCursoDAO();
-		if(this.dao.salvar(this.disciplinaCurso))
+		if(this.dao.salvar(this.disciplinaCurso, this.cursosBean.getCurso().getCodigos()))
 			return "/list/listaDisciplinas";
 		else
 			return "/list/novaDisciplina";
@@ -42,25 +44,19 @@ public class ControllerDisciplinaCurso {
 		
 		this.dao = new DisciplinaCursoDAO();
 		
-		if (this.dao.alterar(
-				this.cursosBean.getCurso().getCodigos(), 
-				this.disciplinaCurso.getCodDisciplina()))
+		if (this.dao.alterar(codigos, this.disciplinaCurso.getCodDisciplina()))
 			
 			return "/list/listaDisciplinas"; 
 		else
 			return "/list/alterarDisciplina";
 	}
 	
-	// OBTEM TODOS OS CURSOS QUE UMA DISCIPLINA PERTENCE
-	public void obterCursosDisciplinaPertence(int codigoDisciplina) {
+	// OBTEM TODOS OS CURSOS QUE UMA DISCIPLINA CONTEMPLA
+	public int[] findCoursesThatBelongToDisciplineByDisciplineCode(int codigoDisciplina) {
 		
 		this.dao = new DisciplinaCursoDAO();
 		
-		// SETA ESSES CODIGOS NO BEAN DE CURSOS 
-		this.cursosBean.getCurso().setCodigos(
-				this.dao.cursosPeloCodigoDisciplina(codigoDisciplina)
-		);
-		
+		return this.dao.findCoursesThatBelongToDisciplineByDisciplineCode(codigoDisciplina);
 	}
 	
 	// RETURN DISCIPLINAS BY COD COURSE
@@ -89,5 +85,11 @@ public class ControllerDisciplinaCurso {
 	}
 	public void setCursosBean(ControllerCursos cursosBean) {
 		this.cursosBean = cursosBean;
+	}
+	public int[] getCodigos() {
+		return codigos;
+	}
+	public void setCodigos(int[] codigos) {
+		this.codigos = codigos;
 	}
 }

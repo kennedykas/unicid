@@ -6,7 +6,6 @@ public class Curso {
 	private int    codUniversidade; // COD DA UNIVERSIDADE QUE O CURSO PERTENCE 
 	private String nome;            // NOME DO CURSO
 	private String data;            // DATA EM QUE O CURSO FOI CADASTRADO
-	private int[]  codigos;			// CODS DOS CURSOS DISCIPLINA PERTENCE
 	private int    icon;            // ICONE DO CURSO
 	private String modulos;         // MODULOS
 	private String ementa;			// EMENTA
@@ -17,6 +16,7 @@ public class Curso {
 	private String horario;			// HORARIO
 	private String duracao;			// DURACAO
 	private String taxaInscricao;	// TAXA DE INSCRICAO
+	private int[]  codigos;			// CODS DOS CURSOS SELECIONADOS NO SELECT MANY CURSOS
 	private String conteudoProgramatico; // CONTEUDO PROGRAMATICO
 	
 	public Curso() {}

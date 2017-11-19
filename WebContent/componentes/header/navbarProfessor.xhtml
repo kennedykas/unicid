@@ -52,38 +52,40 @@
 			</ul>
 	    </div>
 	    <div class="nav-content">
-	      <ul class="tabs tabs-transparent">
-	        <li class="tab">
-				<h:link outcome="/list/listaProvasRealizadasProfessor" class="navItem">
-					<h:outputText value="#{msg['upper.students']}"/>
-				</h:link>
-			</li>
-			<li class="tab">
-				<h:link outcome="/list/listaDisciplinas" class="navItem">
-					<h:outputText value="#{msg['upper.disciplines']}"/>
-				</h:link>
-			</li>
-			<li class="tab">
-				<h:link outcome="/list/listaProvasProfessor" class="navItem">
-					<h:outputText value="#{msg['upper.tests']}"/>
-				</h:link>
-			</li>
-			<li class="tab">
-				<h:link outcome="/list/listaQuestoes" class="navItem">
-					<h:outputText value="#{msg['upper.questions']}"/>
-				</h:link>
-			</li>
-			<li class="tab">
-				<h:link outcome="/list/listaGrupos" class="navItem">
-					<h:outputText value="#{msg['upper.groups']}"/>
-				</h:link>
-			</li>
-			<li class="tab">
-				<h:link outcome="/list/listaCursos" class="navItem">
-					<h:outputText value="#{msg['upper.courses']}"/>
-				</h:link>
-			</li>
-	      </ul>
+	    	<h:form>
+		      <ul class="tabs tabs-transparent">
+		        <li class="tab">
+					<h:commandLink action="/list/listaProvasRealizadasProfessor" class="navItem">
+						<h:outputText value="#{msg['upper.students']}"/>
+					</h:commandLink>
+				</li>
+				<li class="tab">
+					<h:commandLink action="/list/listaDisciplinas" class="navItem">
+						<h:outputText value="#{msg['upper.disciplines']}"/>
+					</h:commandLink>
+				</li>
+				<li class="tab">
+					<h:commandLink action="/list/listaProvasProfessor" class="navItem">
+						<h:outputText value="#{msg['upper.tests']}"/>
+					</h:commandLink>
+				</li>
+				<li class="tab">
+					<h:commandLink action="/list/listaQuestoes" class="navItem">
+						<h:outputText value="#{msg['upper.questions']}"/>
+					</h:commandLink>
+				</li>
+				<li class="tab">
+					<h:commandLink action="/list/listaGrupos" class="navItem">
+						<h:outputText value="#{msg['upper.groups']}"/>
+					</h:commandLink>
+				</li>
+				<li class="tab">
+					<h:commandLink action="/list/listaCursos" class="navItem">
+						<h:outputText value="#{msg['upper.courses']}"/>
+					</h:commandLink>
+				</li>
+		      </ul>
+	    	</h:form>
 	    </div>
 	</nav>
     

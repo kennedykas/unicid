@@ -26,7 +26,7 @@ public class DisciplinaCursoDAO {
 	}
 		
 	// SAVE
-	public boolean salvar(DisciplinaCurso disciplinaCurso) {
+	public boolean salvar(DisciplinaCurso disciplinaCurso, int[] codigosDosCursos) {
     	TransactionManager txManager = new TransactionManager();
     	return txManager.doInTransactionWithReturn((connection) -> {
 	    	
@@ -37,7 +37,7 @@ public class DisciplinaCursoDAO {
 			
 			int affectedRows = 0;
 			
-			for(int i : disciplinaCurso.getCursos()) {
+			for(int i : codigosDosCursos) {
 				this.ps.setInt(3, i);
 				affectedRows = this.ps.executeUpdate();
 			}
@@ -79,7 +79,7 @@ public class DisciplinaCursoDAO {
 	}	
 	
 	// RETURN COURSES BY COD DISCIPLINA
-	public int[] cursosPeloCodigoDisciplina(int codigoDisciplina) {
+	public int[] findCoursesThatBelongToDisciplineByDisciplineCode(int codigoDisciplina) {
 		TransactionManager txManager = new TransactionManager();
     	return txManager.doInTransactionWithReturn((connection) -> {
 
