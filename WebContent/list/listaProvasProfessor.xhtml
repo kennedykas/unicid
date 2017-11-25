@@ -16,7 +16,7 @@
 	
 	<div class="container">
 	
-		<!-- LISTA VAZIA -->
+		<!-- CASO NAO HAJA PROVAS A SEREM LISTADAS -->
   		<h:panelGroup rendered="#{controllerProvas.getListaProvas().getRowCount() eq 0 ? true : false}">
  			
  			<h:outputText
@@ -24,12 +24,14 @@
  				value="#{msg['nothing.found']}" 
  				style="font-size:1.5em"/>
   		</h:panelGroup>		
-			
+		
+		<!-- LISTA AS PROVAS -->	
 		<h:panelGroup rendered="#{controllerProvas.getListaProvas().getRowCount() eq 0 ? false : true}">
-			<h:dataTable value="#{controllerProvas.getListaProvas()}" var="dados" class="table table-striped">
-				<div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
-					<h:form styleClass="loading">		
+			<div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
+				<h:form styleClass="loading">		
 				
+					<h:dataTable value="#{controllerProvas.getListaProvas()}" var="dados" class="striped">
+						
 						<!-- TITULO -->
 						<h:column>
 							<f:facet name="header">
@@ -91,7 +93,7 @@
 							<f:facet name="header">
 								<h:outputText value="#{msg['upper.allow.after.date']}"/>
 							</f:facet>
-							<h:outputText value="#{dados.permitir eq false ? msg['upper.not'] : msg['upper.yes']}"/>
+							<h:outputText value="#{dados.allowAfterDate eq false ? msg['upper.not'] : msg['upper.yes']}"/>
 						</h:column>
 						
 						<!-- MULTIPLAS TENTATIVAS -->
@@ -103,45 +105,12 @@
 						</h:column>
 						
 						<!-- ACOES -->
-						<h:column>
-							<!-- VISUALIZAR -->
-							<span class="tooltipped" data-position="left" 
-								data-delay="50" data-tooltip="#{msg['upper.see']}">
-								<h:commandLink 
-									actionListener="#{controllerProvas.selecionarRegistro}" 
-									action="/see/gabaritoProfessor">
-									<i class="material-icons right">format_list_numbered</i>
-								</h:commandLink>
-							</span>							
-					
-							<!-- ALTERAR INFORMACOES -->
-					  		<p:commandLink 
-					  			styleClass="glyphicon glyphicon-edit" 
-					  			data-toggle="modal" 
-					  			data-target="#myModal" 
-					  			title="Alterar informações" 
-					  			onclick="$('#myModal').modal('show');">
-					  			asdfsad
-					  			<f:ajax listener="#{controllerProvas.selecionarRegistro}"/>
-					  		</p:commandLink>
-								
-							<!-- EDITAR -->
-							<span class="tooltipped" data-position="left" 
-								data-delay="50" data-tooltip="#{msg['upper.edit']}">
-								<h:commandLink 
-									action="/update/alterarDisciplina">
-									
-									<f:actionListener binding="#{controllerDisciplinas.selecionarRegistro()}"/>
-		    						<f:actionListener binding="#{controllerDisciplinaCurso.obterCursosDisciplinaPertence(dados.codigo)}"/>
-									
-									<i class="material-icons right">mode_edit</i>
-								</h:commandLink>
-							</span>
-
+						<h:column headerClass="action-buttons-column">
+							<f:facet name="header"/>
+						
 							<!-- EXCLUIR -->
 							<span class="tooltipped" data-position="left" 
 								data-delay="50" data-tooltip="#{msg['upper.delete']}">
-								
 								<h:commandLink 
 									actionListener="#{controllerProvas.selecionarRegistro}" 
 									action="#{controllerProvas.excluir}" 
@@ -149,50 +118,70 @@
   									<i class="material-icons right">delete</i>
   								</h:commandLink>
 							</span>
+								
+							<!-- EDITAR -->
+							<span class="tooltipped" data-position="left" 
+								data-delay="50" data-tooltip="#{msg['upper.edit']}">
+								<p:commandLink 
+									actionListener="#{controllerProvas.selecionarRegistro}" 
+									onclick="$('#test-info-modal').modal('open')">
+						  			<f:ajax listener="#{controllerProvas.selecionarRegistro}"/>
+									<i class="material-icons right">mode_edit</i>
+								</p:commandLink>
+							</span>
+
+							<!-- VISUALIZAR -->
+							<span class="tooltipped" data-position="left" 
+								data-delay="50" data-tooltip="#{msg['upper.see']}">
+								<h:commandLink 
+									actionListener="#{controllerProvas.selecionarRegistro}" 
+									action="/see/gabaritoProfessor">
+									<i class="material-icons right">remove_red_eye</i>
+								</h:commandLink>
+							</span>							
 						</h:column>
-					</h:form>
-				</div>
-			</h:dataTable>
+					</h:dataTable>
+				</h:form>
+			</div>
 		</h:panelGroup>
 		
-		<!-- MODAL INFO PROVA -->
-		<div class="modal fade" id="myModal" role="dialog">
-			<div class="modal-dialog modal-sm">
-		    	<div class="modal-content">
-		    		<h:form id="formInfoProva">
-		    			
-		    			<!-- MODAL HEADER -->
-				        <div class="modal-header">
-				        	<button type="button" class="close" data-dismiss="modal">&times;</button>
-				         	<h4 class="modal-title">Alterar informações da prova.</h4>
-				         	<h6>
-				         		<span class="glyphicon glyphicon-info-sign"/>
-				         		O aluno poderá começar a avaliação até 10 minutos antes, mas nem um minuto depois!				  
-				         	</h6>
-				        </div>
-				        
-				        <!-- FORM INFORMACOES PROVA -->
-						<ui:include src="../componentes/form/professor/formInformacoesProva.xhtml"/>
-				        
-				        <!-- MODAL FOOTER -->
-				        <div class="modal-footer">
-				        	<!-- SUBMIT -->
-				        	<h:commandButton 
-				        		action="#{controllerProvas.alterarInformacoes}" 
-				        		class="form-control btn btn-default" 
-				        		data-dismiss="modal" 
-				        		value="Alterar informações"/>
-				        </div>
-		    		</h:form>
-				</div>
-			</div>
-		</div>
-
-	</div>
-			<h:link outcome="/list/listaQuestoes" class="link">
-				Selecione as questoes para criar uma nova prova
+		<!-- CRIAR PROVA -->
+		<div class="fixed-action-btn tooltipped" 
+			data-position="left" data-delay="50" data-tooltip="#{msg['upper.new.test']}">
+			<h:link
+				outcome="/list/listaQuestoes" 
+				class="btn-floating btn-large waves-effect waves-light light-green accent-4 pulse">
+				<i class="material-icons right">add</i>
 			</h:link>
-		
+		</div>		
+
+		<!-- TEST INFO MODAL -->
+		<div id="test-info-modal" class="modal modal-fixed-footer">
+			<h:form id="testInfo" class="loading">
+				<div class="modal-content">
+					<h4><h:outputText value="#{msg['test.informations']}"/></h4>
+					<p class="lime-text text-darken-2">
+						<i class="material-icons left">info</i>
+	         			<h:outputText value="#{msg['info.student.test.begin']}"/>
+					</p>			  
+			        <!-- FORM INFORMACOES PROVA -->
+					<ui:include src="../componentes/form/professor/formInformacoesProva.xhtml" />
+				</div>
+				<div class="modal-footer">
+					<!-- CANCEL -->
+		        	<a class="modal-action modal-close waves-effect waves-red btn-flat">
+		        		<h:outputText value="#{msg['upper.cancel']}"/>
+		        	</a>
+					<!-- UPDATE -->
+		        	<h:commandButton 
+		        		action="#{controllerProvas.alterarInformacoesDaProva()}" 
+		        		class="modal-action waves-effect waves-green btn-flat" 
+		        		value="#{msg['upper.save']}"/>
+				</div>
+    		</h:form>
+		</div>
+	</div>
+
 	<!-- FOOTER -->
 	<ui:include src="../componentes/footer/footer.xhtml"/>
 </h:body>

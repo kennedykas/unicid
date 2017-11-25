@@ -4,44 +4,67 @@
     xmlns:h="http://xmlns.jcp.org/jsf/html" 
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+	
+	<div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 0 30px 0">
 		
-	<!-- RESPOSTAS -->
-	<h:dataTable 
-		id="answersTable" 
-		binding="#{tabela}" 
-		value="#{controllerQuestoes.getListaQuestoes(controllerProvas.prova.questoes)}" 
-		var="dados" 
-		class="table table-striped" >
-		
-		<h:column>
-			<!-- PERGUNTA E VALOR -->
-			<h5 style="padding:5px 15px 15px 5px">
-				<h:outputText 
-					value="VALOR: #{controllerProvas.prova.valorQuestoes} /  QUESTÃO #{tabela.rowIndex + 1}: " 
-					class="text-info"/>
-				<br/><br/>
-				<h:outputText value="#{dados.pergunta}"/>
-			</h5>
+		<!-- TITULO -->
+		<h4 class="teal-text center">
+			<h:outputText value="#{controllerProvas.prova.titulo}"/>
+		</h4>
 
-			<!-- ALTERNATIVAS -->
-			<div style="margin:10px 0 0 25px">
-				<h:outputText 
-					value="A) #{dados.alternativaA}" 
-					styleClass="#{dados.alternativaCorreta eq 'A' ? 'correta' : controllerProvas.errou(dados.codigo, 'A') eq true ? 'errada' : ''}"/><br/>
-				<h:outputText 
-					value="B) #{dados.alternativaB}" 
-					styleClass="#{dados.alternativaCorreta eq 'B' ? 'correta' : controllerProvas.errou(dados.codigo, 'B') eq true ? 'errada' : ''}"/><br/>
-				<h:outputText 
-					value="C) #{dados.alternativaC}" 
-					styleClass="#{dados.alternativaCorreta eq 'C' ? 'correta' : controllerProvas.errou(dados.codigo, 'C') eq true ? 'errada' : ''}"/><br/>
-				<h:outputText 
-					value="D) #{dados.alternativaD}" 
-					styleClass="#{dados.alternativaCorreta eq 'D' ? 'correta' : controllerProvas.errou(dados.codigo, 'D') eq true ? 'errada' : ''}"/><br/>
-				<h:outputText 
-					value="E) #{dados.alternativaE}" 
-					styleClass="#{dados.alternativaCorreta eq 'E' ? 'correta' : controllerProvas.errou(dados.codigo, 'E') eq true ? 'errada' : ''}"/><br/>
-			</div>
-		</h:column>
-	</h:dataTable>
+		<!-- RESPOSTAS -->
+		<h:dataTable 
+			id="answersTable" 
+			binding="#{tabela}" 
+			value="#{controllerQuestoes.getListaQuestoes(controllerProvas.prova.questoes)}" 
+			var="dados" 
+			class="striped">
 
+			<h:column>
+			
+				<!-- NUMERO DA QUESTAO, VALOR E QUESTAO -->
+				<div style="padding:0 20px 0 20px;color:#424242 !important">
+					<h:outputText styleClass="blue-text"
+						value="QUESTÃO #{tabela.rowIndex + 1}, VALOR: #{controllerProvas.prova.valorQuestoes}  "/>
+					
+					<h:outputText value="#{dados.pergunta}"/>
+				
+					
+					<!-- ALTERNATIVAS -->
+					<div style="margin-top:10px">
+						
+						<h:outputText value="A) " 
+							styleClass="#{dados.alternativaCorreta eq 'A'? 'green-text' : 'red-text'}"/>
+						<h:outputText value="#{dados.alternativaA}" 
+							styleClass="#{dados.alternativaCorreta eq 'A'? 'green-text' : ''}"/>
+						<br/>
+						
+						<h:outputText value="B) " 
+							styleClass="#{dados.alternativaCorreta eq 'B'? 'green-text' : 'red-text'}"/>
+						<h:outputText value="#{dados.alternativaB}" 
+							styleClass="#{dados.alternativaCorreta eq 'B'? 'green-text' : ''}"/>
+						<br/>
+						
+						<h:outputText value="C) " 
+							styleClass="#{dados.alternativaCorreta eq 'C'? 'green-text' : 'red-text'}"/>
+						<h:outputText value="#{dados.alternativaC}" 
+							styleClass="#{dados.alternativaCorreta eq 'C'? 'green-text' : ''}"/>
+						<br/>
+						
+						<h:outputText value="D) " 
+							styleClass="#{dados.alternativaCorreta eq 'D'? 'green-text' : 'red-text'}"/>
+						<h:outputText value="#{dados.alternativaD}" 
+							styleClass="#{dados.alternativaCorreta eq 'D'? 'green-text' : ''}"/>
+						<br/>
+													
+						<h:outputText value="E) " 
+							styleClass="#{dados.alternativaCorreta eq 'E'? 'green-text' : 'red-text'}"/>
+						<h:outputText value="#{dados.alternativaE}" 
+							styleClass="#{dados.alternativaCorreta eq 'E'? 'green-text' : ''}"/>
+						<br/>
+					</div>
+				</div>
+			</h:column>
+		</h:dataTable>
+	</div>
 </ui:composition>

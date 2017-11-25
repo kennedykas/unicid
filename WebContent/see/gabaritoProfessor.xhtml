@@ -9,24 +9,26 @@
       
 	<!-- HEAD -->
 	<ui:include src="../componentes/head/head.xhtml" />
-<h:body>
+<h:body class="grey lighten-4">
+
 	<!-- NAVBAR -->
 	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
 	
-	<div class="container">
+	<div class="container mainContent">
 		<h:form styleClass="loading">
-		
-			<!-- TITULO -->
-			<h2><h:outputText value="#{controllerProvas.prova.titulo}"/></h2>
 			
 			<!-- GABARITO -->
 			<ui:include src="../componentes/form/formGabarito.xhtml" />
 		
 			<!-- FECHAR -->	
-			<h:commandButton 
-				value="FECHAR" 
-				action="/list/listaProvasProfessor" 
-				class="btn btn-success finishTest"/>
+			<div class="fixed-action-btn tooltipped" 
+				data-position="left" data-delay="50" data-tooltip="#{msg['upper.close']}">
+				<h:link
+					outcome="/list/listaProvasProfessor" 
+					class="btn-floating btn-large waves-effect waves-light red">
+					<i class="material-icons right">close</i>
+				</h:link>
+			</div>		
 		</h:form>
 	</div>
 		

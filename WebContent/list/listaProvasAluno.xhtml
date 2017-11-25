@@ -8,91 +8,106 @@
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
       
 	<!-- HEAD -->
-	<ui:include src="../componentes/head/head.xhtml" />
-<h:body>
+	<ui:include src="../componentes/head/head.xhtml"/>
+<h:body class="grey lighten-4">
+
 	<!-- NAVBAR -->
-	<ui:include src="../componentes/header/navbarAluno.xhtml" />
+	<ui:include src="../componentes/header/navbarProfessor.xhtml"/>
 	
 	<div class="container">
-		
-		<!-- PAGE TITLE -->
-		<h2><h:outputText value="#{msg['test.list.title']}"/></h2>
-		
-		<h:form id="listaProvasAluno" styleClass="loading">
-			<!-- PROVAS < COD DISCIPLINAS < COD CURSO -->
-			<h:dataTable 
-				value="#{controllerProvas.obterProvasPeloCodDisciplina(controllerDisciplinaCurso.obterCodDisciplinaPeloCodCurso(controllerAlunos.aluno.getCodCurso()))}" 
-				var="dados" 
-				class="table table-striped">				
-			
-				<!-- TITULO -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="TITULO DA PROVA" />
-					</f:facet>
-					<h:outputText value="#{dados.titulo}" />
-				</h:column>
 	
-				<!-- VALOR TOTAL -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="VALOR TOTAL" />
-					</f:facet>
-					<h:outputText value="#{dados.valorTotal}" />
-				</h:column>
-
-				<!-- TEMPO -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="TEMPO MIN." />
-					</f:facet>
-					<h:outputText value="#{dados.tempo} min." title="Tempo máximo #{dados.tempo} minutos"/>
-				</h:column>
+		<!-- CASO NAO HAJA PROVAS A SEREM LISTADAS -->
+  		<h:panelGroup rendered="#{controllerProvas.obterProvasPeloCodDisciplina(controllerDisciplinaCurso.obterCodDisciplinaPeloCodCurso(controllerAlunos.aluno.getCodCurso()))}.getRowCount() eq 0 ? true : false}">
+ 			
+ 			<h:outputText
+ 				class="grey-text" 
+ 				value="#{msg['nothing.found']}" 
+ 				style="font-size:1.5em"/>
+  		</h:panelGroup>		
+		
+		<!-- LISTA PROVAS -->
+		<h:panelGroup rendered="#{controllerProvas.obterProvasPeloCodDisciplina(controllerDisciplinaCurso.obterCodDisciplinaPeloCodCurso(controllerAlunos.aluno.getCodCurso()))}.getRowCount() eq 0 ? false : true}">
+			<div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
+				<h:form styleClass="loading">		
+				
+					<h:dataTable value="#{controllerProvas.getListaProvas()}" var="dados" class="striped">
+				
+			<h:form id="listaProvasAluno" styleClass="loading">
+				<!-- PROVAS < COD DISCIPLINAS < COD CURSO -->
+				<h:dataTable 
+					value="#{controllerProvas.obterProvasPeloCodDisciplina(controllerDisciplinaCurso.obterCodDisciplinaPeloCodCurso(controllerAlunos.aluno.getCodCurso()))}" 
+					var="dados" 
+					class="table table-striped">				
+				
+					<!-- TITULO -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="TITULO DA PROVA" />
+						</f:facet>
+						<h:outputText value="#{dados.titulo}" />
+					</h:column>
+		
+					<!-- VALOR TOTAL -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="VALOR TOTAL" />
+						</f:facet>
+						<h:outputText value="#{dados.valorTotal}" />
+					</h:column>
 	
-				<!-- HORARIO -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="DATA. REALIZAÇÃO" />
-					</f:facet>
-					<h:outputText value="#{dados.data eq ''? '???' : dados.data}"/>
-				</h:column>
+					<!-- TEMPO -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="TEMPO MIN." />
+						</f:facet>
+						<h:outputText value="#{dados.tempo} min." title="Tempo máximo #{dados.tempo} minutos"/>
+					</h:column>
+		
+					<!-- HORARIO -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="DATA. REALIZAÇÃO" />
+						</f:facet>
+						<h:outputText value="#{dados.data eq ''? '???' : dados.data}"/>
+					</h:column>
+					
+					<!-- REALIZAR APOS DATA -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="REALIZAR APÓS DATA" />
+						</f:facet>
+						<h:outputText value="#{dados.allowAfterDate eq false ? 'NÃO' : 'SIM'}"/>
+					</h:column>
+					
+					<!-- MULTIPLAS TENTATIVAS -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="MULTIPLAS TENTATIVAS" />
+						</f:facet>
+						<h:outputText value="#{dados.allowMultipleAttempts eq false ? 'NÃO' : 'SIM'}"/>
+					</h:column>
+					 
+					<!-- ACOES -->
+					<h:column>
+						<f:facet name="header">
+							<h:outputText value="STATUS" />
+						</f:facet>
+						<!-- FAZER -->
+						<h:commandLink 
+							actionListener="#{controllerProvas.selecionarRegistro}"
+							action="#{controllerProvas.showProva}" 
+							disabled="#{controllerProvas.permissao(dados.data, dados.allowAfterDate, dados.allowMultipleAttempts, controllerProvasRealizadas.checkRealizacao(dados.codigo))}" 
+							title="#{controllerProvasRealizadas.checkRealizacao(dados.codigo) eq true ? (dados.allowMultipleAttempts eq true ? 'VOCÊ PODE FAZER NOVAMENTE CASO QUEIRA' : 'VOCÊ JA REALIZOU ESTA AVALIAÇÂO') : 'A FAZER'}"
+						    value="#{controllerProvasRealizadas.checkRealizacao(dados.codigo) eq true ? (dados.allowMultipleAttempts eq true ? 'PODE SER FEITA NOVAMENTE' : ' REALIZADA') : ' A FAZER'}"
+							class="#{controllerProvasRealizadas.checkRealizacao(dados.codigo) eq true ? 'glyphicon glyphicon-check' : 'glyphicon glyphicon-edit'}" 
+							onclick="return confirm('Quer mesmo fazer este teste agora?')"/> 
+					</h:column>
+				</h:dataTable>
 				
-				<!-- REALIZAR APOS DATA -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="REALIZAR APÓS DATA" />
-					</f:facet>
-					<h:outputText value="#{dados.allowAfterDate eq false ? 'NÃO' : 'SIM'}"/>
-				</h:column>
-				
-				<!-- MULTIPLAS TENTATIVAS -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="MULTIPLAS TENTATIVAS" />
-					</f:facet>
-					<h:outputText value="#{dados.allowMultipleAttempts eq false ? 'NÃO' : 'SIM'}"/>
-				</h:column>
-				 
-				<!-- ACOES -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="STATUS" />
-					</f:facet>
-					<!-- FAZER -->
-					<h:commandLink 
-						actionListener="#{controllerProvas.selecionarRegistro}"
-						action="#{controllerProvas.showProva}" 
-						disabled="#{controllerProvas.permissao(dados.data, dados.allowAfterDate, dados.allowMultipleAttempts, controllerProvasRealizadas.checkRealizacao(dados.codigo))}" 
-						title="#{controllerProvasRealizadas.checkRealizacao(dados.codigo) eq true ? (dados.allowMultipleAttempts eq true ? 'VOCÊ PODE FAZER NOVAMENTE CASO QUEIRA' : 'VOCÊ JA REALIZOU ESTA AVALIAÇÂO') : 'A FAZER'}"
-					    value="#{controllerProvasRealizadas.checkRealizacao(dados.codigo) eq true ? (dados.allowMultipleAttempts eq true ? 'PODE SER FEITA NOVAMENTE' : ' REALIZADA') : ' A FAZER'}"
-						class="#{controllerProvasRealizadas.checkRealizacao(dados.codigo) eq true ? 'glyphicon glyphicon-check' : 'glyphicon glyphicon-edit'}" 
-						onclick="return confirm('Quer mesmo fazer este teste agora?')"/> 
-				</h:column>
-			</h:dataTable>
-			
-			<!-- BOTAO QUE VIA JS ENVIA O FORM A CADA X SEGUNDOS PARA ATUALIZAR A LISTA DE PROVAS -->
-			<h:commandButton style="display:none" id="refreshTable"/>
-		</h:form>
+				<!-- BOTAO QUE VIA JS ENVIA O FORM A CADA X SEGUNDOS PARA ATUALIZAR A LISTA DE PROVAS -->
+				<h:commandButton style="display:none" id="refreshTable"/>
+			</h:form>
+		</h:panelGroup>
 	</div>
 		
 	<!-- FOOTER -->

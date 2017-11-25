@@ -42,15 +42,13 @@ public class ControllerProvas {
 	// LIST COM AS RESPOSTAS ERRADAS QUE O USER SELECIONOU
 	private HashMap<Integer, String> wrongAnswers = new HashMap<Integer, String>();
 	
-	// DISCIPLINAS BEAN
+	// BEANS
 	@ManagedProperty(value="#{controllerDisciplinas}")
 	private ControllerDisciplinas disciplinaBean;
 	
-	// PROFESSORES BEAN
 	@ManagedProperty(value="#{controllerProfessores}")
 	private ControllerProfessores professorBean;
 	
-	// QUESTOES BEAN
 	@ManagedProperty(value="#{controllerQuestoes}")
 	private ControllerQuestoes questaoBean;
 	
@@ -187,8 +185,7 @@ public class ControllerProvas {
 		this.prova = this.listaProva.getRowData();
 	}
 
-	// SET DATE OF THE TEST
-	public String alterarInformacoes() {
+	public String alterarInformacoesDaProva() {
 		this.dao = new ProvaDAO();
 
 		if(this.dao.alterarInformacoes(this.prova))

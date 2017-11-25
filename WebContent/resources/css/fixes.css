@@ -40,6 +40,8 @@ input[type="radio"]{margin-left: 30px}
 .selectTeacher { margin-left: 0 }
 .pointer { cursor: pointer }
 .big-icon { font-size: 35px !important }
+.action-buttons-column { min-width: 130px }
+.text-bold { font-weight: bold }
 /* ------- CONTAINER ------- */
 body > .container { min-height: 78vh }
 

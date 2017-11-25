@@ -1,5 +1,6 @@
 	package br.edu.unicid.web;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,13 +27,16 @@ public class ControllerAlunos {
 	private Aluno    aluno;
 	private Email    email;
 	private Date     date; // TO KNOW WHEN THE USER IS REGISTERED
-	// RESPOSTA QUE O USER DEU ON RECAPTCHA
-	private String   gRecaptchaResponse;
+	private String   userRecaptchaResponse;
 	// AUX PARA RENDERIZAR MSG DE EMAIL ENVIADO
 	private boolean  renderEmailAluno = false;  
 	private DataModel<Aluno> listaAluno;
+
+	private static final String PAGINA_NOVO_ALUNO            = "/create/novoAluno";
+	private static final String PAGINA_EMAIL_ENVIADO         = "/user-tools/emailEnviado";
+	private static final String PAGINA_LOGIN_ALUNO           = "/login/loginAluno";
+	private static final String PAGINA_RECUPERAR_SENHA_ALUNO = "/user-tools/recuperarSenhaAluno";
 	
-	// BEAN CURSOS
 	@ManagedProperty(value="#{controllerCursos}")
 	private ControllerCursos cursosBean;
 	
@@ -48,23 +52,23 @@ public class ControllerAlunos {
 	}
 		
 	// SAVE
-	public String save() throws Exception {
+	public String save() throws IOException {
 								
 		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
 		FacesContext ctx = FacesContext.getCurrentInstance();
 		
 		// RESPOSTA DA DIV DO RECAPTCHA
-		this.gRecaptchaResponse = req.getParameter("g-recaptcha-response");
+		this.userRecaptchaResponse = req.getParameter("g-recaptcha-response");
 
 		// RECAPTCHA NAO CHECADO
-		if(this.gRecaptchaResponse.equals("")) { 
+		if(this.userRecaptchaResponse.equals("")) { 
 			ctx.addMessage("messages", new FacesMessage("QUASE só falta você dizer que não é um robô!"));
-			return "/create/novoAluno";
+			return PAGINA_NOVO_ALUNO;
 		}
 		// RECAPTCHA ROBO (false = robot / true = people)
-		else if(!VerifyRecaptcha.verify(this.gRecaptchaResponse)) {
+		else if(!VerifyRecaptcha.verify(userRecaptchaResponse)) {
 			ctx.addMessage("messages", new FacesMessage("CLIQUE EM: 'não sou um robô', para confirmar que você é uma pessoa!"));
-			return "/create/novoAluno";
+			return PAGINA_NOVO_ALUNO;
 		}		
 		
 		this.date = new Date();
@@ -75,9 +79,9 @@ public class ControllerAlunos {
 		if(this.dao.salvar(this.aluno)) { // IF ALUNO SALVO COM SUCESSO ENTAO ELE RECEBE UM EMAIL
 			this.email.sendEmailVerificacao(this.aluno); // PASSANDO O ALUNO PARA Q ELE RECEBA O EMAIL
 			this.renderEmailAluno = true; // MSG SERA RENDERIZADA PARA O ALUNO
-			return "/user-tools/emailEnviado";
+			return PAGINA_EMAIL_ENVIADO;
 		}
-		return "/create/novoAluno";
+		return PAGINA_NOVO_ALUNO;
 	}
 		
 	// ALTERAR
@@ -98,21 +102,25 @@ public class ControllerAlunos {
 	// LOGIN
 	public String login() {
 		this.dao = new AlunoDAO();
-		String login = this.dao.login(this.aluno);
-		if(login.equals("ok")) // LOGIN EFETUADO
-			return "/list/listaProvasAluno"; 
-		else if(login.equals("rgm")) { // ERRO DE RGM
+		String loginAttemptStatus = this.dao.login(this.aluno);
+		
+		if(loginAttemptStatus.equals("ok")) 
+			return "/list/listaProvasAluno";
+		
+		else if(loginAttemptStatus.equals("rgm")) { 
 				FacesContext ctx = FacesContext.getCurrentInstance();
 				ctx.addMessage("messages", new FacesMessage("RGM incorreto, tente novamente. Caso não consiga se lembrar entre em contato conosco: jadircmj@hotmail.com"));
-			} else if(login.equals("senha")) { // ERRO DE SENHA
+			
+			} else if(loginAttemptStatus.equals("senha")) { 
 					FacesContext ctx = FacesContext.getCurrentInstance();
 					ctx.addMessage("messages", new FacesMessage("SENHA incorreta, tente novamente. Caso não consiga se lembrar entre em contato conosco: jadircmj@hotmail.com"));
-				} else if(login.equals("unverified")) { // USER NAO VERIFICOU EMAIL
+				
+				} else if(loginAttemptStatus.equals("unverified")) {
 						this.email.sendEmailVerificacao(this.aluno); // ENVIANDO EMAIL NOVAMENTE
 						this.renderEmailAluno = true; // MSG SERA RENDERIZADA PARA O ALUNO
-						return "/user-tools/emailEnviado";
+						return PAGINA_EMAIL_ENVIADO;
 					}
-		return "/login/loginAluno";
+		return PAGINA_LOGIN_ALUNO;
 	}
 	
 	// AUTENTICA 
@@ -134,23 +142,23 @@ public class ControllerAlunos {
 	}
 	
 	// RECUPERAR SENHA 
-	public String recuperarSenha() throws Exception {
+	public String recuperarSenha() throws IOException {
 		
 		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
 		FacesContext ctx = FacesContext.getCurrentInstance();
 		
 		// RESPOSTA DA DIV DO RECAPTCHA
-		this.gRecaptchaResponse = req.getParameter("g-recaptcha-response");
+		userRecaptchaResponse = req.getParameter("g-recaptcha-response");
 
 		// RECAPTCHA NAO CHECADO
-		if(this.gRecaptchaResponse.equals("")) { 
+		if(userRecaptchaResponse.equals("")) { 
 			ctx.addMessage("messages", new FacesMessage("QUASE só falta você dizer que não é um robô!"));
-			return "/user-tools/recuperarSenhaAluno";
+			return PAGINA_RECUPERAR_SENHA_ALUNO;
 		}
 		// RECAPTCHA ROBO (false = robot / true = people)
-		else if(!VerifyRecaptcha.verify(this.gRecaptchaResponse)) {
+		else if(!VerifyRecaptcha.verify(userRecaptchaResponse)) {
 			ctx.addMessage("messages", new FacesMessage("CLIQUE EM: 'não sou um robô', para confirmar que você é uma pessoa!"));
-			return "/user-tools/recuperarSenhaAluno";
+			return PAGINA_RECUPERAR_SENHA_ALUNO;
 		}	
 		
 		this.dao = new AlunoDAO();
@@ -164,7 +172,7 @@ public class ControllerAlunos {
 			else
 				ctx.addMessage("messages", new FacesMessage("RGM não coincide com o nome, dúvidas entre em contato conosco: jadircmj@hotmail.com"));
 
-		return "/user-tools/recuperarSenhaAluno";		
+		return PAGINA_RECUPERAR_SENHA_ALUNO;		
 	}
 	
 	// OBTER NOME ALUNO
@@ -194,7 +202,7 @@ public class ControllerAlunos {
 	// LOG OFF
 	public String quit() {
 		init();
-		return "/login/loginAluno";
+		return PAGINA_LOGIN_ALUNO;
 	}
 	
 	// GETTERS AND SETTERS
