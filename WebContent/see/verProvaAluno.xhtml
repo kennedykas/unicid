@@ -9,89 +9,113 @@
       
 	<!-- HEAD -->
 	<ui:include src="../componentes/head/head.xhtml" />
-<h:body>
+<h:body class="grey lighten-4">
+
 	<!-- NAVBAR -->
 	<ui:include src="../componentes/header/navbarAluno.xhtml" />
 	
-	<div class="container">
-		<h:form id="showProva" styleClass="loading">			
+	<div class="container mainContent">
+		<h:form id="showProva" styleClass="loading" onsubmit="checkFormValidity(this)">			
 		
-			<!-- TITULO -->
-			<h2><h:outputText value="#{controllerProvas.prova.titulo}"/></h2>
-			
-			<!-- QUESTOES -->
-			<h:dataTable 
-				binding="#{table}" 
-				value="#{controllerQuestoes.getListaQuestoes(controllerProvas.prova.questoes)}" 
-				var="dados"
-				class="table table-striped" >
-				
-				<h:column>
-					<!-- PERGUNTA E VALOR -->
-					<h5 style="padding:5px 15px 15px 5px">
-						<h:outputText 
-							value="VALOR: #{controllerProvas.prova.valorQuestoes} /  QUESTÃO #{table.rowIndex + 1}: " 
-							class="text-info"/>
-						<br/><br/>
-						<h:outputText value="#{dados.pergunta}"/>
-					</h5>
-					<br/>
-					<!-- ALTERNATIVAS -->
-					<h:selectOneRadio 
-						value="#{controllerProvas.selectedAnswer}" 
-						a:required="true" 
-						requiredMessage="Selecione uma alternativa." 
-						layout="pageDirection">
+			<div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 0 30px 0">
+		
+				<!-- TITULO -->
+				<h4 class="teal-text center">
+					<h:outputText value="#{controllerProvas.prova.titulo}"/>
+				</h4>
+
+				<!-- QUESTOES -->
+				<h:dataTable 
+					binding="#{table}" 
+					value="#{controllerQuestoes.getListaQuestoes(controllerProvas.prova.questoes)}" 
+					var="dados" 
+					class="striped">
+		
+					<h:column>
+					
+						<!-- NUMERO DA QUESTAO, VALOR E QUESTAO -->
+						<div style="padding:0 20px 0 20px;color:#424242 !important">
+							<h:outputText styleClass="blue-text"
+								value="QUESTÃO #{table.rowIndex + 1}, VALOR: #{controllerProvas.prova.valorQuestoes}  "/>
+							
+							<h:outputText value="#{dados.pergunta}"/>
 						
-					   	<f:selectItem 
-					   		itemValue="A" 
-					   		itemLabel="A) #{dados.alternativaA}" 
-					   		itemDisabled="#{dados.alternativaA eq '' ? true : false}"/>
-					   	<f:selectItem 
-					   		itemValue="B" 
-					   		itemLabel="B) #{dados.alternativaB}" 
-					   		itemDisabled="#{dados.alternativaB eq '' ? true : false}"/>
-					   	<f:selectItem 
-					   		itemValue="C" 
-					   		itemLabel="C) #{dados.alternativaC}" 
-					   		itemDisabled="#{dados.alternativaC eq '' ? true : false}"/>
-					   	<f:selectItem 
-					   		itemValue="D" 
-					   		itemLabel="D) #{dados.alternativaD}" 
-					   		itemDisabled="#{dados.alternativaD eq '' ? true : false}"/>
-					   	<f:selectItem 
-					   		itemValue="E" 
-					   		itemLabel="E) #{dados.alternativaE}" 
-					   		itemDisabled="#{dados.alternativaE eq '' ? true : false}"/>
-						
-						<!-- GET ROW DATA ON QUESTOES MANAGED BEAN -->
-						<f:ajax listener="#{controllerQuestoes.selecionarRegistro()}" />
-						<!-- SET SELECTED ANSWER ON PROVAS MANAGED BEAN-->
-						<f:ajax onevent="change" listener="#{controllerProvas.setResposta(dados.codigo)}"/>
-						
-					</h:selectOneRadio>
-				</h:column>
-			</h:dataTable>
+							
+							<!-- ALTERNATIVAS -->
+							<div style="margin-top:10px">
+								
+								<h:selectOneRadio 
+									value="#{controllerProvas.selectedAnswer}" 
+									a:required="true" 
+									requiredMessage="#{msg['required.answer']}" 
+									layout="pageDirection" styleClass="asd">
+									
+								   	<f:selectItem 
+								   		itemValue="A" 
+								   		itemLabel="A) #{dados.alternativaA}" 
+								   		itemDisabled="#{dados.alternativaA eq '' ? true : false}"/>
+								   	<f:selectItem 
+								   		itemValue="B" 
+								   		itemLabel="B) #{dados.alternativaB}" 
+								   		itemDisabled="#{dados.alternativaB eq '' ? true : false}"/>
+								   	<f:selectItem 
+								   		itemValue="C" 
+								   		itemLabel="C) #{dados.alternativaC}" 
+								   		itemDisabled="#{dados.alternativaC eq '' ? true : false}"/>
+								   	<f:selectItem 
+								   		itemValue="D" 
+								   		itemLabel="D) #{dados.alternativaD}" 
+								   		itemDisabled="#{dados.alternativaD eq '' ? true : false}"/>
+								   	<f:selectItem 
+								   		itemValue="E" 
+								   		itemLabel="E) #{dados.alternativaE}" 
+								   		itemDisabled="#{dados.alternativaE eq '' ? true : false}"/>
+									
+									<!-- GET ROW DATA ON QUESTOES MANAGED BEAN -->
+									<f:ajax listener="#{controllerQuestoes.selecionarRegistro()}" />
+									<!-- SET SELECTED ANSWER ON PROVAS MANAGED BEAN-->
+									<f:ajax onevent="change" listener="#{controllerProvas.setResposta(dados.codigo)}"/>
+									
+								</h:selectOneRadio>
+							</div>
+						</div>
+					</h:column>
+				</h:dataTable>
+			</div>
 						 
 			<!-- INICIANDO CRONOMETRO NO BACKBEAN-->
 			<f:event listener="#{controllerProvasRealizadas.startTimer()}" type="preRenderView"/>
 			
 			<!-- TEMPO/PONTOS -->
-			<div id="tempoRestante" class="alert-warning">
-				<p>VALOR</p>	
+			<div id="tempoRestante" class="teal lighten-1 white-text">
+				<p><h:outputText value="#{msg['upper.value']}"/></p>	
 				<h:outputText value="#{controllerProvas.prova.valorTotal}"/>
-				<hr/>
-				<p>TEMPO</p>
+				<p><h:outputText value="#{msg['upper.time']}"/></p>
 				<h:inputHidden id="minutes" value="#{controllerProvas.prova.tempo}"/> 
 				<h:outputText id="countdown"/> 
 			</div>
 
 			<!-- FINALIZAR TESTE -->
-			<h:commandButton 
-				value="FINALIZAR" 
-				actionListener="#{controllerProvasRealizadas.save()}" 
-				action="/see/gabaritoAluno" 
-				class="btn btn-success finishTest"/>
+   			<div class="fixed-action-btn tooltipped" 
+   				 data-position="left" 
+   				 data-delay="50" 
+   				 data-tooltip="#{msg['upper.finish.test']}">
+				
+				<!-- BOTAO USADO APENAS PARA DAR UM TRIGGER NA VALIDACAO DO HTML 5 -->
+				<button type="submit" class="startHidden"/>
+
+				<button  
+					onclick="checkFormValidity(this.closest('form'))"
+					class="btn-floating btn-large waves-effect waves-light pulse light-green accent-4">
+					
+					<i class="material-icons right">done</i>
+				</button>
+
+				<h:commandButton
+					styleClass="startHidden formActionButton"
+					actionListener="#{controllerProvasRealizadas.save()}" 
+					action="/see/gabaritoAluno"/>
+      			</div>
 		</h:form> 
 	</div>
 		

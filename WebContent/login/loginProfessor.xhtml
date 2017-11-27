@@ -22,18 +22,21 @@
 	            </div>
 	            <div class="row"></div>
 	            
-	            <h:form class="loading" id="login-form" onsubmit="verifyValidity(this)">
+	            <h:form class="loading" id="login-form" onsubmit="checkFormValidity(this)" onkeypress="return event.keyCode != 13;">
 	            
 					<!-- E-MAIL PROFESSOR -->
 		            <div class="input-field row">
 						<h:inputText 
 							id="email" 
 							value="#{controllerProfessores.professor.emailProfessor}" 
-							class="emailField" 
+							class="validate" 
 							a:type="email" 
 							a:required="true" 
 							requiredMessage="#{msg['required.email']}"/>
-						<h:outputLabel value="#{msg['upper.email']}" for="email" />
+						
+						<label for="email" data-error="#{msg['invalid.email']}">
+							<h:outputText value="#{msg['upper.email']}"/>
+						</label>
 					</div>
 					
 					<!-- SENHA -->
@@ -44,7 +47,10 @@
 							a:minlength="4" 
 							a:required="true" 
 							requiredMessage="#{msg['required.password']}"/>
-						<h:outputLabel value="#{msg['upper.password']}" for="senha"/>
+						
+						<label for="senha" data-error="#{msg['invalid.password']}">
+							<h:outputText value="#{msg['upper.password']}"/>
+						</label>
 					</div>
 					
 					<!-- MENSAGENS DE ERRO -->
@@ -57,7 +63,7 @@
 						<button type="submit" class="startHidden"/>
 	
 						<button  
-							onclick="verifyValidity(this.closest('form'))"
+							onclick="checkFormValidity(this.closest('form'))"
 							class="row btn waves-effect waves-light">
 							<h:outputText value="#{msg['upper.get.in']}"/>
 							<i class="material-icons right">send</i>

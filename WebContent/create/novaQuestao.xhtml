@@ -22,7 +22,7 @@
 		       	</h5>
 		    </div>
 		          
-		    <h:form id="questao" class="loading row" onsubmit="verifyValidity(this)">
+		    <h:form id="questao" class="loading row" onsubmit="checkFormValidity(this)">
 		          
 			  	<!-- LIMPA O BEAN DE QUESTOES -->
 				<f:event listener="#{controllerQuestoes.init()}" type="preRenderView"/>
@@ -40,7 +40,7 @@
 					<button type="submit" class="startHidden"/>
 
 					<button  
-						onclick="verifyValidity(this.closest('form'))"
+						onclick="checkFormValidity(this.closest('form'))"
 						class="btn-floating btn-large waves-effect waves-light deep-purple pulse">
 						
 						<i class="material-icons right">save</i>

@@ -32,10 +32,17 @@ public class ControllerAlunos {
 	private boolean  renderEmailAluno = false;  
 	private DataModel<Aluno> listaAluno;
 
-	private static final String PAGINA_NOVO_ALUNO            = "/create/novoAluno";
-	private static final String PAGINA_EMAIL_ENVIADO         = "/user-tools/emailEnviado";
-	private static final String PAGINA_LOGIN_ALUNO           = "/login/loginAluno";
-	private static final String PAGINA_RECUPERAR_SENHA_ALUNO = "/user-tools/recuperarSenhaAluno";
+	private static final String PAGE_NEW_STUDENT             = "/create/novoAluno";
+	private static final String PAGE_EMAIL_SENT              = "/user-tools/emailEnviado";
+	private static final String PAGE_LOGIN_STUDENT           = "/login/loginAluno";
+	private static final String PAGE_RECOVER_STUDENT_PASS    = "/user-tools/recuperarSenhaAluno";
+	private static final String WRONG_RGM                    = "RGM incorreto, tente novamente. Caso nÃ£o consiga se lembrar entre em contato conosco: jadircmj@hotmail.com";
+	private static final String WRONG_PASSWORD               = "SENHA incorreta, tente novamente. Caso nÃ£o consiga se lembrar entre em contato conosco: jadircmj@hotmail.com";
+	private static final String FORGET_CHECK_RECAPTCHA       = "QUASE sÃ³ falta vocÃª dizer que nÃ£o Ã© um robÃ´!";
+	private static final String RECAPTCHA_FAILED             = "CLIQUE EM: 'nÃ£o sou um robÃ´', para confirmar que vocÃª Ã© uma pessoa!";
+	private static final String EMAIL_WAS_SENT_WITH_PASSWORD = "ENVIAMOS um email com a sua senha, para o endereÃ§o cadastrado. dÃºvidas entre em contato conosco: jadircmj@hotmail.com";
+	private static final String NAME_NOT_FOUND               = "NOME nÃ£o encontrado (maiÃºsculas e minÃºsculas nÃ£o interferem), dÃºvidas entre em contato conosco: jadircmj@hotmail.com";
+	private static final String UNKNOWN_RGM                  = "RGM nÃ£o coincide com o nome, dÃºvidas entre em contato conosco: jadircmj@hotmail.com";
 	
 	@ManagedProperty(value="#{controllerCursos}")
 	private ControllerCursos cursosBean;
@@ -62,13 +69,13 @@ public class ControllerAlunos {
 
 		// RECAPTCHA NAO CHECADO
 		if(this.userRecaptchaResponse.equals("")) { 
-			ctx.addMessage("messages", new FacesMessage("QUASE só falta você dizer que não é um robô!"));
-			return PAGINA_NOVO_ALUNO;
+			ctx.addMessage("messages", new FacesMessage(FORGET_CHECK_RECAPTCHA));
+			return PAGE_LOGIN_STUDENT;
 		}
 		// RECAPTCHA ROBO (false = robot / true = people)
 		else if(!VerifyRecaptcha.verify(userRecaptchaResponse)) {
-			ctx.addMessage("messages", new FacesMessage("CLIQUE EM: 'não sou um robô', para confirmar que você é uma pessoa!"));
-			return PAGINA_NOVO_ALUNO;
+			ctx.addMessage("messages", new FacesMessage(RECAPTCHA_FAILED));
+			return PAGE_LOGIN_STUDENT;
 		}		
 		
 		this.date = new Date();
@@ -79,9 +86,9 @@ public class ControllerAlunos {
 		if(this.dao.salvar(this.aluno)) { // IF ALUNO SALVO COM SUCESSO ENTAO ELE RECEBE UM EMAIL
 			this.email.sendEmailVerificacao(this.aluno); // PASSANDO O ALUNO PARA Q ELE RECEBA O EMAIL
 			this.renderEmailAluno = true; // MSG SERA RENDERIZADA PARA O ALUNO
-			return PAGINA_EMAIL_ENVIADO;
+			return PAGE_EMAIL_SENT;
 		}
-		return PAGINA_NOVO_ALUNO;
+		return PAGE_NEW_STUDENT;
 	}
 		
 	// ALTERAR
@@ -109,18 +116,18 @@ public class ControllerAlunos {
 		
 		else if(loginAttemptStatus.equals("rgm")) { 
 				FacesContext ctx = FacesContext.getCurrentInstance();
-				ctx.addMessage("messages", new FacesMessage("RGM incorreto, tente novamente. Caso não consiga se lembrar entre em contato conosco: jadircmj@hotmail.com"));
+				ctx.addMessage("messages", new FacesMessage(WRONG_RGM));
 			
 			} else if(loginAttemptStatus.equals("senha")) { 
 					FacesContext ctx = FacesContext.getCurrentInstance();
-					ctx.addMessage("messages", new FacesMessage("SENHA incorreta, tente novamente. Caso não consiga se lembrar entre em contato conosco: jadircmj@hotmail.com"));
+					ctx.addMessage("messages", new FacesMessage(WRONG_PASSWORD));
 				
 				} else if(loginAttemptStatus.equals("unverified")) {
 						this.email.sendEmailVerificacao(this.aluno); // ENVIANDO EMAIL NOVAMENTE
 						this.renderEmailAluno = true; // MSG SERA RENDERIZADA PARA O ALUNO
-						return PAGINA_EMAIL_ENVIADO;
+						return PAGE_EMAIL_SENT;
 					}
-		return PAGINA_LOGIN_ALUNO;
+		return PAGE_LOGIN_STUDENT;
 	}
 	
 	// AUTENTICA 
@@ -138,7 +145,7 @@ public class ControllerAlunos {
 		if(this.dao.autentica(this.aluno))
 			return "Pronto!";
 		
-		return "Algo não aconteceu como o esperado!";		
+		return "Algo nÃ£o aconteceu como o esperado!";		
 	}
 	
 	// RECUPERAR SENHA 
@@ -152,13 +159,13 @@ public class ControllerAlunos {
 
 		// RECAPTCHA NAO CHECADO
 		if(userRecaptchaResponse.equals("")) { 
-			ctx.addMessage("messages", new FacesMessage("QUASE só falta você dizer que não é um robô!"));
-			return PAGINA_RECUPERAR_SENHA_ALUNO;
+			ctx.addMessage("messages", new FacesMessage(FORGET_CHECK_RECAPTCHA));
+			return PAGE_RECOVER_STUDENT_PASS;
 		}
 		// RECAPTCHA ROBO (false = robot / true = people)
 		else if(!VerifyRecaptcha.verify(userRecaptchaResponse)) {
-			ctx.addMessage("messages", new FacesMessage("CLIQUE EM: 'não sou um robô', para confirmar que você é uma pessoa!"));
-			return PAGINA_RECUPERAR_SENHA_ALUNO;
+			ctx.addMessage("messages", new FacesMessage(RECAPTCHA_FAILED));
+			return PAGE_RECOVER_STUDENT_PASS;
 		}	
 		
 		this.dao = new AlunoDAO();
@@ -166,13 +173,13 @@ public class ControllerAlunos {
 		
 		if(resultado.equals("ok")) { // ALUNO FOI ENCONTRADO
 			this.email.sendEmailSenha(this.aluno); // ENVIANDO EMAIL SENHA
-			ctx.addMessage("messages", new FacesMessage("ENVIAMOS um email com a sua senha, para o endereço cadastrado. dúvidas entre em contato conosco: jadircmj@hotmail.com"));
+			ctx.addMessage("messages", new FacesMessage(EMAIL_WAS_SENT_WITH_PASSWORD));
 		} else if(resultado.equals("nome")) 
-				ctx.addMessage("messages", new FacesMessage("NOME não encontrado (maiúsculas e minúsculas não interferem), dúvidas entre em contato conosco: jadircmj@hotmail.com"));
+				ctx.addMessage("messages", new FacesMessage(NAME_NOT_FOUND));
 			else
-				ctx.addMessage("messages", new FacesMessage("RGM não coincide com o nome, dúvidas entre em contato conosco: jadircmj@hotmail.com"));
+				ctx.addMessage("messages", new FacesMessage(UNKNOWN_RGM));
 
-		return PAGINA_RECUPERAR_SENHA_ALUNO;		
+		return PAGE_RECOVER_STUDENT_PASS;		
 	}
 	
 	// OBTER NOME ALUNO
@@ -202,7 +209,7 @@ public class ControllerAlunos {
 	// LOG OFF
 	public String quit() {
 		init();
-		return PAGINA_LOGIN_ALUNO;
+		return PAGE_LOGIN_STUDENT;
 	}
 	
 	// GETTERS AND SETTERS

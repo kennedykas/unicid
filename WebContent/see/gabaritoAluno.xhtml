@@ -8,32 +8,35 @@
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
       
 	<!-- HEAD -->
-	<ui:include src="../componentes/head/head.xhtml" />
-<h:body>
+	<ui:include src="../componentes/head/head.xhtml"/>
+<h:body class="grey lighten-4">
+
 	<!-- NAVBAR -->
-	<ui:include src="../componentes/header/navbarAluno.xhtml" />
+	<ui:include src="../componentes/header/navbarAluno.xhtml"/>
 	
-	<div class="container">
+	<div class="container mainContent">
 		<h:form styleClass="loading">
 		
-			<!-- TITULO -->
-			<h2><h:outputText value="#{controllerProvas.prova.titulo}"/></h2>
-			
 			<!-- NOTA -->
-         	<h3>
-         		Sua nota foi de 
-         		<h:outputText value="#{controllerProvasRealizadas.provasBean.getProva().getNota()}"/> 
-         		pontos.
-         	</h3>
+         	<h4>
+         		<h:outputText value="#{msg['upper.grade']}: "/> 
+         		<h:outputText value="#{controllerProvasRealizadas.provasBean.getProva().getNota()} "/>
+         		<h:outputText value="#{msg['upper.of']} "/>
+         		<h:outputText value="#{controllerProvasRealizadas.provasBean.getProva().getValorTotal()}"/> 
+         	</h4>
 			
 			<!-- GABARITO -->
 			<ui:include src="../componentes/form/formGabarito.xhtml" />
 			
 			<!-- FECHAR -->	
-			<h:commandButton 
-				value="OK" 
-				action="/list/listaProvasRealizadasAluno" 
-				class="btn btn-success finishTest" />
+			<div class="fixed-action-btn tooltipped" 
+				data-position="left" data-delay="50" data-tooltip="#{msg['upper.close']}">
+				<h:link
+					outcome="/list/listaProvasRealizadasAluno" 
+					class="btn-floating btn-large waves-effect waves-light red">
+					<i class="material-icons right">close</i>
+				</h:link>
+			</div>
 		</h:form>
 	</div>
 		

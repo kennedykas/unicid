@@ -138,7 +138,7 @@ public class AlunoDAO {
 			ps.setInt(1, codigo);
 			rs = ps.executeQuery();
 			
-			return (rs.next()) ? rs.getString(2) : "Nome não encontrado";  			
+			return (rs.next()) ? rs.getString(2) : "Nome nï¿½o encontrado";  			
 		});
 	}
 

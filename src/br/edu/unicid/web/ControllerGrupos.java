@@ -50,12 +50,12 @@ public class ControllerGrupos {
 
 		// RECAPTCHA NAO CHECADO
 		if(this.gRecaptchaResponse.equals("")) { 
-			ctx.addMessage("messages", new FacesMessage("QUASE só falta você dizer que não é um robô!"));
+			ctx.addMessage("messages", new FacesMessage("QUASE sï¿½ falta vocï¿½ dizer que nï¿½o ï¿½ um robï¿½!"));
 			return "/create/novoGrupo";
 		}
 		// RECAPTCHA ROBO (false = robot / true = people)
 		else if(!VerifyRecaptcha.verify(this.gRecaptchaResponse)) {
-			ctx.addMessage("messages", new FacesMessage("CLIQUE EM: 'não sou um robô', para confirmar que você é uma pessoa!"));
+			ctx.addMessage("messages", new FacesMessage("CLIQUE EM: 'nï¿½o sou um robï¿½', para confirmar que vocï¿½ ï¿½ uma pessoa!"));
 			return "/create/novoGrupo";
 		}	
 		
@@ -70,7 +70,7 @@ public class ControllerGrupos {
 		InputStream input = grupo.getArquivo().getInputStream();
 		byte[] file = IOUtils.toByteArray(input); // Apache commons IO.
 		grupo.setBytes(file);
-		grupo.setNomeArquivo(grupo.getArquivo().getSubmittedFileName());
+		//grupo.setNomeArquivo(grupo.getArquivo().getSubmittedFileName());
 	}
 	
 	public void alterar() throws IOException {
@@ -91,12 +91,12 @@ public class ControllerGrupos {
 		// NOME DO GRUPO ERRADO
 		else if(login.equals("nome")) { 
 				FacesContext ctx = FacesContext.getCurrentInstance();
-				ctx.addMessage("messages", new FacesMessage("NOME DA EQUIPE incorreto (maiúsculas e minusculas não fazem diferença tanto faz ex: Equipe como EQUIPE), tente novamente. Caso não consiga se lembrar entre em contato conosco: jadircmj@hotmail.com"));
+				ctx.addMessage("messages", new FacesMessage("NOME DA EQUIPE incorreto (maiï¿½sculas e minusculas nï¿½o fazem diferenï¿½a tanto faz ex: Equipe como EQUIPE), tente novamente. Caso nï¿½o consiga se lembrar entre em contato conosco: jadircmj@hotmail.com"));
 			
 			// SENHA INCORRETA
 			} else { 
 				FacesContext ctx = FacesContext.getCurrentInstance();
-				ctx.addMessage("messages", new FacesMessage("SENHA incorreta, tente novamente. Caso não consiga se lembrar entre em contato conosco: jadircmj@hotmail.com"));
+				ctx.addMessage("messages", new FacesMessage("SENHA incorreta, tente novamente. Caso nï¿½o consiga se lembrar entre em contato conosco: jadircmj@hotmail.com"));
 			}
 		return "/login/loginGrupo";
 	}

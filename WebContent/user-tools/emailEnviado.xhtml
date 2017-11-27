@@ -23,13 +23,13 @@
 			
 					<!-- TIPO DE USER ALUNO -->
 					<h:panelGroup rendered="#{controllerAlunos.renderEmailAluno}"> 
-						<h4>
+						<h5>
 							Enviamos um email para 
 							<span class="red darken-1">
-								<strong><h:outputText value="#{controllerAlunos.aluno.email}"/></strong>
+								<strong class="white-text"><h:outputText value="#{controllerAlunos.aluno.email}, "/></strong>
 							</span> 
-							, acesse-o clicando no icone abaixo para confirmar o seu cadastro.
-						</h4>
+							acesse-o clicando no icone abaixo para confirmar o seu cadastro.
+						</h5>
 						<br/>
 						
 						<div class="center-align">
@@ -62,13 +62,13 @@
 					
 					 <!-- TIPO DE USER PROFESSOR -->
 					<h:panelGroup rendered="#{controllerProfessores.renderEmailProfessor}">
-						<h4>
+						<h5>
 							Enviamos um email para 
 							<span class="red darken-1">
-								<strong><h:outputText value="#{controllerProfessores.professor.emailProfessor}"/></strong>,
+								<strong class="white-text"><h:outputText value="#{controllerProfessores.professor.emailProfessor}, "/></strong>
 							</span> 
 							acesse-o clicando no icone abaixo para confirmar o seu cadastro.
-						</h4>
+						</h5>
 						<br/>
 		
 						<div class="center-align">

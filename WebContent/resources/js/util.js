@@ -27,7 +27,7 @@ function init(){
 	// masking the fields
 	$(".cpf")    .mask("999.999.999-99");
 	$(".date")   .mask("99/99/9999-99:99",{placeholder:"DD/MM/AAAA-HH:MM"});
-	$(".number") .val(null); // the null here is to prevent the default value
+	$(".number") .val(null); // the null here is to prevent the default value 0
 	$(".celular").mask("(99) 99999-9999");
 	
 	// facemessage links (making they work)
@@ -65,23 +65,20 @@ function init(){
 //   VERIFY IS A FORM IS VALID BEFORE SUBMIT
 //  
 //   @param  the form that will be validated
-//   @usedIn novaQuestao.xhtml
+//   @usedIn almost all pages
 //---------------------------------------------
-function verifyValidity(form) {
-	
-	// if the form isn't right filled the submit button 
-	// click will be fired to show html5 form validation 
+function checkFormValidity(form) {
+	 
 	if(!form[0].checkValidity())
 		form.find(':submit').click();
 	else
-		// when the form is ok the button with the controller action is fired
 		$('.formActionButton').click(); 
 }
 
 //---------------------------------------------
 //        SHOW PAGE LOADING ANIMATION
 //---------------------------------------------
-$(".loading").on("submit", function(){
+$(".loading").on("submit", function() {
 	$('.loaderContainer').fadeIn(2800);
 });
 
@@ -118,7 +115,7 @@ $(".cpf").on("keyup", function(){
 
 	// CHECA OS CPFs INVALIDOS MAIS COMUNS
     if (cpf == '' || cpf.length != 11 || cpf == "00000000000" || cpf == "11111111111" || cpf == "22222222222" || cpf == "33333333333" ||	cpf == "44444444444" || cpf == "55555555555" ||	cpf == "66666666666" || cpf == "77777777777" ||	cpf == "88888888888" || cpf == "99999999999") {
-    	$('.cpf').css({ 'border':'1px solid red'});
+    	$('.cpf').addClass('invalid');
     	return false;
     }
     // VALIDA O PRIMEIRO DIGITO
@@ -129,7 +126,7 @@ $(".cpf").on("keyup", function(){
         if (rev == 10 || rev == 11)     
             rev = 0;    
         if (rev != parseInt(cpf.charAt(9))) {
-        	$('.cpf').css({ 'border':'1px solid red'});
+        	$('.cpf').addClass('invalid');
         	return false;
         }     
     // VALIDA O SEGUNDO DIGITO
@@ -140,23 +137,23 @@ $(".cpf").on("keyup", function(){
     if (rev == 10 || rev == 11) 
         rev = 0;    
     if (rev != parseInt(cpf.charAt(10))) {
-    	$('.cpf').css({ 'border':'1px solid red'});
+    	$('.cpf').addClass('invalid');
     	return false;
     }
     // CASO ESTEJA TUDO CORRETO
-    $('.cpf').css({ 'border':'1px solid green'});
+    $('.cpf').removeClass('invalid').addClass('valid');
     return true;
 });
 
 //--------------------------------------------------------------------------- 
-//     CHECA SE PASSWORDS CORRESPONDEM NOS DOIS CAMPOS (logins, newUsers)
+//     CHECA SE PASSWORDS CORRESPONDEM NOS DOIS CAMPOS (newUsers)
 //---------------------------------------------------------------------------
 $(".password").on("keyup", function(){
 	if($('.password1').val() != $('.password2').val()) {
-		$('.password1, .password2').css({ 'border':'1px solid red'});
+		$('.password1, .password2').addClass('invalid');
 		$('.submit').prop("disabled",true);
 	} else {
-		$('.password1, .password2').css({ 'border':'1px solid green'});
+		$('.password1, .password2').removeClass('invalid').addClass('valid');
 		$('.submit').prop("disabled",false);
 	}
 });

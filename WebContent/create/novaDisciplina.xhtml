@@ -24,7 +24,7 @@
 	            </div>
 	            <div class="row"></div>
 	            
-	            <h:form class="loading" onsubmit="verifyValidity(this)">
+	            <h:form class="loading" onsubmit="checkFormValidity(this)">
 					
 					<!-- FORMULARIO DISCIPLINA -->  
 					<ui:include src="../componentes/form/professor/formDisciplina.xhtml" />
@@ -39,7 +39,7 @@
 						<button type="submit" class="startHidden"/>
 	
 						<button  
-							onclick="verifyValidity(this.closest('form'))"
+							onclick="checkFormValidity(this.closest('form'))"
 							class="btn-floating btn-large waves-effect waves-light deep-purple pulse">
 							
 							<i class="material-icons right">save</i>

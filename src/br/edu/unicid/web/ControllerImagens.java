@@ -39,7 +39,7 @@ public class ControllerImagens {
 			// OBTEM A IMG QUE ESTA TEMPORARIAMENTE ARMAZANADA NO SERVIDOR
 			InputStream input = this.selectedImage.getInputStream(); 
 			this.imagem.setImagem(IOUtils.toByteArray(input)); // OBTEM OS BYTES DA IMG
-			this.imagem.setNomeImagem(this.selectedImage.getSubmittedFileName());
+			//this.imagem.setNomeImagem(this.selectedImage.getSubmittedFileName());
 		
 		} catch (IOException e) { e.printStackTrace(); }
 		

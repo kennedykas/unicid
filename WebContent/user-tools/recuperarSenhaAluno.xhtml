@@ -28,27 +28,35 @@
 					<div class="input-field row">
 						<h:inputText 
 							id="nome" 
+							styleClass="validate"
 							value="#{controllerAlunos.aluno.nome}" 
 							a:minlenght="4" 
 							a:required="true" 
 							a:maxlength="350" 
 							a:placeholder="#{msg['upper.name']}" 
 							requiredMessage="#{msg['required.name']}"/>
-						<h:outputLabel value="#{msg['upper.name']}" for="nome"/>																													
+						
+						<label for="nome" data-error="#{msg['invalid.name']}">
+							<h:outputText value="#{msg['upper.name']}"/>
+						</label>																													
 					</div>
 					
 					<!-- RGM -->
 					<div class="input-field row">
 						<h:inputText 
 							id="rgm" 
+							styleClass="validate number"
 							value="#{controllerAlunos.aluno.rgm}" 
-							class="numberField" 
 							a:required="true" 
 							a:maxlength="8" 
-							a:minlength="8" 
+							a:minlength="5"
+							a:type="number" 
 							a:placeholder="#{msg['upper.rgm']}" 
 							requiredMessage="#{msg['required.rgm']}"/>
-						<h:outputLabel value="#{msg['upper.rgm']}" for="rgm" />
+						
+						<label for="rgm" data-error="#{msg['invalid.rgm']}">
+							<h:outputText value="#{msg['upper.rgm']}"/>
+						</label>
 					</div>
 					
 					<!-- GOOGLE CAPTCHA -->

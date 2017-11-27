@@ -22,30 +22,37 @@
 	            </div>
 	            <div class="row"></div>
 	            
-	            <h:form class="loading" onsubmit="verifyValidity(this)">
+	            <h:form class="loading" onsubmit="checkFormValidity(this)" onkeypress="return event.keyCode != 13;">
 		          
 		            <!-- RGM -->
 		            <div class="input-field row">
 						<h:inputText 
-							id="rgm" 
+							id="rgm"
 							value="#{controllerAlunos.aluno.rgm}" 
-							class="number" 
+							class="number validate" 
 							a:required="true" 
 							a:maxlength="8" 
-							a:minlength="8" 
+							a:minlength="5" 
 							requiredMessage="#{msg['required.rgm']}"/>
-						<h:outputLabel value="#{msg['upper.rgm']}" for="rgm" />
+						
+						<label for="rgm" data-error="#{msg['invalid.rgm']}">
+							<h:outputText value="#{msg['upper.rgm']}"/>
+						</label>
 					</div>
 					
 					<!-- SENHA -->
 					<div class="input-field row">
 						<h:inputSecret 
-							id="senha" 
+							id="senha"
+							styleClass="validate" 
 							value="#{controllerAlunos.aluno.senha}" 
 							a:minlength="4" 
 							a:required="true" 
 							requiredMessage="#{msg['required.password']}"/>
-						<h:outputLabel value="#{msg['upper.password']}" for="senha"/>
+						
+						<label for="senha" data-error="#{msg['invalid.password']}">
+							<h:outputText value="#{msg['upper.password']}"/>
+						</label>
 					</div>
 					
 					<!-- MENSSAGENS DE ERRO -->
@@ -58,7 +65,7 @@
 						<button type="submit" class="startHidden"/>
 	
 						<button  
-							onclick="verifyValidity(this.closest('form'))"
+							onclick="checkFormValidity(this.closest('form'))"
 							class="row btn waves-effect waves-light">
 							<h:outputText value="#{msg['upper.get.in']}"/>
 							<i class="material-icons right">send</i>

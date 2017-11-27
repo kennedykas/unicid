@@ -3,6 +3,7 @@
     xmlns:f="http://java.sun.com/jsf/core" 
     xmlns:h="http://xmlns.jcp.org/jsf/html" 
     xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
     xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
 	<nav class="nav-extended teal lighten-1">
@@ -52,40 +53,43 @@
 			</ul>
 	    </div>
 	    <div class="nav-content">
-	    	<h:form>
+<!-- 	    	<h:form> -->
 		      <ul class="tabs tabs-transparent">
 		        <li class="tab">
-					<h:commandLink action="/list/listaProvasRealizadasProfessor" class="navItem">
+					<h:link outcome="/list/listaProvasRealizadasProfessor" styleClass="navItem">
 						<h:outputText value="#{msg['upper.students']}"/>
-					</h:commandLink>
+					</h:link>
 				</li>
 				<li class="tab">
-					<h:commandLink action="/list/listaDisciplinas" class="navItem">
+					<h:link outcome="/list/listaDisciplinas" styleClass="navItem">
 						<h:outputText value="#{msg['upper.disciplines']}"/>
-					</h:commandLink>
+					</h:link>
 				</li>
 				<li class="tab">
-					<h:commandLink action="/list/listaProvasProfessor" class="navItem">
+					<p:link href="/list/listaProvasProfessor" styleClass="navItem">
 						<h:outputText value="#{msg['upper.tests']}"/>
-					</h:commandLink>
+					</p:link>
+					<h:link outcome="/list/listaProvasProfessor" styleClass="navItem">
+						<h:outputText value="#{msg['upper.tests']}"/>
+					</h:link>
 				</li>
 				<li class="tab">
-					<h:commandLink action="/list/listaQuestoes" class="navItem">
+					<h:link outcome="/list/listaQuestoes" styleClass="navItem">
 						<h:outputText value="#{msg['upper.questions']}"/>
-					</h:commandLink>
+					</h:link>
 				</li>
 				<li class="tab">
-					<h:commandLink action="/list/listaGrupos" class="navItem">
+					<h:link outcome="/list/listaGrupos" styleClass="navItem">
 						<h:outputText value="#{msg['upper.groups']}"/>
-					</h:commandLink>
+					</h:link>
 				</li>
 				<li class="tab">
-					<h:commandLink action="/list/listaCursos" class="navItem">
+					<h:link outcome="/list/listaCursos" styleClass="navItem">
 						<h:outputText value="#{msg['upper.courses']}"/>
-					</h:commandLink>
+					</h:link>
 				</li>
 		      </ul>
-	    	</h:form>
+<!-- 	    	</h:form> -->
 	    </div>
 	</nav>
     

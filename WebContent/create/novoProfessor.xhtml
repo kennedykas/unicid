@@ -22,20 +22,21 @@
 	            </div>
 	            <div class="row"></div>
 	            
-	            <h:form class="loading">
+	            <h:form class="loading" onkeypress="return event.keyCode != 13;">
 					
 					<!-- NOME DO PROFESSOR -->
 		            <div class="input-field row">
 						<h:inputText 
 							id="nome" 
 							value="#{controllerProfessores.professor.nomeProfessor}" 
-							class="emailField" 
-							a:type="email" 
+							class="validate" 
 							a:maxlength="400" 
 							a:minlength="4" 
 							a:required="true" 
 							requiredMessage="#{msg['required.teacher.name']}"/>
-						<h:outputLabel value="#{msg['upper.name']}" for="nome" />
+						<label for="nome" data-error="#{msg['invalid.name']}">
+							<h:outputText value="#{msg['upper.name']}"/>
+						</label>
 					</div>
 					
 					<!-- E-MAIL PROFESSOR -->
@@ -43,11 +44,13 @@
 						<h:inputText
 							id="email" 
 							value="#{controllerProfessores.professor.emailProfessor}" 
-							class="emailField" 
+							class="validate" 
 							a:required="true" 
 							a:type="email" 
 							requiredMessage="#{msg['required.email']}"/>
-						<h:outputLabel value="#{msg['upper.email']}" for="email" />
+						<label for="email" data-error="#{msg['invalid.email']}">
+							<h:outputText value="#{msg['upper.email']}"/>
+						</label>
 					</div>			
 					
 					<!-- SENHA PROFESSOR -->
@@ -55,11 +58,13 @@
 						<h:inputSecret 
 							id="senha" 
 							value="#{controllerProfessores.professor.senhaProfessor}" 
-							class="password password1" 
+							class="password password1 validate" 
 							a:minlength="4" 
 							a:required="true" 
 							requiredMessage="#{msg['required.password']}"/>
-						<h:outputLabel value="#{msg['upper.password']}" for="senha"/>
+						<label for="senha" data-error="#{msg['invalid.password']}">
+							<h:outputText value="#{msg['upper.password']}"/>
+						</label>
 					</div>
 								
 					<!-- SENHA PROFESSOR -->
@@ -70,7 +75,9 @@
 							a:minlength="4" 
 							a:required="true" 
 							requiredMessage="#{msg['required.confirm.password']}"/>
-						<h:outputLabel value="#{msg['upper.confirm.password']}" for="senha2"/>
+						<label for="senha2" data-error="#{msg['invalid.password']}">
+							<h:outputText value="#{msg['upper.confirm.password']}"/>
+						</label>
 					</div>
 							
 					<!-- GOOGLE CAPTCHA -->
@@ -83,7 +90,7 @@
 				
 					<!-- BOTAO ENVIAR -->
 					<div class="center">
-						<button type="submit" class="row btn waves-effect waves-light" 
+						<button type="submit" class="row btn waves-effect waves-light submit" 
 							onclick="return $(this.closest('form')).valid() ? $('#submit').click() : false;">
 							<h:commandButton 
 								action="#{controllerProfessores.save}" 

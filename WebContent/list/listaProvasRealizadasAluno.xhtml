@@ -8,61 +8,76 @@
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
       
 	<!-- HEAD -->
-	<ui:include src="../componentes/head/head.xhtml" />
-<h:body>
+	<ui:include src="../componentes/head/head.xhtml"/>
+<h:body class="grey lighten-4">
+
 	<!-- NAVBAR -->
-	<ui:include src="../componentes/header/navbarAluno.xhtml" />
+	<ui:include src="../componentes/header/navbarAluno.xhtml"/>
 	
 	<div class="container">
-		<h2>Essas são as provas que você ja fez.</h2>
-		
-		<h:form styleClass="loading">
-			<h:dataTable 
-				value="#{controllerProvasRealizadas.getProvasRealizadas(controllerAlunos.aluno.codigo)}" 
-				var="dados" 
-				class="table table-striped">
-				
-				<!-- TITULO --> 
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="TITULO DA PROVA" />
-					</f:facet>
-					<h:outputText value="#{controllerProvas.getTitulo(dados.codProva)}" />
-				</h:column>
-
-				<!-- VALOR TOTAL --> 
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="VALOR TOTAL" />
-					</f:facet>
-					<h:outputText value="#{controllerProvas.getValorTotal(dados.codProva)}" />
-				</h:column>
-				
-				<!-- NOTA -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="NOTA" />
-					</f:facet>
-					<h:outputText value="#{dados.nota}" />
-				</h:column>
-				
-				<!-- TEMPO -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="TEMPO" />
-					</f:facet>
-					<h:outputText value="#{dados.tempo}" />
-				</h:column>
 	
-				<!-- DATA -->
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="DATA. REALIZAÇÃO" />
-					</f:facet>
-					<h:outputText value="#{dados.data}"/>
-				</h:column>
-			</h:dataTable>
-		</h:form>
+		<!-- CASO NAO HAJA PROVAS A SEREM LISTADAS -->
+  		<h:panelGroup rendered="#{controllerProvasRealizadas.getProvasRealizadas(controllerAlunos.aluno.codigo).getRowCount() eq 0 ? true : false}">
+ 			
+ 			<h:outputText
+ 				class="grey-text" 
+ 				value="#{msg['nothing.found']}" 
+ 				style="font-size:1.5em"/>
+  		</h:panelGroup>		
+		
+		<!-- LISTA AS PROVAS -->	
+		<h:panelGroup rendered="#{controllerProvasRealizadas.getProvasRealizadas(controllerAlunos.aluno.codigo).getRowCount() eq 0 ? false : true}">
+			<div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
+				<h:form styleClass="loading">		
+				
+					<h:dataTable 
+						value="#{controllerProvasRealizadas.getProvasRealizadas(controllerAlunos.aluno.codigo)}" 
+						var="dados" 
+						class="striped">
+						
+						<!-- TITULO --> 
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.test.title']}" />
+							</f:facet>
+							<h:outputText value="#{controllerProvas.getTitulo(dados.codProva)}" />
+						</h:column>
+		
+						<!-- VALOR TOTAL --> 
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.total.value']}" />
+							</f:facet>
+							<h:outputText value="#{controllerProvas.getValorTotal(dados.codProva)}" />
+						</h:column>
+						
+						<!-- NOTA -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.grade']}" />
+							</f:facet>
+							<h:outputText value="#{dados.nota}" />
+						</h:column>
+						
+						<!-- TEMPO -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.time']}" />
+							</f:facet>
+							<h:outputText value="#{dados.tempo}" />
+						</h:column>
+			
+						<!-- DATA -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.realization.date']}" />
+							</f:facet>
+							<h:outputText value="#{dados.data}"/>
+						</h:column>
+					</h:dataTable>
+				</h:form>
+			</div>
+		</h:panelGroup>
 	</div>
 		
 	<!-- FOOTER -->

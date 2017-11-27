@@ -27,6 +27,18 @@ public class ControllerProfessores {
 	private boolean renderEmailProfessor = false; 
 	private String  gRecaptchaResponse;
 	
+	private static final String PAGE_NEW_PROFSSOR            = "/create/novoProfessor";
+	private static final String PAGE_EMAIL_SENT              = "/user-tools/emailEnviado";
+	private static final String PAGE_LIST_QUESTIONS          = "/list/listaQuestoes";
+	private static final String PAGE_LOGIN_PROFSSOR          = "/login/loginProfessor";
+	private static final String PAGE_RECOVER_PROF_PASSWORD   = "/user-tools/recuperarSenhaProfessor";
+	private static final String WRONG_EMAIL                  = "EMAIL incorreto, tente novamente. Caso nÃ£o consiga se lembrar entre em contato conosco: jadircmj@hotmail.com";
+	private static final String WRONG_PASSWORD               = "SENHA incorreta, tente novamente. Caso nÃ£o consiga se lembrar entre em contato conosco: jadircmj@hotmail.com";
+	private static final String FORGET_CHECK_RECAPTCHA       = "QUASE sÃ³ falta vocÃª dizer que nÃ£o Ã© um robÃ´!";
+	private static final String RECAPTCHA_FAILED             = "CLIQUE EM: 'nÃ£o sou um robÃ´', para confirmar que vocÃª Ã© uma pessoa!";
+	private static final String EMAIL_WAS_SENT_WITH_PASSWORD = "ENVIAMOS um email com a sua senha, para o endereÃ§o cadastrado. dÃºvidas entre em contato conosco: jadircmj@hotmail.com";
+	private static final String NAME_NOT_FOUND               = "NOME nÃ£o encontrado (maiÃºsculas e minÃºsculas nÃ£o interferem), dÃºvidas entre em contato conosco: jadircmj@hotmail.com";
+	
 	public ControllerProfessores() {}
 	
 	@PostConstruct
@@ -46,13 +58,13 @@ public class ControllerProfessores {
 
 		// RECAPTCHA NAO CHECADO
 		if(this.gRecaptchaResponse.equals("")) { 
-			ctx.addMessage("messages", new FacesMessage("QUASE só falta você dizer que não é um robô!"));
-			return "/create/novoProfessor";
+			ctx.addMessage("messages", new FacesMessage(FORGET_CHECK_RECAPTCHA));
+			return PAGE_NEW_PROFSSOR;
 		}
 		// RECAPTCHA ROBO (false = robot / true = people)
 		else if(!VerifyRecaptcha.verify(this.gRecaptchaResponse)) {
-			ctx.addMessage("messages", new FacesMessage("CLIQUE EM: 'não sou um robô', para confirmar que você é uma pessoa!"));
-			return "/create/novoProfessor";
+			ctx.addMessage("messages", new FacesMessage(RECAPTCHA_FAILED));
+			return PAGE_NEW_PROFSSOR;
 		}	
 				
 		dao = new ProfessorDAO();
@@ -60,9 +72,9 @@ public class ControllerProfessores {
 		if(dao.salvar(professor)) { // IF PROFESSOR SALVO COM SUCESSO ELE RECEBE UM EMAIL
 			this.email.sendEmailVerificacao(this.professor); // PASSANDO O PROFESSOR PARA Q ELE RECEBA O EMAIL
 			this.renderEmailProfessor = true; // MSG SERA RENDERIZADA PARA O PROFESSOR
-			return "/user-tools/emailEnviado"; 
+			return PAGE_EMAIL_SENT; 
 		}
-		return "/create/novoProfessor";
+		return PAGE_NEW_PROFSSOR;
 	}
 	
 	// LOGIN
@@ -73,27 +85,27 @@ public class ControllerProfessores {
 	
 		// LOGIN EFETUADO
 		if(login.equals("ok"))  
-			return "/list/listaQuestoes";
+			return PAGE_LIST_QUESTIONS;
 		
 		// EMAIL ERRADO
 		else if(login.equals("email")) { 
 				FacesContext ctx = FacesContext.getCurrentInstance();
-				ctx.addMessage("messages", new FacesMessage("EMAIL incorreto, tente novamente. Caso não consiga se lembrar entre em contato conosco: jadircmj@hotmail.com"));
-				return "/login/loginProfessor";
+				ctx.addMessage("messages", new FacesMessage(WRONG_EMAIL));
+				return PAGE_LOGIN_PROFSSOR;
 			
 			// SENHA INCORRETA	
 			} else if(login.equals("senha")) { 
 					FacesContext ctx = FacesContext.getCurrentInstance();
-					ctx.addMessage("messages", new FacesMessage("SENHA incorreta, tente novamente. Caso não consiga se lembrar entre em contato conosco: jadircmj@hotmail.com"));
-					return "/login/loginProfessor";
+					ctx.addMessage("messages", new FacesMessage(WRONG_PASSWORD));
+					return PAGE_LOGIN_PROFSSOR;
 				
 				// EMAIL NAO VERIFICADO		
 				} else if(login.equals("unverified")) { 
 						this.email.sendEmailVerificacao(this.professor); // ENVIANDO EMAIL NOVAMENTE
 						this.renderEmailProfessor = true; // MSG SERA RENDERIZADA PARA O PROFESSOR
-						return "/user-tools/emailEnviado";
+						return PAGE_EMAIL_SENT;
 					} else 
-						return "/user-tools/loginProfessor";
+						return PAGE_LOGIN_PROFSSOR;
 	}
 	
 	// AUTENTICA 
@@ -107,7 +119,7 @@ public class ControllerProfessores {
 		if(this.dao.autenticar(this.professor))
 			return "Pronto!";
 		
-		return "Algo não aconteceu como o esperado!";		
+		return "Algo nÃ£o aconteceu como o esperado!";		
 	}
 	
 	// RECUPERAR SENHA 
@@ -121,13 +133,13 @@ public class ControllerProfessores {
 
 		// RECAPTCHA NAO CHECADO
 		if(this.gRecaptchaResponse.equals("")) { 
-			ctx.addMessage("messages", new FacesMessage("QUASE só falta você dizer que não é um robô!"));
-			return "pretty:senhaProfessor";
+			ctx.addMessage("messages", new FacesMessage(FORGET_CHECK_RECAPTCHA));
+			return PAGE_RECOVER_PROF_PASSWORD;
 		}
 		// RECAPTCHA ROBO (false = robot / true = people)
 		else if(!VerifyRecaptcha.verify(this.gRecaptchaResponse)) {
-			ctx.addMessage("messages", new FacesMessage("CLIQUE EM: 'não sou um robô', para confirmar que você é uma pessoa!"));
-			return "pretty:senhaProfessor";
+			ctx.addMessage("messages", new FacesMessage(RECAPTCHA_FAILED));
+			return PAGE_RECOVER_PROF_PASSWORD;
 		}	
 		
 		this.dao = new ProfessorDAO();
@@ -135,17 +147,17 @@ public class ControllerProfessores {
 		
 		if(resultado.equals("ok")) { // ALUNO FOI ENCONTRADO
 			this.email.sendEmailSenha(this.professor); // ENVIANDO EMAIL SENHA
-			ctx.addMessage("messages", new FacesMessage("ENVIAMOS um email com a sua senha, para o endereço cadastrado. dúvidas entre em contato conosco: jadircmj@hotmail.com"));
+			ctx.addMessage("messages", new FacesMessage(EMAIL_WAS_SENT_WITH_PASSWORD));
 		} else if(resultado.equals("nome")) 
-				ctx.addMessage("messages", new FacesMessage("NOME não encontrado (maiúsculas e minúsculas não interferem), dúvidas entre em contato conosco: jadircmj@hotmail.com"));
+				ctx.addMessage("messages", new FacesMessage(NAME_NOT_FOUND));
 
-		return "/user-tools/recuperarSenhaProfessor";		
+		return PAGE_RECOVER_PROF_PASSWORD;		
 	}
 	
 	// QUIT FROM APP
 	public String quit() {
 		init();
-		return "/login/loginProfessor";
+		return PAGE_LOGIN_PROFSSOR;
 	}
 	
 	// RENDERIZADOR DE ICONE DE EMAIL 

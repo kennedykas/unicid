@@ -28,11 +28,11 @@ input[type="radio"]{margin-left: 30px}
 #tempoRestante {
  	position: fixed;
  	right: 0;
- 	top: 40vh;
-	padding: 10px;
+ 	top: 28vh;
+	padding: 5px;
 	text-align: center
 }
-.finishTest, .selectTeacher {
+.selectTeacher {
  	width: 40%;
  	margin-left: 30%;
  	margin-bottom: 60px
@@ -53,10 +53,6 @@ body > .container { min-height: 78vh }
 	font-weight: bold;
 	font-size: 20px }
 
-/* ----------- ALERTS ---------- */
-.alert { list-style: none }
-
-
 /* ------ LOADER SPINNER ------ */
 .loaderContainer {
 	position: fixed;
@@ -65,36 +61,4 @@ body > .container { min-height: 78vh }
 	height: 100vh;
 	z-index: 50;
 	background-color: #fff;
-}
-.loadingMessage {
-    position:absolute;
-    width: 180px;
-    top: 55%;
-    left: calc(50vw - 80px);
-}    
-.spinner {
-  width: 40px;
-  height: 40px;
-  margin: 45vh auto;
-  background-color: #48BA9F;
-  border-radius: 100%;  
-  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
-  animation: sk-scaleout 1.0s infinite ease-in-out;
-}
-@-webkit-keyframes sk-scaleout {
-  0% { -webkit-transform: scale(0) }
-  100% {
-    -webkit-transform: scale(1.0);
-    opacity: 0;
-  }
-}
-@keyframes sk-scaleout {
-  0% { 
-    -webkit-transform: scale(0);
-    transform: scale(0);
-  } 100% {
-    -webkit-transform: scale(1.0);
-    transform: scale(1.0);
-    opacity: 0;
-  }
 }
