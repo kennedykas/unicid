@@ -1,5 +1,6 @@
 package br.edu.unicid.web;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,24 +21,25 @@ import br.edu.unicid.util.VerifyRecaptcha;
 @SessionScoped
 public class ControllerProfessores {
 
+	// AUXILIAR PARA RENDERIZAR MSG DE EMAIL ENVIADO
+	private boolean      renderEmailProfessor = Boolean.FALSE; 
 	private Professor    professor;
 	private ProfessorDAO dao;
 	private Email        email;
-	// AUXILIAR PARA RENDERIZAR MSG DE EMAIL ENVIADO
-	private boolean renderEmailProfessor = false; 
-	private String  gRecaptchaResponse;
-	
-	private static final String PAGE_NEW_PROFSSOR            = "/create/novoProfessor";
-	private static final String PAGE_EMAIL_SENT              = "/user-tools/emailEnviado";
-	private static final String PAGE_LIST_QUESTIONS          = "/list/listaQuestoes";
-	private static final String PAGE_LOGIN_PROFSSOR          = "/login/loginProfessor";
-	private static final String PAGE_RECOVER_PROF_PASSWORD   = "/user-tools/recuperarSenhaProfessor";
-	private static final String WRONG_EMAIL                  = "EMAIL incorreto, tente novamente. Caso não consiga se lembrar entre em contato conosco: jadircmj@hotmail.com";
-	private static final String WRONG_PASSWORD               = "SENHA incorreta, tente novamente. Caso não consiga se lembrar entre em contato conosco: jadircmj@hotmail.com";
-	private static final String FORGET_CHECK_RECAPTCHA       = "QUASE só falta você dizer que não é um robô!";
-	private static final String RECAPTCHA_FAILED             = "CLIQUE EM: 'não sou um robô', para confirmar que você é uma pessoa!";
-	private static final String EMAIL_WAS_SENT_WITH_PASSWORD = "ENVIAMOS um email com a sua senha, para o endereço cadastrado. dúvidas entre em contato conosco: jadircmj@hotmail.com";
-	private static final String NAME_NOT_FOUND               = "NOME não encontrado (maiúsculas e minúsculas não interferem), dúvidas entre em contato conosco: jadircmj@hotmail.com";
+	private String       gRecaptchaResponse;
+	private static final String PAGE_NEW_PROFSSOR        = "/create/novoProfessor";
+	private static final String PAGE_EMAIL_SENT          = "/user-tools/emailEnviado";
+	private static final String PAGE_LIST_QUESTIONS      = "/list/listaQuestoes";
+	private static final String PAGE_LOGIN_PROFSSOR      = "/login/loginProfessor";
+	private static final String PAGE_RECOVER_PROF_PASS   = "/user-tools/recuperarSenhaProfessor";
+	private static final String WRONG_EMAIL              = "EMAIL incorreto.";
+	private static final String WRONG_PASS               = "SENHA incorreta.";
+	private static final String FORGET_CHECK_RECAPTCHA   = "QUASE só falta você dizer que não é um robô!";
+	private static final String RECAPTCHA_FAILED         = "CLIQUE EM: 'não sou um robô', para confirmar que você é uma pessoa!";
+	private static final String EMAIL_WAS_SENT_WITH_PASS = "ENVIAMOS um email com a sua senha, para o endereço cadastrado. dúvidas entre em contato conosco: jadircmj@hotmail.com";
+	private static final String NAME_NOT_FOUND           = "NOME não encontrado (maiúsculas e minúsculas não interferem), dúvidas entre em contato conosco: jadircmj@hotmail.com";
+	private static final String FACE_MESSAGES_ID         = "messages";
+	private static final String SUCCESS                  = "ok";
 	
 	public ControllerProfessores() {}
 	
@@ -48,7 +50,7 @@ public class ControllerProfessores {
 	}
 	
 	// SAVE
-	public String save() throws Exception {
+	public String save() throws IOException {
 
 		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
 		FacesContext ctx = FacesContext.getCurrentInstance();
@@ -57,13 +59,13 @@ public class ControllerProfessores {
 		this.gRecaptchaResponse = req.getParameter("g-recaptcha-response");
 
 		// RECAPTCHA NAO CHECADO
-		if(this.gRecaptchaResponse.equals("")) { 
-			ctx.addMessage("messages", new FacesMessage(FORGET_CHECK_RECAPTCHA));
+		if(this.gRecaptchaResponse.isEmpty()) { 
+			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(FORGET_CHECK_RECAPTCHA));
 			return PAGE_NEW_PROFSSOR;
 		}
 		// RECAPTCHA ROBO (false = robot / true = people)
 		else if(!VerifyRecaptcha.verify(this.gRecaptchaResponse)) {
-			ctx.addMessage("messages", new FacesMessage(RECAPTCHA_FAILED));
+			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(RECAPTCHA_FAILED));
 			return PAGE_NEW_PROFSSOR;
 		}	
 				
@@ -84,19 +86,19 @@ public class ControllerProfessores {
 		String login = this.dao.login(this.professor);
 	
 		// LOGIN EFETUADO
-		if(login.equals("ok"))  
+		if(login.equals(SUCCESS))  
 			return PAGE_LIST_QUESTIONS;
 		
 		// EMAIL ERRADO
 		else if(login.equals("email")) { 
 				FacesContext ctx = FacesContext.getCurrentInstance();
-				ctx.addMessage("messages", new FacesMessage(WRONG_EMAIL));
+				ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(WRONG_EMAIL));
 				return PAGE_LOGIN_PROFSSOR;
 			
 			// SENHA INCORRETA	
 			} else if(login.equals("senha")) { 
 					FacesContext ctx = FacesContext.getCurrentInstance();
-					ctx.addMessage("messages", new FacesMessage(WRONG_PASSWORD));
+					ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(WRONG_PASS));
 					return PAGE_LOGIN_PROFSSOR;
 				
 				// EMAIL NAO VERIFICADO		
@@ -123,7 +125,7 @@ public class ControllerProfessores {
 	}
 	
 	// RECUPERAR SENHA 
-	public String recuperarSenha() throws Exception {
+	public String recuperarSenha() throws IOException {
 		
 		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
 		FacesContext ctx = FacesContext.getCurrentInstance();
@@ -132,26 +134,26 @@ public class ControllerProfessores {
 		this.gRecaptchaResponse = req.getParameter("g-recaptcha-response");
 
 		// RECAPTCHA NAO CHECADO
-		if(this.gRecaptchaResponse.equals("")) { 
-			ctx.addMessage("messages", new FacesMessage(FORGET_CHECK_RECAPTCHA));
-			return PAGE_RECOVER_PROF_PASSWORD;
+		if(this.gRecaptchaResponse.isEmpty()) { 
+			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(FORGET_CHECK_RECAPTCHA));
+			return PAGE_RECOVER_PROF_PASS;
 		}
 		// RECAPTCHA ROBO (false = robot / true = people)
 		else if(!VerifyRecaptcha.verify(this.gRecaptchaResponse)) {
-			ctx.addMessage("messages", new FacesMessage(RECAPTCHA_FAILED));
-			return PAGE_RECOVER_PROF_PASSWORD;
+			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(RECAPTCHA_FAILED));
+			return PAGE_RECOVER_PROF_PASS;
 		}	
 		
 		this.dao = new ProfessorDAO();
 		String resultado = this.dao.recuperarSenha(this.professor); 
 		
-		if(resultado.equals("ok")) { // ALUNO FOI ENCONTRADO
+		if(resultado.equals(SUCCESS)) { // ALUNO FOI ENCONTRADO
 			this.email.sendEmailSenha(this.professor); // ENVIANDO EMAIL SENHA
-			ctx.addMessage("messages", new FacesMessage(EMAIL_WAS_SENT_WITH_PASSWORD));
+			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(EMAIL_WAS_SENT_WITH_PASS));
 		} else if(resultado.equals("nome")) 
-				ctx.addMessage("messages", new FacesMessage(NAME_NOT_FOUND));
+				ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(NAME_NOT_FOUND));
 
-		return PAGE_RECOVER_PROF_PASSWORD;		
+		return PAGE_RECOVER_PROF_PASS;		
 	}
 	
 	// QUIT FROM APP
@@ -169,7 +171,7 @@ public class ControllerProfessores {
 	public List<SelectItem> professores() {
 		dao = new ProfessorDAO();
 
-		List<SelectItem> items = new ArrayList<SelectItem>();
+		List<SelectItem> items = new ArrayList<>();
 		List<Professor> professorList = dao.professores();
 	    
 		for(Professor professor: professorList)

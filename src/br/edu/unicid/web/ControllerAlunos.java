@@ -29,26 +29,28 @@ public class ControllerAlunos {
 	private Date     date; // TO KNOW WHEN THE USER IS REGISTERED
 	private String   userRecaptchaResponse;
 	// AUX PARA RENDERIZAR MSG DE EMAIL ENVIADO
-	private boolean  renderEmailAluno = false;  
+	private boolean  renderEmailAluno = Boolean.FALSE;  
 	private DataModel<Aluno> listaAluno;
 
-	private static final String PAGE_NEW_STUDENT             = "/create/novoAluno";
-	private static final String PAGE_EMAIL_SENT              = "/user-tools/emailEnviado";
-	private static final String PAGE_LOGIN_STUDENT           = "/login/loginAluno";
-	private static final String PAGE_RECOVER_STUDENT_PASS    = "/user-tools/recuperarSenhaAluno";
-	private static final String WRONG_RGM                    = "RGM incorreto, tente novamente. Caso não consiga se lembrar entre em contato conosco: jadircmj@hotmail.com";
-	private static final String WRONG_PASSWORD               = "SENHA incorreta, tente novamente. Caso não consiga se lembrar entre em contato conosco: jadircmj@hotmail.com";
-	private static final String FORGET_CHECK_RECAPTCHA       = "QUASE só falta você dizer que não é um robô!";
-	private static final String RECAPTCHA_FAILED             = "CLIQUE EM: 'não sou um robô', para confirmar que você é uma pessoa!";
-	private static final String EMAIL_WAS_SENT_WITH_PASSWORD = "ENVIAMOS um email com a sua senha, para o endereço cadastrado. dúvidas entre em contato conosco: jadircmj@hotmail.com";
-	private static final String NAME_NOT_FOUND               = "NOME não encontrado (maiúsculas e minúsculas não interferem), dúvidas entre em contato conosco: jadircmj@hotmail.com";
-	private static final String UNKNOWN_RGM                  = "RGM não coincide com o nome, dúvidas entre em contato conosco: jadircmj@hotmail.com";
+	private static final String PAGE_NEW_STUDENT          = "/create/novoAluno";
+	private static final String PAGE_EMAIL_SENT           = "/user-tools/emailEnviado";
+	private static final String PAGE_LOGIN_STUDENT        = "/login/loginAluno";
+	private static final String PAGE_RECOVER_STUDENT_PASS = "/user-tools/recuperarSenhaAluno";
+	private static final String WRONG_RGM                 = "RGM incorreto.";
+	private static final String WRONG_PASS                = "SENHA incorreta.";
+	private static final String FORGET_CHECK_RECAPTCHA    = "QUASE só falta você dizer que não é um robô!";
+	private static final String RECAPTCHA_FAILED          = "CLIQUE EM: 'não sou um robô', para confirmar que você é uma pessoa!";
+	private static final String EMAIL_WAS_SENT_WITH_PASS  = "ENVIAMOS um email com a sua senha, para o endereço cadastrado. dúvidas entre em contato conosco: jadircmj@hotmail.com";
+	private static final String NAME_NOT_FOUND            = "NOME não encontrado (maiúsculas e minúsculas não interferem), dúvidas entre em contato conosco: jadircmj@hotmail.com";
+	private static final String UNKNOWN_RGM               = "RGM não coincide com o nome, dúvidas entre em contato conosco: jadircmj@hotmail.com";
+	private static final String FACE_MESSAGES_ID          = "messages";
+	
+	private final DateFormat DATA = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
 	
 	@ManagedProperty(value="#{controllerCursos}")
 	private ControllerCursos cursosBean;
 	
 	// DATEFORMAT PARA SABER A HORA EM QUE O ALUNO FOI SALVO
-	private DateFormat data = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
 
 	public ControllerAlunos() {}
 		
@@ -68,18 +70,18 @@ public class ControllerAlunos {
 		this.userRecaptchaResponse = req.getParameter("g-recaptcha-response");
 
 		// RECAPTCHA NAO CHECADO
-		if(this.userRecaptchaResponse.equals("")) { 
-			ctx.addMessage("messages", new FacesMessage(FORGET_CHECK_RECAPTCHA));
+		if(this.userRecaptchaResponse.isEmpty()) { 
+			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(FORGET_CHECK_RECAPTCHA));
 			return PAGE_LOGIN_STUDENT;
 		}
 		// RECAPTCHA ROBO (false = robot / true = people)
 		else if(!VerifyRecaptcha.verify(userRecaptchaResponse)) {
-			ctx.addMessage("messages", new FacesMessage(RECAPTCHA_FAILED));
+			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(RECAPTCHA_FAILED));
 			return PAGE_LOGIN_STUDENT;
 		}		
 		
 		this.date = new Date();
-		this.aluno.setData(this.data.format(date)); // SETA DATA EM QUE O ALUNO ESTA SENDO SALVO
+		this.aluno.setData(DATA.format(date)); // SETA DATA EM QUE O ALUNO ESTA SENDO SALVO
 		
 		this.dao = new AlunoDAO();
 		this.aluno.setCodCurso(this.cursosBean.getCurso().getCodigo()); // SET COD CURSO SELECIONADO NO BEAN
@@ -102,7 +104,7 @@ public class ControllerAlunos {
 		dao = new AlunoDAO();
 		if(dao.excluir(aluno.getCodigo())) { 
 			FacesContext ctx = FacesContext.getCurrentInstance();
-			ctx.addMessage("messages", new FacesMessage("Aluno excluido!"));				
+			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage("Aluno excluido!"));				
 		}
 	}
 	
@@ -116,11 +118,11 @@ public class ControllerAlunos {
 		
 		else if(loginAttemptStatus.equals("rgm")) { 
 				FacesContext ctx = FacesContext.getCurrentInstance();
-				ctx.addMessage("messages", new FacesMessage(WRONG_RGM));
+				ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(WRONG_RGM));
 			
 			} else if(loginAttemptStatus.equals("senha")) { 
 					FacesContext ctx = FacesContext.getCurrentInstance();
-					ctx.addMessage("messages", new FacesMessage(WRONG_PASSWORD));
+					ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(WRONG_PASS));
 				
 				} else if(loginAttemptStatus.equals("unverified")) {
 						this.email.sendEmailVerificacao(this.aluno); // ENVIANDO EMAIL NOVAMENTE
@@ -158,13 +160,13 @@ public class ControllerAlunos {
 		userRecaptchaResponse = req.getParameter("g-recaptcha-response");
 
 		// RECAPTCHA NAO CHECADO
-		if(userRecaptchaResponse.equals("")) { 
-			ctx.addMessage("messages", new FacesMessage(FORGET_CHECK_RECAPTCHA));
+		if(userRecaptchaResponse.isEmpty()) { 
+			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(FORGET_CHECK_RECAPTCHA));
 			return PAGE_RECOVER_STUDENT_PASS;
 		}
 		// RECAPTCHA ROBO (false = robot / true = people)
 		else if(!VerifyRecaptcha.verify(userRecaptchaResponse)) {
-			ctx.addMessage("messages", new FacesMessage(RECAPTCHA_FAILED));
+			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(RECAPTCHA_FAILED));
 			return PAGE_RECOVER_STUDENT_PASS;
 		}	
 		
@@ -173,11 +175,11 @@ public class ControllerAlunos {
 		
 		if(resultado.equals("ok")) { // ALUNO FOI ENCONTRADO
 			this.email.sendEmailSenha(this.aluno); // ENVIANDO EMAIL SENHA
-			ctx.addMessage("messages", new FacesMessage(EMAIL_WAS_SENT_WITH_PASSWORD));
+			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(EMAIL_WAS_SENT_WITH_PASS));
 		} else if(resultado.equals("nome")) 
-				ctx.addMessage("messages", new FacesMessage(NAME_NOT_FOUND));
+				ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(NAME_NOT_FOUND));
 			else
-				ctx.addMessage("messages", new FacesMessage(UNKNOWN_RGM));
+				ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(UNKNOWN_RGM));
 
 		return PAGE_RECOVER_STUDENT_PASS;		
 	}

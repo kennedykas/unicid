@@ -50,18 +50,20 @@
 			</ul>
 	    </div>
 	    <div class="nav-content">
-			<ul class="tabs tabs-transparent">
-				<li class="tab">
-					<h:link outcome="/list/listaProvasAluno" class="link">
-						<h:outputText value="#{msg['upper.tests.to.do']}"/>
-					</h:link>
-				</li>
-				<li class="tab">
-					<h:link outcome="/list/listaProvasRealizadasAluno" class="link">
-						<h:outputText value="#{msg['upper.made.tests']}"/>
-					</h:link>
-				</li>
-			</ul>
+    		<h:form>
+	      		<ul class="tabs tabs-transparent">
+					<li class="tab">
+						<h:commandLink action="/list/listaProvasAluno" styleClass="navItem" a:data-page="tests-to-do">
+							<h:outputText value="#{msg['upper.tests.to.do']}"/>
+						</h:commandLink>
+					</li>
+					<li class="tab">
+						<h:commandLink action="/list/listaProvasRealizadasAluno" styleClass="navItem" a:data-page="student-made-tests">
+							<h:outputText value="#{msg['upper.made.tests']}"/>
+						</h:commandLink>
+					</li>
+				</ul>
+			</h:form>
 		</div>
 	</nav>
     

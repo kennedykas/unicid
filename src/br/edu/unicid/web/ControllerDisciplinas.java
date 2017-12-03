@@ -20,19 +20,19 @@ import br.edu.unicid.dao.DisciplinaDAO;
 @SessionScoped
 public class ControllerDisciplinas {
 
-	private DisciplinaDAO dao;
-	private Disciplina disciplina;
-	private DataModel<Disciplina> listaDisciplina;
+	private DisciplinaDAO         dao;
+	private Disciplina            disciplina;
+	private DataModel<Disciplina> listaDisciplinas;
+	private static final String   FACE_MESSAGES_ID        = "messages";
+	private static final String   PAGE_LIST_DISCIPLINES   = "/list/listaDisciplinas";
+	private static final String   PAGE_UPDATE_DISCIPLINES = "/list/alterarDisciplina";
 	
-	// BEAN CURSOS
 	@ManagedProperty(value="#{controllerCursos}")
 	private ControllerCursos cursoBean;
 	
-	// BEAN PROFESSORES
 	@ManagedProperty(value="#{controllerProfessores}")
 	private ControllerProfessores professorBean;
 	
-	// BEAN DISCIPLINA CURSO
 	@ManagedProperty(value="#{controllerDisciplinaCurso}")
 	private ControllerDisciplinaCurso disciplinaCursoBean;
 	
@@ -45,7 +45,7 @@ public class ControllerDisciplinas {
 	
 	// SAVE
 	public void saveDisciplineAndPrepareDisciplineCourse() {
-		this.disciplina.setCodProfessor(this.professorBean.getProfessor().getCodigo()); // SET COD PROFESSOR
+		this.disciplina.setCodProfessor(this.professorBean.getProfessor().getCodigo());
 		this.dao = new DisciplinaDAO();
 
 		int codigoDisciplina = this.dao.salvar(this.disciplina);
@@ -59,12 +59,16 @@ public class ControllerDisciplinas {
 		
 	// CHANGE
 	public String alterar() {
-		this.disciplinaCursoBean.getDisciplinaCurso().setCodDisciplina(this.disciplina.getCodigo()); 
-		this.dao = new DisciplinaDAO();
+		
+		dao = new DisciplinaDAO();
 
-		if(this.dao.alterar(this.disciplina))
-			return "/list/listaDisciplinas";
-		return "/list/alterarDisciplina";
+		disciplinaCursoBean.getDisciplinaCurso().setCodDisciplina(disciplina.getCodigo()); 
+		disciplinaCursoBean.getDisciplinaCurso()
+			.setCoursesThatDisciplineBelongTo(this.cursoBean.getCurso().getCodigos());
+		
+		if(dao.alterar(disciplina))
+			return PAGE_LIST_DISCIPLINES;
+		return PAGE_UPDATE_DISCIPLINES;
 	}
 	
 	// DELETE
@@ -73,7 +77,7 @@ public class ControllerDisciplinas {
 
 		if(this.dao.excluir(this.disciplina.getCodigo())) { 
 			FacesContext ctx = FacesContext.getCurrentInstance();
-			ctx.addMessage("messages", new FacesMessage("Disciplina Excluida!"));				
+			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage("Disciplina Excluida!"));				
 		}
 	}
 	
@@ -85,30 +89,21 @@ public class ControllerDisciplinas {
 	
 	// GET ROW DATA
 	public void selecionarRegistro() {
-		this.disciplina = this.listaDisciplina.getRowData(); // OBTEM INFORMACOES LINHA SELECIONADA NA DATATABLE
+		this.disciplina = this.listaDisciplinas.getRowData();
 	}
 
 	// GET ALL DISCIPLINAS WHERE COD.PROF. LIKE PROF.
-	public DataModel<Disciplina> getListaDisciplinas(int codProfessor) {
+	public void findDisciplinesByTeachersCode(int codProfessor) {
 		this.dao = new DisciplinaDAO();
 		List<Disciplina> lista = this.dao.todasDisciplinas(codProfessor);
-		this.listaDisciplina = new ListDataModel<>(lista);
-		return this.listaDisciplina;
+		this.listaDisciplinas = new ListDataModel<>(lista);
 	}
-	
-	// GET ALL DISCIPLINAS WHERE COD. CURSO LIKE CURSO ALUNO
-//	public ArrayList<Integer> disciplinasPeloCodigoCurso(int codCurso) {
-//		this.dao = new DisciplinaDAO();
-//		ArrayList<Integer> disciplinas = this.dao.disciplinasPeloCodigoCurso(codCurso);
-//		
-//		return disciplinas;
-//	}
 	
 	// GET COD. AND NAME DISCIPLINA TO FILL SELECTS 	
 	public List<SelectItem> disciplinas(int codProfessor) {
 		this.dao = new DisciplinaDAO();
 		
-		List<SelectItem> items = new ArrayList<SelectItem>();
+		List<SelectItem> items = new ArrayList<>();
 		List<Disciplina> disciplinaList = this.dao.disciplinasPeloCodProfessor(codProfessor);
 
 		for(Disciplina disciplina: disciplinaList)
@@ -123,6 +118,9 @@ public class ControllerDisciplinas {
 	}
 	public void setDisciplina(Disciplina disciplina) {
 		this.disciplina = disciplina;
+	}
+	public DataModel<Disciplina> getListaDisciplinas() {
+		return listaDisciplinas;
 	}
 	public ControllerCursos getCursoBean() {
 		return cursoBean;

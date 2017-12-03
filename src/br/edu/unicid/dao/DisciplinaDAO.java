@@ -70,25 +70,6 @@ public class DisciplinaDAO {
 		});
 	}
 	
-	// LISTA TODAS DISCIPLINAS PELO CODIGO DE DETERMINADO CURSO
-//	public ArrayList<Integer> disciplinasPeloCodigoCurso(int codCurso) {
-//		TransactionManager txManager = new TransactionManager();
-//	    return txManager.doInTransactionWithReturn((connection) -> {
-//			
-//	    	ps = connection.prepareStatement(
-//	    			"SELECT codigo FROM disciplina");
-////			ps.setString(1, "%" + 1 + "%");
-//			rs = ps.executeQuery();
-//			
-//			ArrayList<Integer> codigosDisciplinas = new ArrayList<Integer>();
-//			
-//			while(rs.next()) 
-//				codigosDisciplinas.add(rs.getInt(1));
-//			
-//			return codigosDisciplinas;
-//		});
-//	}
-	
 	// ALTERAR
 	public boolean alterar(Disciplina disciplina) {
 		TransactionManager txManager = new TransactionManager();

@@ -14,10 +14,13 @@
 	<!-- NAVBAR -->
 	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
 	
-	<div class="container">
+	<!-- SEARCHING FOR MADE TESTS IN DATABASE -->
+	<f:event listener="#{controllerProvasRealizadas.findTestsMadeByTeachersStudents(controllerProfessores.professor.codigo)}" type="preRenderView"/>
+	
+	<div class="container mainContent" data-content="professor-made-tests">
 	
 		<!-- LISTA VAZIA -->
-  		<h:panelGroup rendered="#{controllerProvasRealizadas.getListaProvasRealizadas(controllerProfessores.professor.codigo).getRowCount() eq 0 ? true : false}">
+  		<h:panelGroup rendered="#{controllerProvasRealizadas.listaProvasRealizadas.getRowCount() eq 0 ? true : false}">
  			
  			<h:outputText
  				class="grey-text" 
@@ -26,12 +29,12 @@
   		</h:panelGroup>
 		
 		<!-- LISTA DE ALUNOS QUE JA REALIZARAM OS TESTES -->		
-		<h:panelGroup rendered="#{controllerProvasRealizadas.getListaProvasRealizadas(controllerProfessores.professor.codigo).getRowCount() eq 0 ? false : true}">
+		<h:panelGroup rendered="#{controllerProvasRealizadas.listaProvasRealizadas.getRowCount() eq 0 ? false : true}">
 			<div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
 				<h:form styleClass="loading">		
 		
 					<h:dataTable 
-						value="#{controllerProvasRealizadas.getListaProvasRealizadas(controllerProfessores.professor.codigo)}" 
+						value="#{controllerProvasRealizadas.listaProvasRealizadas}" 
 						var="dados" 
 						class="striped">
 				

@@ -6,33 +6,51 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
-	
+
 	<!-- HEAD -->
 	<ui:include src="../componentes/head/head.xhtml" />
-<h:body>
+<h:body class="grey lighten-4">
 	<!-- NAVBAR -->
 	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
 	
-	<div class="container">
-		<h2>Modificar questão</h2>
-		
-		<h:form enctype="multipart/form-data" class="loading" id="questao"> 
+	<div class="container" data-content="questions">
+        <div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
+	        	          
+		    <div class="row">
+		        <h5 class="center">
+		        	<h:outputText value="#{msg['upper.update.question']}"/>
+		       	</h5>
+		    </div>
+		          
+		    <h:form id="questao" class="loading row">
+		          
+			  	<!-- SETA A DISCIPLINA SELECIONADA -->
+				<f:event listener="#{controllerDisciplinas.disciplina.setCodigo(controllerQuestoes.questao.disciplina)}" type="preRenderView"/>
 			
-			<!-- FORMULARIO DE QUESTAO -->
-			<ui:include src="../componentes/form/professor/formQuestao.xhtml" />
+				<!-- FORMULARIO DE QUESTAO -->
+				<ui:include src="../componentes/form/professor/formQuestao.xhtml" />
 				
-			<!-- BOTAO ENVIAR -->
-			<br/>
-			<h:commandButton 
-				value="Alterar" 
-				action="#{controllerQuestoes.alterar()}" 
-				class="submit btn btn-lg btn-primary btn-block"/>
-			<br/>
-			
-		</h:form>
+				<!-- BOTAO SALVAR -->
+    			<div class="fixed-action-btn tooltipped" 
+    				 data-position="left" 
+    				 data-delay="50" 
+    				 data-tooltip="#{msg['upper.save']}">
+					
+					<div class="btn-floating btn-large waves-effect waves-light deep-purple pulse">
+
+						<i class="material-icons right">save</i>
+
+						<h:commandButton
+							style="padding: 21px 28px"
+							styleClass="position-absolute" 
+							action="#{controllerQuestoes.alterar()}"/>
+					</div>
+       			</div>
+			</h:form>
+		</div>
 	</div>
 		
 	<!-- FOOTER -->
 	<ui:include src="../componentes/footer/footer.xhtml" />
 </h:body>
-</html>
+</html> 

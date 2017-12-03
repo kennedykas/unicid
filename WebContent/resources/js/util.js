@@ -1,7 +1,6 @@
 //--------------------------------- 
 //           DOM READY
 //---------------------------------
-//$(document).ready(function() {
 $(document).ready(function(){
 	init();	
 });
@@ -10,7 +9,7 @@ $(document).ready(function(){
 //   AFTER CONTENT LOAD RECALL INIT FOR MATERIALIZE COMPONENTS 
 //---------------------------------------------------------------
 function loadContent(content) {
-	$( ".mainContent" ).load( content, function() {
+	$(".mainContent").load(content,function() {
 	  init();
 	});
 }
@@ -24,6 +23,10 @@ function init(){
 	//initialize all modals           
 	$('.modal').modal();
 	
+
+	// HIDE PAGE LOADING ANIMATION 
+	document.getElementsByClassName('loaderContainer')[0].style.display = 'none';
+
 	// masking the fields
 	$(".cpf")    .mask("999.999.999-99");
 	$(".date")   .mask("99/99/9999-99:99",{placeholder:"DD/MM/AAAA-HH:MM"});
@@ -38,14 +41,18 @@ function init(){
 		$(this).html(h);
 	});
 	
-	// set the current page as selected on navbar
-	var url = window.location; // GET CURRENT URL
-	// remove last active item
-	$('.navItem').find('.active').removeClass('active'); 
-	$('.navItem').each(function () { 
-		if (this.href == url) // SETA ATIVO ITEM COM URL IGUAL A ATUAL
-			$(this).addClass('active');
-	}); 
+	// SET THE CURRENT PAGE AS SSELECTED ON NAVBAR
+	var activeWindow = document.getElementsByClassName('mainContent')[0].getAttribute("data-content");
+	
+	$('.navItem').find('.active').removeClass('active');
+	
+	var links = document.getElementsByClassName('navItem');
+
+	for(var i = 0; i < links.length; i++) {
+		 
+		if (document.getElementsByClassName('navItem')[i].getAttribute('data-page') == activeWindow)
+			document.getElementsByClassName('navItem')[i].classList.add('active');
+	}
 	
 	// email field (.emailField)
 	var testEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -56,24 +63,8 @@ function init(){
 		} else 
 			$(this).css({ 'border':'1px solid red'}); // invalid
 	});
-	
-	// HIDE PAGE LOADING ANIMATION 
-	$('.loaderContainer').hide();
 }
 
-//---------------------------------------------
-//   VERIFY IS A FORM IS VALID BEFORE SUBMIT
-//  
-//   @param  the form that will be validated
-//   @usedIn almost all pages
-//---------------------------------------------
-function checkFormValidity(form) {
-	 
-	if(!form[0].checkValidity())
-		form.find(':submit').click();
-	else
-		$('.formActionButton').click(); 
-}
 
 //---------------------------------------------
 //        SHOW PAGE LOADING ANIMATION
@@ -213,7 +204,7 @@ function display() {
 		seconds = 0; 
 		minutes += 1;
 		alert("Seu tempo acabou as suas respostas foram salvas!")
-		window.location.href="verGabaritoAluno.xhtml";
+		window.location.href="gabaritoAluno.xhtml";
 	} 
 	else 
 		seconds -= 1;

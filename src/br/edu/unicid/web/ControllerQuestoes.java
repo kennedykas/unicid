@@ -23,8 +23,11 @@ public class ControllerQuestoes {
 	private QuestaoDAO dao;
 	private Questao questao;
 	private DataModel<Questao> listaQuestoes;
+	private static final String FACE_MESSAGES_ID     = "messages";
+	private static final String PAGE_LIST_QUESTIONS  = "/list/listaQuestoes";
+	private static final String PAGE_NEW_QUESTION    = "/create/novaQuestao";
+	private static final String PAGE_UPDATE_QUESTION = "/update/alterarQuestao";
 	
-	// BEAN DISCIPLINA
 	@ManagedProperty(value="#{controllerDisciplinas}")
 	private ControllerDisciplinas disciplinaBean;
 	
@@ -42,7 +45,7 @@ public class ControllerQuestoes {
 		
 		this.dao = new QuestaoDAO();
 		
-		return (this.dao.salvar(questao)) ? "/list/listaQuestoes" : "/create/novaQuestao";
+		return (this.dao.salvar(questao)) ? PAGE_LIST_QUESTIONS : PAGE_NEW_QUESTION;
 	}
 		
 	// CHANGE
@@ -52,7 +55,7 @@ public class ControllerQuestoes {
 		
 		dao = new QuestaoDAO();
 
-		return (dao.alterar(questao)) ? "/list/listaQuestoes" : "/update/alterarQuestao";
+		return (dao.alterar(questao)) ? PAGE_LIST_QUESTIONS : PAGE_UPDATE_QUESTION;
 	}
 	
 	// DELETE
@@ -61,35 +64,32 @@ public class ControllerQuestoes {
 
 		if(dao.excluir(questao.getCodigo())) { 
 			FacesContext ctx = FacesContext.getCurrentInstance();
-			ctx.addMessage("messages", new FacesMessage("Quest„o excluida!"));				
+			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage("Quest√£o excluida!"));				
 		}
 	}
 	
 	// GET ROW DATA
 	public void selecionarRegistro() {
-		this.questao = listaQuestoes.getRowData(); // Obtendo as informacoes da linha selecionada
+		this.questao = listaQuestoes.getRowData();
 	}
 	
-	// OBTEM TODAS AS QUESTOES QUE UM PROFESSOR CADASTROU
-	public DataModel<Questao> getListaQuestoes(int codigoProfessor) {
+	
+	public void findQuestionsByTeachersCode(int codigoProfessor) {
 		dao = new QuestaoDAO();
 
 		List<Questao> lista = dao.todasQuestoes(codigoProfessor);
-		this.listaQuestoes = new ListDataModel<Questao>(lista);
-		
-		return this.listaQuestoes;
+		this.listaQuestoes = new ListDataModel<>(lista);
 	}
 	
-	// RETURNING QUESTIONS
-	public DataModel<Questao> getListaQuestoes(String codigosQuestoes) {
+	public DataModel<Questao> findQuestionsByCode(String codigosQuestoes) {
 		int[] codigos = Stream.of(codigosQuestoes.split(",")).mapToInt(Integer::parseInt).toArray();
 		dao = new QuestaoDAO();
-		List<Questao> questoes = new ArrayList<Questao>();
+		List<Questao> questoes = new ArrayList<>();
 		
 		for(int cod : codigos) 
 			questoes.add(this.dao.getQuestao(cod));
 		
-		this.listaQuestoes = new ListDataModel<Questao>(questoes);
+		this.listaQuestoes = new ListDataModel<>(questoes);
 		return this.listaQuestoes;
 	}
 
@@ -99,6 +99,9 @@ public class ControllerQuestoes {
 	}
 	public void setQuestao(Questao questao) {
 		this.questao = questao;
+	}
+	public DataModel<Questao> getListaQuestoes() {
+		return listaQuestoes;
 	}
 	public ControllerDisciplinas getDisciplinaBean() {
 		return disciplinaBean;

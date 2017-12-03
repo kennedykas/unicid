@@ -1,5 +1,7 @@
 package br.edu.unicid.web;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,70 +26,75 @@ import br.edu.unicid.util.Chronometer;
 @SessionScoped
 public class ControllerProvasRealizadas {
 
+	private Timer               timer;         
+	private Date                date;          // TO KNOW WHEN THE USER REALIZED THE TEST
+	private boolean             saveWasCalled; // CHECK SE O TESTE JA FOI SALVO
+	private boolean             timerAlreadyStarted;
+	private Chronometer         chronometer              = new Chronometer();
+	private final DateFormat    data                     = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
+	private ProvasRealizadas    provasRealizadas;
 	private ProvasRealizadasDAO dao;
-	private ProvasRealizadas provasRealizadas;
+	private static final String FACE_MESSAGES_ID         = "messages";
+	private static final String PAGE_LIST_MADE_TESTS     = "/list/listaProvasRealizadasAluno";
+	private static final String PAGE_SEE_CORRECT_ANSWERS = "/see/gabaritoAluno";
+	private static final String MINUTES                  = "m";
+	private static final String SECONDS                  = "s";
+	private static final int    PRECISION_SCALE          = 2;
 	private DataModel<ProvasRealizadas> listaProvasRealizadas;
-	private Timer   timer;         // CRONOMETRO
-	private long    startTime;     // GET NANOSECONDS ON TIMER START
-	private Date    date;          // TO KNOW WHEN THE USER REALIZED THE TEST
-	private boolean saveWasCalled; // CHECK SE O TESTE JA FOI SALVO
-	private boolean timerAlreadyStarted;
-	private Chronometer chronometer = new Chronometer();
 	
-	// PROVAS BEAN
 	@ManagedProperty(value="#{controllerProvas}")
 	private ControllerProvas provasBean;
-	// ALUNOS BEAN
+
 	@ManagedProperty(value="#{controllerAlunos}")
 	private ControllerAlunos alunosBean;
-	
-	// DATEFORMAT PARA SABER A HORA EM QUE O USER FEZ O TESTE
-	private DateFormat data = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
 	
 	public ControllerProvasRealizadas() {}
 
 	@PostConstruct
 	public void init() {
-		this.provasRealizadas = new ProvasRealizadas();
-		this.timer = new Timer();
-		this.saveWasCalled = false;
-		this.timerAlreadyStarted = false;
+		
+		provasRealizadas    = new ProvasRealizadas();
+		timer               = new Timer();
+		saveWasCalled       = Boolean.FALSE;
+		timerAlreadyStarted = Boolean.FALSE;
 	}
 	
-	/** SALVA A PROVA DO ALUNO
-	 * Seta o código da prova, código do professor, código do aluno,
-	 * nota que o aluno pontuol no bean e salva ou atualiza a prova. 
-	 * @param Este método não exige parâmetros ele tem todos os beans 
-	 * necessários injetados então ele só da um get().
-	 * @return Retorna uma String com o nome da página a ser renderizada
-	 */
+	// SALVA A PROVA DO ALUNO
 	public String save() {
 		chronometer.stop();
-		
-		this.provasRealizadas.setTempo(
-				this.chronometer.getMinutes() >= 1 ? 
-				this.chronometer.getMinutes() + "m" : 
-				this.chronometer.getSeconds() + "s");
-		System.out.println(this.provasRealizadas.getTempo());
-		this.provasRealizadas.setCodProva(this.provasBean.getProva().getCodigo());
-		this.provasRealizadas.setCodProfessor(this.provasBean.getProva().getCodProfessor());
-		this.provasRealizadas.setCodAluno(this.alunosBean.getAluno().getCodigo());
-		this.provasRealizadas.setNota(this.provasBean.getProva().getNota());
 		this.date = new Date();
-		this.provasRealizadas.setData(this.data.format(date));
+		
+		this.provasRealizadas.setTempo       (getTempo());
+		this.provasRealizadas.setCodProva    (provasBean.getProva().getCodigo());
+		this.provasRealizadas.setCodProfessor(provasBean.getProva().getCodProfessor());
+		this.provasRealizadas.setCodAluno    (alunosBean.getAluno().getCodigo());
+		this.provasRealizadas.setNota        (provasBean.getProva().getNota());
+		this.provasRealizadas.setData        (this.data.format(date));
 		
 		this.dao = new ProvasRealizadasDAO();
 
 		if (this.dao.salvar(this.provasRealizadas))  
-			return "/see/gabaritoAluno";
+			return PAGE_LIST_MADE_TESTS;
 		else 
-			return "/list/listaProvasRealizadasAluno";
+			return PAGE_SEE_CORRECT_ANSWERS;
+	}
+	
+	public String getTempo() {
+		
+		if (chronometer.getMinutes() >= 1)
+			
+			return new BigDecimal(
+					((Double)(chronometer.getMinutes())).toString()).setScale(PRECISION_SCALE,RoundingMode.HALF_UP).toString() + MINUTES;
+		
+		else
+			return new BigDecimal(
+					((Double)(chronometer.getSeconds())).toString()).setScale(PRECISION_SCALE,RoundingMode.HALF_UP).toString() + SECONDS;
 	}
 
 	// INICIANDO CRONOMETRO
 	public void startTimer() {
 		if(!this.timerAlreadyStarted) {
-			System.out.println("timer started -----------------------------");
+			
 			this.chronometer.start();
 			
 			this.timer.schedule(new TimerTask() {
@@ -95,47 +102,40 @@ public class ControllerProvasRealizadas {
 				public void run() {
 					if(!saveWasCalled) {
 						save();
-						saveWasCalled = true;
+						saveWasCalled = Boolean.TRUE;
 						chronometer.stop();
-						System.out.println("time after stop RUN" + chronometer.getSeconds());
-						
 					}
 				}
 			}, ((this.provasBean.getProva().getTempo() * 60) * 1000));
 			
-			this.timerAlreadyStarted = true;
+			this.timerAlreadyStarted = Boolean.TRUE;
 		}
 	}
 		
 	// DELETE
-	public void excluir() throws Exception {
+	public void excluir() {
 		this.dao = new ProvasRealizadasDAO();
 
 		if(this.dao.excluir(this.provasRealizadas.getCodigo())) { 
 			FacesContext ctx = FacesContext.getCurrentInstance();
-			ctx.addMessage("messages", new FacesMessage("ProvasRealizadas excluida!"));				
+			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage("ProvasRealizadas excluida!"));				
 		}
 	}
 	
-	
-	// LISTA ALUNOS QUE JA REALIZARAM A AVALIACAO 
-	public DataModel<ProvasRealizadas> getListaProvasRealizadas(int codigoProfessor) {
-		this.dao = new ProvasRealizadasDAO();
+	public void findTestsMadeByTeachersStudents(int codigoProfessor) {
+
+		dao = new ProvasRealizadasDAO();
 
 		List<ProvasRealizadas> lista = this.dao.provasRealizadasProfessor(codigoProfessor);
-		this.listaProvasRealizadas = new ListDataModel<ProvasRealizadas>(lista);
-		
-		return this.listaProvasRealizadas;
+		listaProvasRealizadas = new ListDataModel<>(lista);
 	}
 
-	// LISTA AVALIACOES REALIZADAS PELO ALUNO
-	public DataModel<ProvasRealizadas> getProvasRealizadas(int codigoAluno) {
-		this.dao = new ProvasRealizadasDAO();
-
-		List<ProvasRealizadas> lista = this.dao.provasRealizadasAluno(codigoAluno);
-		this.listaProvasRealizadas = new ListDataModel<ProvasRealizadas>(lista);
+	public void findTestsByStudentCode(int codigoAluno) {
 		
-		return this.listaProvasRealizadas;
+		dao = new ProvasRealizadasDAO();
+
+		List<ProvasRealizadas> lista = dao.provasRealizadasAluno(codigoAluno);
+		listaProvasRealizadas = new ListDataModel<>(lista);
 	}
 	
 	// CHECAGEM SE O ALUNO JA REALIZOU O TESTE
@@ -144,12 +144,12 @@ public class ControllerProvasRealizadas {
 
 		List<Integer> listaCodigos = this.dao.obtemProvas(this.alunosBean.getAluno().getCodigo());
 		
-		return (listaCodigos.contains(codProva)) ? true : false;  
+		return (listaCodigos.contains(codProva)) ? Boolean.TRUE : Boolean.FALSE;  
 	}
 	
 	// GET ROW DATA
 	public void selecionarRegistro() {
-		this.provasRealizadas = this.listaProvasRealizadas.getRowData();
+		provasRealizadas = listaProvasRealizadas.getRowData();
 	}
 	
 	// GETTERS AND SETTERS
@@ -170,5 +170,8 @@ public class ControllerProvasRealizadas {
 	}
 	public void setAlunosBean(ControllerAlunos alunosBean) {
 		this.alunosBean = alunosBean;
+	}
+	public DataModel<ProvasRealizadas> getListaProvasRealizadas() {
+		return listaProvasRealizadas;
 	}
 }

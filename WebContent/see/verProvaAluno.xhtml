@@ -15,7 +15,7 @@
 	<ui:include src="../componentes/header/navbarAluno.xhtml" />
 	
 	<div class="container mainContent">
-		<h:form id="showProva" styleClass="loading" onsubmit="checkFormValidity(this)">			
+		<h:form id="showProva" styleClass="loading">			
 		
 			<div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 0 30px 0">
 		
@@ -27,7 +27,7 @@
 				<!-- QUESTOES -->
 				<h:dataTable 
 					binding="#{table}" 
-					value="#{controllerQuestoes.getListaQuestoes(controllerProvas.prova.questoes)}" 
+					value="#{controllerQuestoes.findQuestionsByCode(controllerProvas.prova.questoes)}" 
 					var="dados" 
 					class="striped">
 		
@@ -100,22 +100,18 @@
    				 data-position="left" 
    				 data-delay="50" 
    				 data-tooltip="#{msg['upper.finish.test']}">
-				
-				<!-- BOTAO USADO APENAS PARA DAR UM TRIGGER NA VALIDACAO DO HTML 5 -->
-				<button type="submit" class="startHidden"/>
 
-				<button  
-					onclick="checkFormValidity(this.closest('form'))"
-					class="btn-floating btn-large waves-effect waves-light pulse light-green accent-4">
-					
+				<div class="btn-floating btn-large waves-effect waves-light pulse light-green accent-4">
+
 					<i class="material-icons right">done</i>
-				</button>
-
-				<h:commandButton
-					styleClass="startHidden formActionButton"
-					actionListener="#{controllerProvasRealizadas.save()}" 
-					action="/see/gabaritoAluno"/>
-      			</div>
+				
+					<h:commandButton
+						style="padding: 21px 28px"
+						styleClass="position-absolute"
+						actionListener="#{controllerProvasRealizadas.save()}" 
+						action="/see/gabaritoAluno"/>
+				</div>
+   			</div>
 		</h:form> 
 	</div>
 		

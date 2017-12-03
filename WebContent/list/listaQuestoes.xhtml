@@ -14,11 +14,14 @@
 	<!-- NAVBAR -->
 	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
 
-  	<div class="container mainContent">
+	<!-- SEARCHING FOR QUESTIONS IN DATABASE -->
+	<f:event listener="#{controllerQuestoes.findQuestionsByTeachersCode(controllerProfessores.professor.codigo)}" type="preRenderView"/>
+
+  	<div class="container mainContent" data-content="questions">
 
 		<!-- LISTA VAZIA -->
   		<h:panelGroup 
-  			rendered="#{controllerQuestoes.getListaQuestoes(controllerProfessores.professor.codigo).getRowCount() eq 0 ? true : false}">
+  			rendered="#{controllerQuestoes.listaQuestoes.getRowCount() eq 0 ? true : false}">
  			
  			<h:outputText
  				class="grey-text" 
@@ -27,13 +30,12 @@
   		</h:panelGroup>
   		
 		<!-- LISTA DE QUESTOES -->
-  		<h:panelGroup rendered="#{controllerQuestoes.getListaQuestoes(controllerProfessores.professor.codigo).getRowCount() eq 0 ? false : true}">
+  		<h:panelGroup rendered="#{controllerQuestoes.listaQuestoes.getRowCount() eq 0 ? false : true}">
 	       	<div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
 				<h:form id="questionList" styleClass="loading">
 					
 					<h:dataTable
-						rendered="#{controllerQuestoes.getListaQuestoes(controllerProfessores.professor.codigo).getRowCount() eq 0 ? false : true}" 
-						value="#{controllerQuestoes.getListaQuestoes(controllerProfessores.professor.codigo)}" 
+						value="#{controllerQuestoes.listaQuestoes}" 
 						var="dados" 
 						binding="#{table}"
 						class="bordered">
@@ -57,7 +59,7 @@
 									<span class="tooltipped" data-position="left" 
 										data-delay="50" data-tooltip="#{msg['upper.edit']}">
 										<h:commandLink 
-											actionListener="#{controllerQuestoes.selecionarRegistro}"
+											actionListener="#{controllerQuestoes.selecionarRegistro()}"
 											action="/update/alterarQuestao">
 											<i class="material-icons right">mode_edit</i>
 										</h:commandLink>
@@ -73,7 +75,7 @@
 									<h:selectBooleanCheckbox
 										id="#{'checkbox'.concat(table.rowIndex + 2)}" 
 										styleClass="filled-in">
-										<f:ajax listener="#{controllerProvas.addQuestion(dados.codigo)}"/>
+										<f:ajax listener="#{controllerProvas.manageSelectedQuestions(dados.codigo)}"/>
 									</h:selectBooleanCheckbox>
 									<!-- DISCIPLINA -->
 									<h:outputLabel 

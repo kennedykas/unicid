@@ -16,7 +16,7 @@
 		<h:dataTable 
 			id="answersTable" 
 			binding="#{tabela}" 
-			value="#{controllerQuestoes.getListaQuestoes(controllerProvas.prova.questoes)}" 
+			value="#{controllerQuestoes.findQuestionsByCode(controllerProvas.prova.questoes)}" 
 			var="dados" 
 			class="striped">
 
@@ -34,23 +34,23 @@
 					<div style="margin-top:10px">
 						
 						<h:outputText value="A) #{dados.alternativaA}" 
-							styleClass="#{dados.alternativaCorreta eq 'A'? 'green-text' : controllerProvas.errou(dados.codigo, 'A') eq true ? 'red-text' : ''}"/>
+							styleClass="#{dados.alternativaCorreta eq 'A'? 'green-text' : controllerProvas.answeredWrong(dados.codigo, 'A') eq true ? 'red-text' : ''}"/>
 						<br/>
 						
 						<h:outputText value="B) #{dados.alternativaB}" 
-							styleClass="#{dados.alternativaCorreta eq 'B'? 'green-text' : controllerProvas.errou(dados.codigo, 'B') eq true ? 'red-text' : ''}"/>
+							styleClass="#{dados.alternativaCorreta eq 'B'? 'green-text' : controllerProvas.answeredWrong(dados.codigo, 'B') eq true ? 'red-text' : ''}"/>
 						<br/>
 						
 						<h:outputText value="C) #{dados.alternativaC}" 
-							styleClass="#{dados.alternativaCorreta eq 'C'? 'green-text' : controllerProvas.errou(dados.codigo, 'C') eq true ? 'red-text' : ''}"/>
+							styleClass="#{dados.alternativaCorreta eq 'C'? 'green-text' : controllerProvas.answeredWrong(dados.codigo, 'C') eq true ? 'red-text' : ''}"/>
 						<br/>
 						
 						<h:outputText value="D) #{dados.alternativaD}" 
-							styleClass="#{dados.alternativaCorreta eq 'D'? 'green-text' : controllerProvas.errou(dados.codigo, 'D') eq true ? 'red-text' : ''}"/>
+							styleClass="#{dados.alternativaCorreta eq 'D'? 'green-text' : controllerProvas.answeredWrong(dados.codigo, 'D') eq true ? 'red-text' : ''}"/>
 						<br/>
 													
 						<h:outputText value="E) #{dados.alternativaE}" 
-							styleClass="#{dados.alternativaCorreta eq 'E'? 'green-text' : controllerProvas.errou(dados.codigo, 'E') eq true ? 'red-text' : ''}"/>
+							styleClass="#{dados.alternativaCorreta eq 'E'? 'green-text' : controllerProvas.answeredWrong(dados.codigo, 'E') eq true ? 'red-text' : ''}"/>
 						<br/>
 					</div>
 				</div>

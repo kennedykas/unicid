@@ -15,7 +15,7 @@
 	<!-- NAVBAR -->
 	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
 	
-	<div class="container">
+	<div class="container" data-content="disciplines">
 	    <div class="row center" style="margin:11vh 0">
 	        <div class="z-depth-2 white login-form">
 	            
@@ -24,7 +24,7 @@
 	            </div>
 	            <div class="row"></div>
 	            
-	            <h:form class="loading" onsubmit="checkFormValidity(this)">
+	            <h:form class="loading">
 					
 					<!-- FORMULARIO DISCIPLINA -->  
 					<ui:include src="../componentes/form/professor/formDisciplina.xhtml" />
@@ -35,20 +35,16 @@
 	    				 data-delay="50" 
 	    				 data-tooltip="#{msg['upper.save']}">
 						
-						<!-- BOTAO USADO APENAS PARA DAR UM TRIGGER NA VALIDACAO DO HTML 5 -->
-						<button type="submit" class="startHidden"/>
-	
-						<button  
-							onclick="checkFormValidity(this.closest('form'))"
-							class="btn-floating btn-large waves-effect waves-light deep-purple pulse">
-							
+						<div class="btn-floating btn-large waves-effect waves-light deep-purple pulse">
+
 							<i class="material-icons right">save</i>
-						</button>
-	
-						<h:commandButton
-							styleClass="startHidden formActionButton"
-							actionListener="#{controllerDisciplinas.saveDisciplineAndPrepareDisciplineCourse()}"
-							action="#{controllerDisciplinaCurso.save()}"/>
+
+							<h:commandButton
+								style="padding: 21px 28px"
+								styleClass="position-absolute"
+								actionListener="#{controllerDisciplinas.saveDisciplineAndPrepareDisciplineCourse()}"
+								action="#{controllerDisciplinaCurso.save()}"/>
+						</div>	
 	       			</div>
 				</h:form>
 			</div>

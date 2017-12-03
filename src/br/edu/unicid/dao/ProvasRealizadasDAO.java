@@ -99,18 +99,19 @@ public class ProvasRealizadasDAO {
 	    return txManager.doInTransactionWithReturn((connection) -> {
 	    	
 			ps = connection.prepareStatement(
-					"SELECT codProva, codAluno, nota, data FROM provas_realizadas WHERE codAluno=?");
+					"SELECT codProva, codAluno, nota, tempo, data FROM provas_realizadas WHERE codAluno=?");
 			ps.setInt(1, codigoAluno);
 			rs = ps.executeQuery();
 			
-			List<ProvasRealizadas> list = new ArrayList<ProvasRealizadas>();
+			List<ProvasRealizadas> list = new ArrayList<>();
 			
 			while(rs.next()) {
 				int codProva = rs.getInt(1);
 				int codAluno = rs.getInt(2);
 				Double  nota = rs.getDouble(3);
-				String  data = rs.getString(4);
-				list.add(new ProvasRealizadas(codProva, codAluno, nota, data));
+				String tempo = rs.getString(4);
+				String  data = rs.getString(5);
+				list.add(new ProvasRealizadas(codProva, codAluno, nota, tempo, data));
 			}
 			return list;
 		});

@@ -23,11 +23,12 @@ public class ProvasRealizadas {
 		this.data = data;
 	}
 	
-	public ProvasRealizadas(int codProva, int codAluno, double nota, String data) {
+	public ProvasRealizadas(int codProva, int codAluno, double nota, String tempo, String data) {
 		super();
 		this.codProva = codProva;
 		this.codAluno = codAluno;
 		this.nota = nota;
+		this.tempo = tempo;
 		this.data = data;
 	}
 

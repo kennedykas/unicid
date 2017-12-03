@@ -1,7 +1,6 @@
 package br.edu.unicid.web;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -15,11 +14,14 @@ import br.edu.unicid.dao.DisciplinaCursoDAO;
 @SessionScoped
 public class ControllerDisciplinaCurso {
 
-	private DisciplinaCursoDAO dao;
-	private DisciplinaCurso    disciplinaCurso ;
-	private int[] codigos; // CODS DOS CURSOS QUE DETERMINADA DISCIPLINA PERTENCE
-		
-	// BEAN CURSOS
+	// CODS DOS CURSOS QUE DETERMINADA DISCIPLINA PERTENCE
+	private int[]               codigos;
+	private DisciplinaCursoDAO  dao;
+	private DisciplinaCurso     disciplinaCurso ;
+	private static final String PAGE_LIST_DISCIPLINES  = "/list/listaDisciplinas";
+	private static final String PAGE_NEW_DISCIPLINE    = "/list/novaDisciplina";
+	private static final String PAGE_UPDATE_DISCIPLINE = "/list/alterarDisciplina";
+	
 	@ManagedProperty(value="#{controllerCursos}")
 	private ControllerCursos cursosBean;
 	
@@ -32,31 +34,43 @@ public class ControllerDisciplinaCurso {
 	
 	// SAVE
 	public String save() {
+		
 		this.dao = new DisciplinaCursoDAO();
+		
 		if(this.dao.salvar(this.disciplinaCurso, this.cursosBean.getCurso().getCodigos()))
-			return "/list/listaDisciplinas";
+			return PAGE_LIST_DISCIPLINES;
 		else
-			return "/list/novaDisciplina";
+			return PAGE_NEW_DISCIPLINE;
 	}
 	
 	// ALTERAR
 	public String alterar() { 
 		
-		this.dao = new DisciplinaCursoDAO();
+		dao = new DisciplinaCursoDAO();
 		
-		if (this.dao.alterar(codigos, this.disciplinaCurso.getCodDisciplina()))
+		if (dao.alterar(cursosBean.getCurso().getCodigos(), disciplinaCurso.getCodDisciplina()))
 			
-			return "/list/listaDisciplinas"; 
+			return PAGE_LIST_DISCIPLINES; 
 		else
-			return "/list/alterarDisciplina";
+			return PAGE_UPDATE_DISCIPLINE;
 	}
 	
 	// OBTEM TODOS OS CURSOS QUE UMA DISCIPLINA CONTEMPLA
 	public int[] findCoursesThatBelongToDisciplineByDisciplineCode(int codigoDisciplina) {
 		
-		this.dao = new DisciplinaCursoDAO();
+		dao = new DisciplinaCursoDAO();
 		
-		return this.dao.findCoursesThatBelongToDisciplineByDisciplineCode(codigoDisciplina);
+		cursosBean.getCurso().setCodigos(dao.findCoursesThatBelongToDisciplineByDisciplineCode(codigoDisciplina));
+		
+		return cursosBean.getCurso().getCodigos();
+	}
+	
+	// OBTEM TODOS OS CURSOS QUE UMA DISCIPLINA CONTEMPLA
+	public void justFindCoursesThatBelongToDisciplineByDisciplineCode(int codigoDisciplina) {
+		
+		dao = new DisciplinaCursoDAO();
+		
+		cursosBean.getCurso().setCodigos(dao.findCoursesThatBelongToDisciplineByDisciplineCode(codigoDisciplina));
 	}
 	
 	// RETURN DISCIPLINAS BY COD COURSE

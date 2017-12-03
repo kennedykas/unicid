@@ -14,7 +14,7 @@
 	<!-- NAVBAR -->
 	<ui:include src="../componentes/header/navbarAluno.xhtml"/>
 	
-	<div class="container">
+	<div class="container mainContent" data-content="tests-to-do">
 	
 		<!-- CASO NAO HAJA PROVAS A SEREM LISTADAS -->
   		<h:panelGroup rendered="#{controllerProvas.obterProvasPeloCodDisciplina(controllerDisciplinaCurso.obterCodDisciplinaPeloCodCurso(controllerAlunos.aluno.getCodCurso())).getRowCount() eq 0 ? true : false}">
@@ -93,7 +93,7 @@
 							<h:commandLink 
 								actionListener="#{controllerProvas.selecionarRegistro}"
 								action="#{controllerProvas.showProva}" 
-								disabled="#{controllerProvas.permissao(dados.data, dados.allowAfterDate, dados.allowMultipleAttempts, controllerProvasRealizadas.checkRealizacao(dados.codigo))}" 
+								disabled="#{controllerProvas.studentCanTakeTestNow(dados.data, dados.allowAfterDate, dados.allowMultipleAttempts, controllerProvasRealizadas.checkRealizacao(dados.codigo))}" 
 								title="#{controllerProvasRealizadas.checkRealizacao(dados.codigo) eq true ? (dados.allowMultipleAttempts eq true ? 'VOCÊ PODE FAZER NOVAMENTE CASO QUEIRA' : 'VOCÊ JA REALIZOU ESTA AVALIAÇÂO') : 'A FAZER'}"
 							    value="#{controllerProvasRealizadas.checkRealizacao(dados.codigo) eq true ? (dados.allowMultipleAttempts eq true ? 'PODE SER FEITA NOVAMENTE' : ' REALIZADA') : ' A FAZER'}"
 								class="#{controllerProvasRealizadas.checkRealizacao(dados.codigo) eq true ? 'glyphicon glyphicon-check' : 'glyphicon glyphicon-edit'}" 

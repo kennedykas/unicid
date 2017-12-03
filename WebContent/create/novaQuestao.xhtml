@@ -13,7 +13,7 @@
 	<!-- NAVBAR -->
 	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
 	
-	<div class="container">
+	<div class="container" data-content="questions">
         <div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
 	        	          
 		    <div class="row">
@@ -22,7 +22,7 @@
 		       	</h5>
 		    </div>
 		          
-		    <h:form id="questao" class="loading row" onsubmit="checkFormValidity(this)">
+		    <h:form id="questao" class="loading row">
 		          
 			  	<!-- LIMPA O BEAN DE QUESTOES -->
 				<f:event listener="#{controllerQuestoes.init()}" type="preRenderView"/>
@@ -36,19 +36,15 @@
     				 data-delay="50" 
     				 data-tooltip="#{msg['upper.save']}">
 					
-					<!-- BOTAO USADO APENAS PARA DAR UM TRIGGER NA VALIDACAO DO HTML 5 -->
-					<button type="submit" class="startHidden"/>
+					<div class="btn-floating btn-large waves-effect waves-light deep-purple pulse">
 
-					<button  
-						onclick="checkFormValidity(this.closest('form'))"
-						class="btn-floating btn-large waves-effect waves-light deep-purple pulse">
-						
 						<i class="material-icons right">save</i>
-					</button>
 
-					<h:commandButton
-						styleClass="startHidden formActionButton" 
-						action="#{controllerQuestoes.save(controllerProfessores.professor.getCodigo())}"/>
+						<h:commandButton
+							style="padding: 21px 28px"
+							styleClass="position-absolute" 
+							action="#{controllerQuestoes.save(controllerProfessores.professor.getCodigo())}"/>
+					</div>
        			</div>
 			</h:form>
 		</div>

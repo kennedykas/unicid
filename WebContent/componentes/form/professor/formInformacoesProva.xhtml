@@ -42,7 +42,7 @@
 	    	a:max="240" 
 	    	a:step=".1" 
 	    	a:required="true" 
-	    	requiredMessage="#{msg['required.test.time']}"/>
+	    	requiredMessage="#{msg['required.test.time'].concat(' ').concat(msg['upper.in.minutes'])}"/>
 	    <h:outputLabel value="#{msg['upper.test.time']}" for="time"/>
 	</div>		    	
 	     
