@@ -25,12 +25,28 @@ public class ProfessorDAO {
 			ps = connection.prepareStatement(
 					"INSERT INTO professor (codigo, nome, email, senha, data) values (?, ?, ?, ?, ?)");
 			ps.setInt   (1, 0); //code
-			ps.setString(2, professor.getNomeProfessor()); //nomeEquipe
-			ps.setString(3, professor.getEmailProfessor()); //nomeArquivo
-			ps.setString(4, professor.getSenhaProfessor()); //obs
+			ps.setString(2, professor.getNomeProfessor());
+			ps.setString(3, professor.getEmailProfessor());
+			ps.setString(4, professor.getSenhaProfessor());
 			Date date = new Date();
-			professor.setData(dateFormat.format(date)); // Setando a data no bean
+			professor.setData(dateFormat.format(date));
 			ps.setString(5, professor.getData());
+			
+			return (ps.executeUpdate() > 0) ? true : false;
+		});
+	}
+	
+	// UPDATE
+	public boolean updateProfessor(Professor professor) {
+		TransactionManager txManager = new TransactionManager();
+	    return txManager.doInTransactionWithReturn((connection) -> {
+
+			ps = connection.prepareStatement("UPDATE professor SET nome=?, email=?, senha=? WHERE codigo=?");
+			
+			ps.setString(1, professor.getNomeProfessor());
+			ps.setString(2, professor.getEmailProfessor());
+			ps.setString(3, professor.getSenhaProfessor());
+			ps.setInt   (4, professor.getCodigo());
 			
 			return (ps.executeUpdate() > 0) ? true : false;
 		});

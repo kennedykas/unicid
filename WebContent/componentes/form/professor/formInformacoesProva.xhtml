@@ -3,6 +3,7 @@
     xmlns:f="http://java.sun.com/jsf/core" 
     xmlns:h="http://xmlns.jcp.org/jsf/html" 
     xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
     xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 		
    	<!-- TITULO -->
@@ -21,7 +22,6 @@
 	    <h:inputText 
 	    	id="value"
 	    	value="#{controllerProvas.prova.valorTotal}" 
-	    	class="number" 
 	    	a:type="number" 
 	    	a:min=".1" 
 	    	a:max="10" 
@@ -36,7 +36,6 @@
 	    <h:inputText
 	    	id="time" 
 	    	value="#{controllerProvas.prova.tempo}" 
-	    	class="number" 
 	    	a:type="number" 
 	    	a:min=".1" 
 	    	a:max="240" 

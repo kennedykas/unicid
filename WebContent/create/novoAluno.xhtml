@@ -25,151 +25,17 @@
 	        </div>
             
             <h:form id="questao" class="loading row">
-			
-				<!-- FORM LEFT SIDE CONTAINER -->
-				<div class="col s12 m12 l6">
 				
-					<!-- NOME -->
-					<div class="input-field row">
-						<h:inputText 
-							id="nome" 
-							styleClass="validate"
-							value="#{controllerAlunos.aluno.nome}" 
-							a:required="true" 
-							a:maxlength="350" 
-							a:minlenght="4" 
-							requiredMessage="#{msg['required.name']}"/>
-						
-						<label for="nome" data-error="#{msg['invalid.name']}">
-							<h:outputText value="#{msg['upper.name']}"/>
-						</label>
-					</div>		
-					
-					<!-- RGM ALUNO -->
-					<div class="input-field row">
-						<h:inputText 
-							id="rgm" 
-							value="#{controllerAlunos.aluno.rgm}" 
-							styleClass="number validate" 
-							a:required="true" 
-							a:maxlength="8" 
-							a:minlength="5"
-							a:type="number" 
-							requiredMessage="#{msg['required.rgm']}"/>
-						
-						<label for="rgm" data-error="#{msg['invalid.rgm']}">
-							<h:outputText value="#{msg['upper.rgm']}"/>
-						</label>
-					</div>
-					
-					<!-- EMAIL -->
-					<div class="input-field row">
-						<h:inputText 
-							id="email" 
-							styleClass="validate"
-							value="#{controllerAlunos.aluno.email}" 
-							a:type="email" 
-							a:required="true" 
-							requiredMessage="#{msg['required.email']}"/>
-						
-						<label for="email" data-error="#{msg['invalid.email']}">
-							<h:outputText value="#{msg['upper.email']}"/>
-						</label>
-					</div>
-					
-					<!-- SENHA -->
-					<div class="input-field row">
-						<h:inputSecret 
-							id="senha1" 
-							value="#{controllerAlunos.aluno.senha}" 
-							styleClass="password password1 validate" 
-							a:minlength="4" 
-							a:required="true" 
-							requiredMessage="#{msg['required.password']}">
-							<f:validator validatorId="PasswordValidator" />
-						</h:inputSecret>
-						
-						<label for="senha1" data-error="#{msg['invalid.password']}">
-							<h:outputText value="#{msg['upper.password']}"/>
-						</label>
-					</div>
-					
-					<!-- CONFIRMAR SENHA -->
-					<div class="input-field row">
-						<h:inputSecret 
-							id="senha2" 
-							styleClass="password password2 validate" 
-							a:minlength="4" 
-							a:required="true" 
-							requiredMessage="#{msg['required.confirm.password']}"/>
-						
-						<label for="senha2" data-error="#{msg['invalid.password']}">
-							<h:outputText value="#{msg['upper.confirm.password']}"/>
-						</label>
-					</div>		
-					
-					<!-- CPF -->
-					<div class="input-field row">
-						<h:inputText
-							id="cpf"
-							value="#{controllerAlunos.aluno.cpf}"
-							styleClass="cpf validate"/>
-													
-						<label for="cpf" data-error="#{msg['invalid.cpf']}">
-							<h:outputText value="#{msg['upper.cpf'].concat(' ').concat(msg['upper.not.required'])}"/>
-						</label>
-					</div>
-					
-					<!-- CELULAR -->
-					<div class="input-field row">
-						<h:inputText
-							id="celular"
-							value="#{controllerAlunos.aluno.celular}"
-							styleClass="celular validate"/>
-						
-						<label for="celular" data-error="#{msg['invalid.cellphone']}">
-							<h:outputText value="#{msg['upper.cellphone'].concat(' ').concat(msg['upper.not.required'])}"/>
-						</label>
-					</div>
-				</div>
-				
-				<!-- GAMBS NEED TO BE FIXED -->
-				<div class="hide-on-med-and-down col l5" style="width:200px;height:200px"></div>
-	
-				<!-- FORM RIGHT SIDE CONTAINER -->
-				<div class="col s12 m12 l5 right">
-					
-					<!-- CURSO -->
-					<ui:include src="../componentes/form/selectCurso.xhtml"/>
-					
-					<!-- GOOGLE CAPTCHA -->
-					<div class="input-field row">
-						<div class="g-recaptcha" id="captcha" data-sitekey="6LeCGicUAAAAAEdGDF365N0oG5n_4ATnDuqiwdPJ"/>
-					</div>		
-											
-					<!-- MENSSAGENS DE ERRO -->
-					<h:messages id="messages" class="esc red-text text-darken-2"/>
-					
-					<!-- BOTAO ENVIAR -->
-					<div class="center">
-						<button type="submit" class="row btn waves-effect waves-light" 
-							onclick="return $(this.closest('form')).valid() ? $('#submit').click() : false;">
-							<h:commandButton 
-								action="#{controllerAlunos.save}" 
-								class="submit-button"
-								value="#{msg['upper.ready']}"/>
-							<i class="material-icons right">send</i>
-						</button>
-					</div>
-				</div>
+				<ui:include src="../componentes/form/student/formStudent.xhtml">
+					<ui:param name="novoAluno" value="true"/>
+				</ui:include>			
+
 			</h:form>
 	    </div>
 	</div>
 	
 	<!-- GOOGLE CAPTCHA -->
-	<div class="row center-align" style="text-align:-webkit-center">
-		<script src="https://www.google.com/recaptcha/api.js"></script>
-	</div>
+	<script src="https://www.google.com/recaptcha/api.js"></script>
 		
 	<!-- FOOTER -->
 	<ui:include src="../componentes/footer/footer.xhtml" />

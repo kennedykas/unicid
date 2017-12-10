@@ -78,7 +78,7 @@
 						<!-- TEMPO -->
 						<h:column>
 							<f:facet name="header">
-								<h:outputText value="#{msg['upper.test.time']}"/>
+								<h:outputText value="#{msg['upper.test.max.time']}"/>
 							</f:facet>
 							<h:outputText value="#{dados.tempo} min."/>
 						</h:column>
@@ -125,10 +125,10 @@
 							<!-- EDITAR -->
 							<span class="tooltipped" data-position="left" 
 								data-delay="50" data-tooltip="#{msg['upper.edit']}">
-								<p:commandLink 
-									actionListener="#{controllerProvas.selecionarRegistro}" 
-									onclick="$('#test-info-modal').modal('open')">
-						  			<f:ajax listener="#{controllerProvas.selecionarRegistro}"/>
+								<p:commandLink
+									actionListener="#{controllerProvas.selecionarRegistro()}" 
+									action="/update/alterarProva">
+									
 									<i class="material-icons right">mode_edit</i>
 								</p:commandLink>
 							</span>
@@ -157,32 +157,6 @@
 				<i class="material-icons right">add</i>
 			</h:link>
 		</div>		
-
-		<!-- TEST INFO MODAL -->
-		<div id="test-info-modal" class="modal modal-fixed-footer">
-			<h:form id="testInfo" class="loading">
-				<div class="modal-content">
-					<h4><h:outputText value="#{msg['test.informations']}"/></h4>
-					<p class="lime-text text-darken-2">
-						<i class="material-icons left">info</i>
-	         			<h:outputText value="#{msg['info.student.test.begin']}"/>
-					</p>			  
-			        <!-- FORM INFORMACOES PROVA -->
-					<ui:include src="../componentes/form/professor/formInformacoesProva.xhtml" />
-				</div>
-				<div class="modal-footer">
-					<!-- CANCEL -->
-		        	<a class="modal-action modal-close waves-effect waves-red btn-flat">
-		        		<h:outputText value="#{msg['upper.cancel']}"/>
-		        	</a>
-					<!-- UPDATE -->
-		        	<h:commandButton 
-		        		action="#{controllerProvas.alterarInformacoesDaProva(controllerProvas.prova)}" 
-		        		class="modal-action waves-effect waves-green btn-flat" 
-		        		value="#{msg['upper.save']}"/>
-				</div>
-    		</h:form>
-		</div>
 	</div>
 
 	<!-- FOOTER -->

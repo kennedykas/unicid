@@ -1,0 +1,64 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:h="http://xmlns.jcp.org/jsf/html" 
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<!-- NOME DO PROFESSOR -->
+    <div class="input-field row">
+		<h:inputText 
+			id="nome" 
+			value="#{controllerProfessores.professor.nomeProfessor}" 
+			class="validate" 
+			a:maxlength="400" 
+			a:minlength="4" 
+			a:required="true" 
+			requiredMessage="#{msg['required.teacher.name']}"/>
+		<label for="nome" data-error="#{msg['invalid.name']}">
+			<h:outputText value="#{msg['upper.name']}"/>
+		</label>
+	</div>
+
+	<!-- E-MAIL PROFESSOR -->
+    <div class="input-field row">
+		<h:inputText
+			id="email" 
+			value="#{controllerProfessores.professor.emailProfessor}" 
+			class="validate" 
+			a:required="true" 
+			a:type="email" 
+			requiredMessage="#{msg['required.email']}"/>
+		<label for="email" data-error="#{msg['invalid.email']}">
+			<h:outputText value="#{msg['upper.email']}"/>
+		</label>
+	</div>			
+
+	<!-- SENHA PROFESSOR -->
+	<div class="input-field row">
+		<h:inputSecret 
+			id="senha" 
+			value="#{controllerProfessores.professor.senhaProfessor}" 
+			class="password password1 validate" 
+			a:minlength="4" 
+			a:required="true" 
+			requiredMessage="#{msg['required.password']}"/>
+		<label for="senha" data-error="#{msg['invalid.password']}">
+			<h:outputText value="#{msg['upper.password']}"/>
+		</label>
+	</div>
+			
+	<!-- SENHA PROFESSOR -->
+	<div class="input-field row">
+		<h:inputSecret 
+			id="senha2" 
+			class="password password2 validate" 
+			a:minlength="4" 
+			a:required="true" 
+			requiredMessage="#{msg['required.confirm.password']}"/>
+		<label for="senha2" data-error="#{msg['invalid.password']}">
+			<h:outputText value="#{msg['upper.confirm.password']}"/>
+		</label>
+	</div>
+
+</ui:composition>

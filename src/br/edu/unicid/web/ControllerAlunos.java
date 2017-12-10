@@ -36,6 +36,8 @@ public class ControllerAlunos {
 	private static final String PAGE_EMAIL_SENT           = "/user-tools/emailEnviado";
 	private static final String PAGE_LOGIN_STUDENT        = "/login/loginAluno";
 	private static final String PAGE_RECOVER_STUDENT_PASS = "/user-tools/recuperarSenhaAluno";
+	private static final String PAGE_UPDATE_STUDENT_INFO  = "/update/alterarAluno";
+	private static final String PAGE_LIST_TESTS_TO_DO     = "/list/listaProvasAluno";
 	private static final String WRONG_RGM                 = "RGM incorreto.";
 	private static final String WRONG_PASS                = "SENHA incorreta.";
 	private static final String FORGET_CHECK_RECAPTCHA    = "QUASE só falta você dizer que não é um robô!";
@@ -44,6 +46,7 @@ public class ControllerAlunos {
 	private static final String NAME_NOT_FOUND            = "NOME não encontrado (maiúsculas e minúsculas não interferem), dúvidas entre em contato conosco: jadircmj@hotmail.com";
 	private static final String UNKNOWN_RGM               = "RGM não coincide com o nome, dúvidas entre em contato conosco: jadircmj@hotmail.com";
 	private static final String FACE_MESSAGES_ID          = "messages";
+	private static final String SUCCESS                   = "ok";
 	
 	private final DateFormat DATA = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
 	
@@ -94,9 +97,13 @@ public class ControllerAlunos {
 	}
 		
 	// ALTERAR
-	public String alterar() {
-		this.dao = new AlunoDAO();
-		return (this.dao.alterar(this.aluno)) ? "homeAluno" : "/update/alterarAluno";
+	public String updateStudent() {
+		
+		dao = new AlunoDAO();
+
+		aluno.setCodCurso(cursosBean.getCurso().getCodigo()); // SET COD CURSO SELECIONADO NO BEAN
+		
+		return (dao.updateStudent(aluno)) ? PAGE_LIST_TESTS_TO_DO : PAGE_UPDATE_STUDENT_INFO;
 	}
 	
 	// EXCLUIR
@@ -110,11 +117,12 @@ public class ControllerAlunos {
 	
 	// LOGIN
 	public String login() {
-		this.dao = new AlunoDAO();
-		String loginAttemptStatus = this.dao.login(this.aluno);
 		
-		if(loginAttemptStatus.equals("ok")) 
-			return "/list/listaProvasAluno";
+		dao = new AlunoDAO();
+		String loginAttemptStatus = dao.login(aluno);
+		
+		if(loginAttemptStatus.equals(SUCCESS)) 
+			return PAGE_LIST_TESTS_TO_DO;
 		
 		else if(loginAttemptStatus.equals("rgm")) { 
 				FacesContext ctx = FacesContext.getCurrentInstance();
@@ -125,8 +133,8 @@ public class ControllerAlunos {
 					ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(WRONG_PASS));
 				
 				} else if(loginAttemptStatus.equals("unverified")) {
-						this.email.sendEmailVerificacao(this.aluno); // ENVIANDO EMAIL NOVAMENTE
-						this.renderEmailAluno = true; // MSG SERA RENDERIZADA PARA O ALUNO
+						email.sendEmailVerificacao(aluno); // ENVIANDO EMAIL NOVAMENTE
+						renderEmailAluno = true; // MSG SERA RENDERIZADA PARA O ALUNO
 						return PAGE_EMAIL_SENT;
 					}
 		return PAGE_LOGIN_STUDENT;
@@ -138,13 +146,13 @@ public class ControllerAlunos {
 		String[] infos = info.split(" ");
 
 		// SETA OS DADOS NO BEAN
-		this.aluno.setData(infos[0]);
-		this.aluno.setEmail(infos[1]);
+		aluno.setData(infos[0]);
+		aluno.setEmail(infos[1]);
 
-		this.dao = new AlunoDAO();
+		dao = new AlunoDAO();
 		
 		// VERIFICA A AUTENTICIDADE DESSES DADOS
-		if(this.dao.autentica(this.aluno))
+		if(dao.autentica(aluno))
 			return "Pronto!";
 		
 		return "Algo não aconteceu como o esperado!";		
@@ -170,11 +178,11 @@ public class ControllerAlunos {
 			return PAGE_RECOVER_STUDENT_PASS;
 		}	
 		
-		this.dao = new AlunoDAO();
-		String resultado = this.dao.recuperarSenha(this.aluno); 
+		dao = new AlunoDAO();
+		String resultado = dao.recuperarSenha(aluno); 
 		
-		if(resultado.equals("ok")) { // ALUNO FOI ENCONTRADO
-			this.email.sendEmailSenha(this.aluno); // ENVIANDO EMAIL SENHA
+		if(resultado.equals(SUCCESS)) { // ALUNO FOI ENCONTRADO
+			email.sendEmailSenha(aluno); // ENVIANDO EMAIL SENHA
 			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(EMAIL_WAS_SENT_WITH_PASS));
 		} else if(resultado.equals("nome")) 
 				ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(NAME_NOT_FOUND));
@@ -186,7 +194,7 @@ public class ControllerAlunos {
 	
 	// OBTER NOME ALUNO
 	public String getNome(int codAluno) {
-		this.dao = new AlunoDAO();
+		dao = new AlunoDAO();
 		// RETORNA O NOME, CASO NAO SEJA ECONTRADO RETORNA 'NAO FOI ENCONTRADO'
 		return dao.getNome(codAluno);  
 	}

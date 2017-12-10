@@ -13,6 +13,9 @@
 	<!-- NAVBAR -->
 	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
 	
+  	<!-- SETA A DISCIPLINA SELECIONADA -->
+	<f:event listener="#{controllerDisciplinas.disciplina.setCodigo(controllerQuestoes.questao.disciplina)}" type="preRenderView"/>
+
 	<div class="container" data-content="questions">
         <div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
 	        	          
@@ -24,8 +27,6 @@
 		          
 		    <h:form id="questao" class="loading row">
 		          
-			  	<!-- SETA A DISCIPLINA SELECIONADA -->
-				<f:event listener="#{controllerDisciplinas.disciplina.setCodigo(controllerQuestoes.questao.disciplina)}" type="preRenderView"/>
 			
 				<!-- FORMULARIO DE QUESTAO -->
 				<ui:include src="../componentes/form/professor/formQuestao.xhtml" />

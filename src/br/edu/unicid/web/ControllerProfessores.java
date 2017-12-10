@@ -31,6 +31,7 @@ public class ControllerProfessores {
 	private static final String PAGE_EMAIL_SENT          = "/user-tools/emailEnviado";
 	private static final String PAGE_LIST_QUESTIONS      = "/list/listaQuestoes";
 	private static final String PAGE_LOGIN_PROFSSOR      = "/login/loginProfessor";
+	private static final String PAGE_UPDATE_PROFESSOR    = "/update/alterarProfessor";
 	private static final String PAGE_RECOVER_PROF_PASS   = "/user-tools/recuperarSenhaProfessor";
 	private static final String WRONG_EMAIL              = "EMAIL incorreto.";
 	private static final String WRONG_PASS               = "SENHA incorreta.";
@@ -122,6 +123,13 @@ public class ControllerProfessores {
 			return "Pronto!";
 		
 		return "Algo não aconteceu como o esperado!";		
+	}
+	
+	public String updateProfessorInfo() {
+
+		dao = new ProfessorDAO();
+		
+		return (dao.updateProfessor(professor)) ? PAGE_LIST_QUESTIONS : PAGE_UPDATE_PROFESSOR;		
 	}
 	
 	// RECUPERAR SENHA 

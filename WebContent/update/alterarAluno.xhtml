@@ -6,31 +6,35 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
-	
+
 	<!-- HEAD -->
 	<ui:include src="../componentes/head/head.xhtml" />
-<h:body>
+<h:body class="grey lighten-4">
 	<!-- NAVBAR -->
-	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
+	<ui:include src="../componentes/header/navbarAluno.xhtml" />
+	
+  	<!-- SETA O CURSO SELECIONADO -->
+	<f:event listener="#{controllerCursos.curso.setCodigo(controllerAlunos.aluno.codCurso)}" type="preRenderView"/>
 	
 	<div class="container">
-		<h2>Modificar disciplina</h2>
-		<h:form enctype="multipart/form-data" class="form-signin loading"> 
-		
-			<!-- FORMULARIO DISCIPLINA -->			
-			<ui:include src="../componentes/form/professor/formDisciplina.xhtml" />
-				
-			<!-- BOTAO ENVIAR -->
-			<br/>
-			<h:commandButton 
-				value="Alterar" 
-				class="submit btn btn-lg btn-primary btn-block"
-				actionListener="#{controllerDisciplinas.alterar()}"
-				action="#{controllerDisciplinaCurso.alterar()}"/> 
-			 
-		</h:form>
+        <div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
+            
+	        <div class="row">
+	            <h5 class="center">
+	            	<h:outputText value="#{msg['update.your.info']}"/>
+	           	</h5>
+	        </div>
+            
+            <h:form id="questao" class="loading row">
+					
+				<ui:include src="../componentes/form/student/formStudent.xhtml">
+					<ui:param name="novoAluno" value="false"/>					
+				</ui:include>		
+
+			</h:form>
+	    </div>
 	</div>
-	
+		
 	<!-- FOOTER -->
 	<ui:include src="../componentes/footer/footer.xhtml" />
 </h:body>

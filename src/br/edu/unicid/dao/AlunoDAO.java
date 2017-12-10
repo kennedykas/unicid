@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import br.edu.unicid.bean.Aluno;
+import br.edu.unicid.bean.Professor;
 import br.edu.unicid.util.TransactionManager;
 
 public class AlunoDAO {
@@ -57,6 +58,26 @@ public class AlunoDAO {
 	    });
 	}
 	
+	public boolean updateStudent(Aluno aluno) {
+    	TransactionManager txManager = new TransactionManager();
+    	return txManager.doInTransactionWithReturn((connection) -> {
+	    	
+    		ps = connection.prepareStatement(
+    				"UPDATE aluno SET codCurso=?, rgm=?, nome=?, email=?, senha=?, cpf=?, celular=? WHERE codigo=?");
+ 
+			ps.setInt   (1, aluno.getCodCurso()); 
+			ps.setInt   (2, aluno.getRgm()); 
+			ps.setString(3, aluno.getNome());
+			ps.setString(4, aluno.getEmail()); 
+			ps.setString(5, aluno.getSenha());
+			ps.setString(6, aluno.getCpf());
+			ps.setString(7, aluno.getCelular());
+			ps.setInt   (8, aluno.getCodigo());
+			
+			return (ps.executeUpdate() > 0) ? true : false;
+	    });
+	}
+		
 	// LOGIN
 	public String login(Aluno aluno) {
 		TransactionManager txManager = new TransactionManager();

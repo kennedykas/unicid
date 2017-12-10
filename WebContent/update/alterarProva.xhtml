@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<!-- HEAD -->
+	<ui:include src="../componentes/head/head.xhtml" />
+<h:body class="grey lighten-4">
+	<!-- NAVBAR -->
+	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
+	
+	<!-- SETA A DISCIPLINA SELECIONADA -->
+	<f:event listener="#{controllerDisciplinas.disciplina.setCodigo(controllerProvas.prova.codDisciplina)}" type="preRenderView"/>
+	
+	<div class="container" data-content="questions">
+        <div class="z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
+		          
+		    <h4><h:outputText value="#{msg['update.test']}"/></h4>
+
+			<p class="lime-text text-darken-2">
+				<i class="material-icons left">info</i>
+        			<h:outputText value="#{msg['info.student.test.begin']}"/>
+			</p>
+			<br/>			  
+			
+			<h:form id="form-update-test-info" styleClass="loading">
+
+		        <!-- FORM INFORMACOES PROVA -->
+				<ui:include src="../componentes/form/professor/formInformacoesProva.xhtml" />
+	
+				<!-- CANCEL -->
+	   			<div class="fixed-action-btn tooltipped" 
+	   				 data-position="left" 
+	   				 data-delay="50" 
+	   				 data-tooltip="#{msg['upper.cancel']}"
+	   				 style="bottom:102px">
+					
+					<div class="btn-floating btn-large waves-effect waves-light red">
+	
+						<i class="material-icons right">clear</i>
+	
+						<h:commandButton
+							style="padding: 21px 28px"
+							styleClass="position-absolute" 
+							action="/list/listaProvas"/>
+					</div>
+	   			</div>
+	        		
+				<!-- UPDATE -->
+    			<div class="fixed-action-btn tooltipped" 
+    				 data-position="left" 
+    				 data-delay="50" 
+    				 data-tooltip="#{msg['upper.save']}">
+					
+					<div class="btn-floating btn-large waves-effect waves-light deep-purple pulse">
+
+						<i class="material-icons right" style="z-index:1">save</i>
+
+						<h:commandButton
+							style="padding: 21px 28px"
+							styleClass="position-absolute" 
+							action="#{controllerProvas.alterarInformacoesDaProva()}"/>
+					</div>
+       			</div>
+   			</h:form>
+		</div>
+	</div>
+		
+	<!-- FOOTER -->
+	<ui:include src="../componentes/footer/footer.xhtml" />
+</h:body>
+</html> 

@@ -175,15 +175,16 @@ public class ProvaDAO {
 	    return txManager.doInTransactionWithReturn((connection) -> {
 	    	
 			ps = connection.prepareStatement(
-					"UPDATE prova SET codDisciplina=?, titulo=?, valorTotal=?, tempo=?, data=?, allowAfterDate=?, allowMultipleAttempts=? WHERE codigo=?");
+					"UPDATE prova SET codDisciplina=?, titulo=?, valorTotal=?, valorQuestoes=?, tempo=?, data=?, allowAfterDate=?, allowMultipleAttempts=? WHERE codigo=?");
 			ps.setInt    (1, prova.getCodDisciplina());
 			ps.setString (2, prova.getTitulo());
 			ps.setFloat  (3, prova.getValorTotal());
-			ps.setInt    (4, prova.getTempo());
-			ps.setString (5, prova.getData()); 
-			ps.setBoolean(6, prova.isAllowAfterDate()); 
-			ps.setBoolean(7, prova.isAllowMultipleAttempts()); 
-			ps.setInt    (8, prova.getCodigo());
+			ps.setFloat  (4, prova.getValorQuestoes());
+			ps.setInt    (5, prova.getTempo());
+			ps.setString (6, prova.getData()); 
+			ps.setBoolean(7, prova.isAllowAfterDate()); 
+			ps.setBoolean(8, prova.isAllowMultipleAttempts()); 
+			ps.setInt    (9, prova.getCodigo());
 		
 			return (ps.executeUpdate() > 0) ? true : false;
 		});	

@@ -52,6 +52,7 @@ public class ControllerProvas {
 	private static final String PAGE_LIST_TESTS_PROF    = "/list/listaProvasProfessor";
 	private static final String PAGE_LIST_TESTS_STUDENT = "/list/listaProvasAluno";
 	private static final String PAGE_SHOW_TEST          = "/see/verProvaAluno";
+	private static final String PAGE_UPDATE_TEST        = "/update/alterarProva";
 	private static final Double ROUNDING_MARGIN         = 0.11; 
 	private static final int    PRECISION_SCALE         = 2;
 	private static final int    DEZ_MINUTOS             = 10;
@@ -87,13 +88,20 @@ public class ControllerProvas {
 	 */
 	public void calcEachQuestionValue() {
 		
-		BigDecimal testValue       = new BigDecimal(prova.getValorTotal());
-		BigDecimal questionsNumber = new BigDecimal(questions.size());
+		BigDecimal testValue       = BigDecimal.valueOf(prova.getValorTotal());
+		BigDecimal questionsNumber;
+		
+		if(!questions.isEmpty())
+			
+			questionsNumber = BigDecimal.valueOf(questions.size());
+		
+		else // when we are updating a test we dont have the number of questions
+			
+			questionsNumber = BigDecimal.valueOf((prova.getQuestoes().split(",")).length);
 		
 		this.prova.setValorQuestoes(
 				
 				(testValue.divide(questionsNumber, PRECISION_SCALE, RoundingMode.HALF_UP).floatValue()));
-		
 	}
 		
 	public void excluir() {
@@ -177,32 +185,24 @@ public class ControllerProvas {
 	
 	// GET ROW DATA
 	public void selecionarRegistro() {
-		System.out.println("info geted");
 		this.prova = this.listaProvas.getRowData();
 	}
 
-	public String alterarInformacoesDaProva(Prova prova) {
+	public String alterarInformacoesDaProva() {
 		
 		prova.setCodDisciplina(this.disciplinaBean.getDisciplina().getCodigo());
 		
-		//calcEachQuestionValue();
-		
-	
-		
-		BigDecimal testValue       = new BigDecimal(prova.getValorTotal());
-		//BigDecimal questionsNumber = new BigDecimal((prova.getQuestoes().split(",")).length);
-		BigDecimal questionsNumber = new BigDecimal(2);
-		
-		this.prova.setValorQuestoes(
-				
-				(testValue.divide(questionsNumber, PRECISION_SCALE, RoundingMode.HALF_UP).floatValue()));
-		
+		calcEachQuestionValue();
 		
 		dao = new ProvaDAO();
 
-		dao.alterarInformacoes(prova);
+		if(dao.alterarInformacoes(prova))
 		
-		return PAGE_LIST_TESTS_PROF;
+			return PAGE_LIST_TESTS_PROF;
+		
+		else
+			
+			return PAGE_UPDATE_TEST;
 	}
 	
 	public boolean studentCanTakeTestNow(String testDate, boolean allowAfterDate, boolean allowMultipleAttempts, boolean jaRealizou) {

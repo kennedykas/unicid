@@ -1,0 +1,166 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:h="http://xmlns.jcp.org/jsf/html" 
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    
+	<!-- FORM LEFT SIDE CONTAINER -->
+	<div class="col s12 m12 l6">
+	
+		<!-- NOME -->
+		<div class="input-field row">
+			<h:inputText 
+				id="nome" 
+				styleClass="validate"
+				value="#{controllerAlunos.aluno.nome}" 
+				a:required="true" 
+				a:maxlength="350" 
+				a:minlenght="4" 
+				requiredMessage="#{msg['required.name']}"/>
+			
+			<label for="nome" data-error="#{msg['invalid.name']}">
+				<h:outputText value="#{msg['upper.name']}"/>
+			</label>
+		</div>		
+		
+		<!-- RGM ALUNO -->
+		<div class="input-field row">
+			<h:inputText 
+				id="rgm" 
+				value="#{controllerAlunos.aluno.rgm}" 
+				styleClass="validate" 
+				a:required="true" 
+				a:maxlength="8" 
+				a:minlength="5"
+				a:type="number" 
+				requiredMessage="#{msg['required.rgm']}"/>
+			
+			<label for="rgm" data-error="#{msg['invalid.rgm']}">
+				<h:outputText value="#{msg['upper.rgm']}"/>
+			</label>
+		</div>
+		
+		<!-- EMAIL -->
+		<div class="input-field row">
+			<h:inputText 
+				id="email" 
+				styleClass="validate"
+				value="#{controllerAlunos.aluno.email}" 
+				a:type="email" 
+				a:required="true" 
+				requiredMessage="#{msg['required.email']}"/>
+			
+			<label for="email" data-error="#{msg['invalid.email']}">
+				<h:outputText value="#{msg['upper.email']}"/>
+			</label>
+		</div>
+		
+		<!-- SENHA -->
+		<div class="input-field row">
+			<h:inputSecret 
+				id="senha1" 
+				value="#{controllerAlunos.aluno.senha}" 
+				styleClass="password password1 validate" 
+				a:minlength="4" 
+				a:required="true" 
+				requiredMessage="#{msg['required.password']}">
+				<f:validator validatorId="PasswordValidator" />
+			</h:inputSecret>
+			
+			<label for="senha1" data-error="#{msg['invalid.password']}">
+				<h:outputText value="#{msg['upper.password']}"/>
+			</label>
+		</div>
+		
+		<!-- CONFIRMAR SENHA -->
+		<div class="input-field row">
+			<h:inputSecret 
+				id="senha2" 
+				styleClass="password password2 validate" 
+				a:minlength="4" 
+				a:required="true" 
+				requiredMessage="#{msg['required.confirm.password']}"/>
+			
+			<label for="senha2" data-error="#{msg['invalid.password']}">
+				<h:outputText value="#{msg['upper.confirm.password']}"/>
+			</label>
+		</div>		
+		
+		<!-- CPF -->
+		<div class="input-field row">
+			<h:inputText
+				id="cpf"
+				value="#{controllerAlunos.aluno.cpf}"
+				styleClass="cpf validate"/>
+										
+			<label for="cpf" data-error="#{msg['invalid.cpf']}">
+				<h:outputText value="#{msg['upper.cpf'].concat(' ').concat(msg['upper.not.required'])}"/>
+			</label>
+		</div>
+		
+		<!-- CELULAR -->
+		<div class="input-field row">
+			<h:inputText
+				id="celular"
+				value="#{controllerAlunos.aluno.celular}"
+				styleClass="celular validate"/>
+			
+			<label for="celular" data-error="#{msg['invalid.cellphone']}">
+				<h:outputText value="#{msg['upper.cellphone'].concat(' ').concat(msg['upper.not.required'])}"/>
+			</label>
+		</div>
+	</div>
+	
+	<!-- GAMBS NEED TO BE FIXED -->
+	<div class="hide-on-med-and-down col l5" style="width:200px;height:200px"></div>
+
+	<!-- FORM RIGHT SIDE CONTAINER -->
+	<div class="col s12 m12 l5 right">
+		
+		<!-- CURSO -->
+		<ui:include src="../selectCurso.xhtml"/>
+									
+		<!-- MENSSAGENS DE ERRO -->
+		<h:messages id="messages" class="esc red-text text-darken-2"/>
+
+		<h:panelGroup rendered="#{novoAluno eq 'true'}">
+			
+			<!-- GOOGLE CAPTCHA -->
+			<div class="input-field row">
+				<div class="g-recaptcha" id="captcha" data-sitekey="6LeCGicUAAAAAEdGDF365N0oG5n_4ATnDuqiwdPJ"/>
+			</div>		
+			
+			<!-- BOTAO ENVIAR -->
+			<div class="center"> 
+				
+				<div class="row btn waves-effect waves-light padding-zero">
+	
+					<i class="material-icons right position-absolute right-30">send</i>
+	
+					<h:commandButton
+						style="padding:8px 65px 10px 32px"
+						action="#{controllerAlunos.save}"
+						value="#{msg['upper.ready']}"/>
+				</div>
+			</div>
+		</h:panelGroup>
+		
+		<h:panelGroup rendered="#{novoAluno eq 'false'}">
+
+			<!-- BOTAO SALVAR ALTERACOES -->
+   			<div class="center"> 
+				
+				<div class="row btn waves-effect waves-light padding-zero">
+
+ 					<i class="material-icons right position-absolute right-30">save</i>
+
+					<h:commandButton
+						style="padding:8px 65px 10px 32px"
+						action="#{controllerAlunos.updateStudent}"
+						value="#{msg['upper.save']}"/>
+				</div>
+   			</div>
+		</h:panelGroup>
+	</div>
+</ui:composition>
