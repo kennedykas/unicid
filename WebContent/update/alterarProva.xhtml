@@ -4,7 +4,6 @@
       xmlns:f="http://java.sun.com/jsf/core" 
       xmlns:h="http://xmlns.jcp.org/jsf/html" 
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
 	<!-- HEAD -->
@@ -16,7 +15,7 @@
 	<!-- SETA A DISCIPLINA SELECIONADA -->
 	<f:event listener="#{controllerDisciplinas.disciplina.setCodigo(controllerProvas.prova.codDisciplina)}" type="preRenderView"/>
 	
-	<div class="container" data-content="questions">
+	<div class="container main-content" data-content="tests">
         <div class="z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
 		          
 		    <h4><h:outputText value="#{msg['update.test']}"/></h4>
@@ -27,7 +26,7 @@
 			</p>
 			<br/>			  
 			
-			<h:form id="form-update-test-info" styleClass="loading">
+			<h:form id="form-update-test-info" styleClass="loading" >
 
 		        <!-- FORM INFORMACOES PROVA -->
 				<ui:include src="../componentes/form/professor/formInformacoesProva.xhtml" />
@@ -69,6 +68,12 @@
    			</h:form>
 		</div>
 	</div>
+	
+	<script>
+		$(document).ready(function() {
+			fillDateAndTime();	
+		});
+	</script>
 		
 	<!-- FOOTER -->
 	<ui:include src="../componentes/footer/footer.xhtml" />

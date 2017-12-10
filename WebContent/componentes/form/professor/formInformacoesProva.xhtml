@@ -3,7 +3,6 @@
     xmlns:f="http://java.sun.com/jsf/core" 
     xmlns:h="http://xmlns.jcp.org/jsf/html" 
     xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui"
     xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 		
    	<!-- TITULO -->
@@ -45,17 +44,30 @@
 	    <h:outputLabel value="#{msg['upper.test.time']}" for="time"/>
 	</div>		    	
 	     
+	
   	<!-- DATA EM QUE SERA POSSIVEL REALIZA LA -->
    	<div class="input-field row">
-	   	<h:inputText
-	   		id="date" 
-	   		value="#{controllerProvas.prova.data}" 
-	   		class="date"
-	   		a:required="true"
-	   		requiredMessage="#{msg['required.test.date']}"/>
-	    <h:outputLabel value="#{msg['upper.date']}" for="date"/>
+		<input type="text" id="date" required="required" class="datepicker"/>
+	    <label for="date">
+	    	<h:outputText value="#{msg['upper.date']}"/>
+	    </label>
+	</div>	   		
+	
+  	<!-- HORARIO EM QUE SERA POSSIVEL REALIZA LA -->
+   	<div class="input-field row">
+		<input type="text" id="schedule" required="required" class="timepicker"/>
+	    <label for="schedule">
+	    	<h:outputText value="#{msg['upper.schedule']}"/>
+	    </label>
 	</div>	   		
    	
+   	<!-- HIDDEN INPUT TP SET THE SELECTED DATE ON BACK BEAN -->
+   	<h:inputHidden 
+   		id="dateAndTime"
+   		value="#{controllerProvas.prova.data}"
+   		a:required="true"
+   		requiredMessage="#{msg['required.test.date']}"/>
+
    	<!-- PERMITIR REALIZACAO APOS ESSE PERIODO -->
 	<span class="row"> 
 		<h:selectBooleanCheckbox 

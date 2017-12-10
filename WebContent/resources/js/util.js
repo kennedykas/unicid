@@ -41,7 +41,40 @@ function init(){
 		$(this).html(h);
 	});
 	
-	// SET THE CURRENT PAGE AS SSELECTED ON NAVBAR
+	// email field (.emailField)
+	var testEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	$('.emailField').bind('input propertychange', function() {
+		if (testEmail.test(jQuery(this).val())) {
+			$(this).css({ 'border':'1px solid green'}); // valid
+			$('button.validate').prop("disabled", false);
+		} else 
+			$(this).css({ 'border':'1px solid red'}); // invalid
+	});
+	
+	// DATE PICKER
+	$('.datepicker').pickadate({
+	    selectMonths: true, // Creates a dropdown to control month
+	    selectYears: 15, // Creates a dropdown of 15 years to control year,
+	    min: true,
+	    today: 'Hoje',
+	    clear: 'Limpar',
+	    close: 'OK',
+	    closeOnSelect: true // Close upon selecting a date,
+	});
+	
+	// TIME PICKER
+	$('.timepicker').pickatime({
+	    default: 'now', // Set default time: 'now', '1:30AM', '16:30'
+	    fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
+	    twelvehour: false, // Use AM/PM or 24-hour format
+	    donetext: 'OK',
+	    cleartext: 'Limpar',
+	    canceltext: 'Cancelar',
+	    autoclose: true,
+	    ampmclickable: true // make AM PM clickable
+	});
+	
+	// SET THE CURRENT PAGE AS SELECTED ON NAVBAR
 	var activeWindow = document.getElementsByClassName('mainContent')[0].getAttribute("data-content");
 	
 	$('.navItem').find('.active').removeClass('active');
@@ -53,16 +86,6 @@ function init(){
 		if (document.getElementsByClassName('navItem')[i].getAttribute('data-page') == activeWindow)
 			document.getElementsByClassName('navItem')[i].classList.add('active');
 	}
-	
-	// email field (.emailField)
-	var testEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-	$('.emailField').bind('input propertychange', function() {
-		if (testEmail.test(jQuery(this).val())) {
-			$(this).css({ 'border':'1px solid green'}); // valid
-			$('button.validate').prop("disabled", false);
-		} else 
-			$(this).css({ 'border':'1px solid red'}); // invalid
-	});
 }
 
 
@@ -97,9 +120,10 @@ function updateCounter() {
 	
 }
 
-//--------------------------------------------- 
-//                VALIDA CPF
-//---------------------------------------------
+/**
+ * Valida CPF
+ * 
+ */ 
 $(".cpf").on("keyup", function(){
 	// EXTRAI APENAS OS NUMEROS
 	cpf = $(".cpf").val().match(/\d/g).join("");
@@ -135,6 +159,52 @@ $(".cpf").on("keyup", function(){
     $('.cpf').removeClass('invalid').addClass('valid');
     return true;
 });
+
+/**
+ * Set the selected date and time on the hidden input
+ */
+
+var data;
+var horario;
+
+$('#date').on('change', function() {
+	
+	var dateAux = $(this).val().replace(" ", " ").replace(", ", " ").split(" ");
+	
+	data = dateAux[0] + "/" + getMonthFromString(dateAux[1]) + "/" +dateAux[2];
+	
+	if(horario != undefined)
+		$("#form-update-test-info\\:dateAndTime").val(data + "-" + horario);
+});
+
+$('#schedule').on('change', function() {
+	
+	horario = $(this).val();
+	
+	if(data != undefined)
+		$("#form-update-test-info\\:dateAndTime").val(data + "-" + horario);
+});
+
+function fillDateAndTime() {
+	
+	var dateAndTime = $("#form-update-test-info\\:dateAndTime").val().split("-");
+	
+	data = dateAndTime[0];
+	horario = dateAndTime[1];
+	
+	$("#date").val(dateAndTime[0]);
+	$("#schedule").val(dateAndTime[1]);
+}
+
+function getMonthFromString(mon){
+
+   var d = Date.parse(mon + "1, 2018");
+   
+   if(!isNaN(d))
+      return new Date(d).getMonth() + 1;
+   
+   return -1;
+}
 
 //--------------------------------------------------------------------------- 
 //     CHECA SE PASSWORDS CORRESPONDEM NOS DOIS CAMPOS (newUsers)
