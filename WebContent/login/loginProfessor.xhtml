@@ -29,7 +29,7 @@
 						<h:inputText 
 							id="email" 
 							value="#{controllerProfessores.professor.emailProfessor}" 
-							class="validate" 
+							styleClass="validate" 
 							a:type="email" 
 							a:required="true" 
 							requiredMessage="#{msg['required.email']}"/>
@@ -45,7 +45,8 @@
 							id="senha" 
 							value="#{controllerProfessores.professor.senhaProfessor}" 
 							a:minlength="4" 
-							a:required="true" 
+							a:required="true"
+							styleClass="validate" 
 							requiredMessage="#{msg['required.password']}"/>
 						
 						<label for="senha" data-error="#{msg['invalid.password']}">

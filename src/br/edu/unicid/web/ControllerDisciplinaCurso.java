@@ -8,6 +8,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import br.edu.unicid.bean.DisciplinaCurso;
+import br.edu.unicid.constants.Constants;
 import br.edu.unicid.dao.DisciplinaCursoDAO;
 
 @ManagedBean(name="controllerDisciplinaCurso")
@@ -18,10 +19,7 @@ public class ControllerDisciplinaCurso {
 	private int[]               codigos;
 	private DisciplinaCursoDAO  dao;
 	private DisciplinaCurso     disciplinaCurso ;
-	private static final String PAGE_LIST_DISCIPLINES  = "/list/listaDisciplinas";
-	private static final String PAGE_NEW_DISCIPLINE    = "/list/novaDisciplina";
-	private static final String PAGE_UPDATE_DISCIPLINE = "/list/alterarDisciplina";
-	
+
 	@ManagedProperty(value="#{controllerCursos}")
 	private ControllerCursos cursosBean;
 	
@@ -38,9 +36,9 @@ public class ControllerDisciplinaCurso {
 		this.dao = new DisciplinaCursoDAO();
 		
 		if(this.dao.salvar(this.disciplinaCurso, this.cursosBean.getCurso().getCodigos()))
-			return PAGE_LIST_DISCIPLINES;
+			return Constants.PAGE_LIST_DISCIPLINES;
 		else
-			return PAGE_NEW_DISCIPLINE;
+			return Constants.PAGE_NEW_DISCIPLINE;
 	}
 	
 	// ALTERAR
@@ -50,9 +48,9 @@ public class ControllerDisciplinaCurso {
 		
 		if (dao.alterar(cursosBean.getCurso().getCodigos(), disciplinaCurso.getCodDisciplina()))
 			
-			return PAGE_LIST_DISCIPLINES; 
+			return Constants.PAGE_LIST_DISCIPLINES; 
 		else
-			return PAGE_UPDATE_DISCIPLINE;
+			return Constants.PAGE_UPDATE_DISCIPLINE;
 	}
 	
 	// OBTEM TODOS OS CURSOS QUE UMA DISCIPLINA CONTEMPLA

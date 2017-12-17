@@ -27,6 +27,7 @@ public class ControllerCursos {
 	
 	// LISTA DE CURSOS DO TIPO SELECTITEM
 	public List<SelectItem> cursos() {
+		
 		List<SelectItem> itens = new ArrayList<SelectItem>();
 		this.dao = new CursoDAO();
 		List<Curso> cursoList = this.dao.cursos();

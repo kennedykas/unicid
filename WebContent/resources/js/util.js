@@ -104,12 +104,12 @@ $(".loading").on("submit", function() {
 function updateCounter() {
 	
 	// get all selected questions
-	let numberOfSelectedQuestions = 
+	var numberOfSelectedQuestions = 
 		document.getElementsByClassName('bordered')[0]
 			.querySelectorAll('input[type=checkbox]:checked').length;
 	
 	// get the counter element
-	let counter = document.getElementById('selectedQuestionsCounter');
+	var counter = document.getElementById('selectedQuestionsCounter');
 	
 	counter.innerHTML = numberOfSelectedQuestions;
 	
@@ -160,10 +160,10 @@ $(".cpf").on("keyup", function(){
     return true;
 });
 
+
 /**
  * Set the selected date and time on the hidden input
  */
-
 var data;
 var horario;
 
@@ -174,7 +174,7 @@ $('#date').on('change', function() {
 	data = dateAux[0] + "/" + getMonthFromString(dateAux[1]) + "/" +dateAux[2];
 	
 	if(horario != undefined)
-		$("#form-update-test-info\\:dateAndTime").val(data + "-" + horario);
+		$("#testInfo\\:dateAndTime").val(data + "-" + horario);
 });
 
 $('#schedule').on('change', function() {
@@ -182,12 +182,12 @@ $('#schedule').on('change', function() {
 	horario = $(this).val();
 	
 	if(data != undefined)
-		$("#form-update-test-info\\:dateAndTime").val(data + "-" + horario);
+		$("#testInfo\\:dateAndTime").val(data + "-" + horario);
 });
 
 function fillDateAndTime() {
 	
-	var dateAndTime = $("#form-update-test-info\\:dateAndTime").val().split("-");
+	var dateAndTime = $("#testInfo\\:dateAndTime").val().split("-");
 	
 	data = dateAndTime[0];
 	horario = dateAndTime[1];
@@ -296,17 +296,17 @@ setInterval(function() {
 //----------------------------------------------------------------------
 $(".filterQuestionsByDiscipline").on('click', function(){
 
-	let questions = document.getElementsByClassName('questionContainer');
-	let disciplinesAvailableToChoose = 
+	var questions = document.getElementsByClassName('questionContainer');
+	var disciplinesAvailableToChoose = 
 		document.getElementById('disciplines').getElementsByTagName('input'); 
 	
 	if(disciplinesAvailableToChoose.length) {
 
-		for(let j = 0; j < questions.length; j++) {
+		for(var j = 0; j < questions.length; j++) {
 
 			$(questions[j]).closest('td').css('display', 'none');
 			
-			for(let k = 0; k < disciplinesAvailableToChoose.length; k++) {
+			for(var k = 0; k < disciplinesAvailableToChoose.length; k++) {
 				
 				if(disciplinesAvailableToChoose[k].checked && 
 						questions[j].classList.contains(disciplinesAvailableToChoose[k].value))
@@ -319,14 +319,14 @@ $(".filterQuestionsByDiscipline").on('click', function(){
 
 $('.clearFilter').on('click', function(){
 	
-	let questions = document.getElementsByClassName('questionContainer')
-	let disciplinesAvailableToChoose = 
+	var questions = document.getElementsByClassName('questionContainer')
+	var disciplinesAvailableToChoose = 
 		document.getElementById('disciplines').getElementsByTagName('input') 
 	
-	for (let i = 0; i < questions.length; i++)  
+	for (var i = 0; i < questions.length; i++)  
 		$(questions[i]).closest('td').css('display', 'table-cell')
 	
-	for (let i = 0; i < disciplinesAvailableToChoose.length; i++)
+	for (var i = 0; i < disciplinesAvailableToChoose.length; i++)
 		disciplinesAvailableToChoose[i].checked = false
 });
 

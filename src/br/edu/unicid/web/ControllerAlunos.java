@@ -15,6 +15,7 @@ import javax.faces.model.DataModel;
 import javax.servlet.http.HttpServletRequest;
 
 import br.edu.unicid.bean.Aluno;
+import br.edu.unicid.constants.Constants;
 import br.edu.unicid.dao.AlunoDAO;
 import br.edu.unicid.util.Email;
 import br.edu.unicid.util.VerifyRecaptcha;
@@ -29,24 +30,8 @@ public class ControllerAlunos {
 	private Date     date; // TO KNOW WHEN THE USER IS REGISTERED
 	private String   userRecaptchaResponse;
 	// AUX PARA RENDERIZAR MSG DE EMAIL ENVIADO
-	private boolean  renderEmailAluno = Boolean.FALSE;  
+	private boolean  renderEmailAluno = Boolean.FALSE;
 	private DataModel<Aluno> listaAluno;
-
-	private static final String PAGE_NEW_STUDENT          = "/create/novoAluno";
-	private static final String PAGE_EMAIL_SENT           = "/user-tools/emailEnviado";
-	private static final String PAGE_LOGIN_STUDENT        = "/login/loginAluno";
-	private static final String PAGE_RECOVER_STUDENT_PASS = "/user-tools/recuperarSenhaAluno";
-	private static final String PAGE_UPDATE_STUDENT_INFO  = "/update/alterarAluno";
-	private static final String PAGE_LIST_TESTS_TO_DO     = "/list/listaProvasAluno";
-	private static final String WRONG_RGM                 = "RGM incorreto.";
-	private static final String WRONG_PASS                = "SENHA incorreta.";
-	private static final String FORGET_CHECK_RECAPTCHA    = "QUASE só falta você dizer que não é um robô!";
-	private static final String RECAPTCHA_FAILED          = "CLIQUE EM: 'não sou um robô', para confirmar que você é uma pessoa!";
-	private static final String EMAIL_WAS_SENT_WITH_PASS  = "ENVIAMOS um email com a sua senha, para o endereço cadastrado. dúvidas entre em contato conosco: jadircmj@hotmail.com";
-	private static final String NAME_NOT_FOUND            = "NOME não encontrado (maiúsculas e minúsculas não interferem), dúvidas entre em contato conosco: jadircmj@hotmail.com";
-	private static final String UNKNOWN_RGM               = "RGM não coincide com o nome, dúvidas entre em contato conosco: jadircmj@hotmail.com";
-	private static final String FACE_MESSAGES_ID          = "messages";
-	private static final String SUCCESS                   = "ok";
 	
 	private final DateFormat DATA = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
 	
@@ -74,13 +59,13 @@ public class ControllerAlunos {
 
 		// RECAPTCHA NAO CHECADO
 		if(this.userRecaptchaResponse.isEmpty()) { 
-			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(FORGET_CHECK_RECAPTCHA));
-			return PAGE_LOGIN_STUDENT;
+			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage(Constants.FORGET_CHECK_RECAPTCHA));
+			return Constants.PAGE_LOGIN_STUDENT;
 		}
 		// RECAPTCHA ROBO (false = robot / true = people)
 		else if(!VerifyRecaptcha.verify(userRecaptchaResponse)) {
-			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(RECAPTCHA_FAILED));
-			return PAGE_LOGIN_STUDENT;
+			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage(Constants.RECAPTCHA_FAILED));
+			return Constants.PAGE_LOGIN_STUDENT;
 		}		
 		
 		this.date = new Date();
@@ -91,9 +76,9 @@ public class ControllerAlunos {
 		if(this.dao.salvar(this.aluno)) { // IF ALUNO SALVO COM SUCESSO ENTAO ELE RECEBE UM EMAIL
 			this.email.sendEmailVerificacao(this.aluno); // PASSANDO O ALUNO PARA Q ELE RECEBA O EMAIL
 			this.renderEmailAluno = true; // MSG SERA RENDERIZADA PARA O ALUNO
-			return PAGE_EMAIL_SENT;
+			return Constants.PAGE_EMAIL_SENT;
 		}
-		return PAGE_NEW_STUDENT;
+		return Constants.PAGE_NEW_STUDENT;
 	}
 		
 	// ALTERAR
@@ -103,7 +88,7 @@ public class ControllerAlunos {
 
 		aluno.setCodCurso(cursosBean.getCurso().getCodigo()); // SET COD CURSO SELECIONADO NO BEAN
 		
-		return (dao.updateStudent(aluno)) ? PAGE_LIST_TESTS_TO_DO : PAGE_UPDATE_STUDENT_INFO;
+		return (dao.updateStudent(aluno)) ? Constants.PAGE_LIST_TESTS_STUDENT : Constants.PAGE_UPDATE_STUDENT_INFO;
 	}
 	
 	// EXCLUIR
@@ -111,7 +96,7 @@ public class ControllerAlunos {
 		dao = new AlunoDAO();
 		if(dao.excluir(aluno.getCodigo())) { 
 			FacesContext ctx = FacesContext.getCurrentInstance();
-			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage("Aluno excluido!"));				
+			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage("Aluno excluido!"));				
 		}
 	}
 	
@@ -121,23 +106,24 @@ public class ControllerAlunos {
 		dao = new AlunoDAO();
 		String loginAttemptStatus = dao.login(aluno);
 		
-		if(loginAttemptStatus.equals(SUCCESS)) 
-			return PAGE_LIST_TESTS_TO_DO;
+		if(loginAttemptStatus.equals(Constants.SUCCESS)) 
+			return Constants.PAGE_LIST_TESTS_STUDENT;
 		
-		else if(loginAttemptStatus.equals("rgm")) { 
+		else if(loginAttemptStatus.equals(Constants.RGM)) { 
 				FacesContext ctx = FacesContext.getCurrentInstance();
-				ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(WRONG_RGM));
+				ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage(Constants.WRONG_RGM));
 			
-			} else if(loginAttemptStatus.equals("senha")) { 
+			} else if(loginAttemptStatus.equals(Constants.RGM)) { 
 					FacesContext ctx = FacesContext.getCurrentInstance();
-					ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(WRONG_PASS));
+					ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage(Constants.WRONG_PASS));
 				
-				} else if(loginAttemptStatus.equals("unverified")) {
-						email.sendEmailVerificacao(aluno); // ENVIANDO EMAIL NOVAMENTE
+				// ACCOUNT UNVERIFIED SENDING EMAIL AGAIN
+				} else if(loginAttemptStatus.equals(Constants.UNVERIFIED)) {
+						email.sendEmailVerificacao(aluno);
 						renderEmailAluno = true; // MSG SERA RENDERIZADA PARA O ALUNO
-						return PAGE_EMAIL_SENT;
+						return Constants.PAGE_EMAIL_SENT;
 					}
-		return PAGE_LOGIN_STUDENT;
+		return Constants.PAGE_LOGIN_STUDENT;
 	}
 	
 	// AUTENTICA 
@@ -153,9 +139,9 @@ public class ControllerAlunos {
 		
 		// VERIFICA A AUTENTICIDADE DESSES DADOS
 		if(dao.autentica(aluno))
-			return "Pronto!";
+			return Constants.READY;
 		
-		return "Algo não aconteceu como o esperado!";		
+		return Constants.SOMETHING_WENT_WRONG;		
 	}
 	
 	// RECUPERAR SENHA 
@@ -169,27 +155,27 @@ public class ControllerAlunos {
 
 		// RECAPTCHA NAO CHECADO
 		if(userRecaptchaResponse.isEmpty()) { 
-			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(FORGET_CHECK_RECAPTCHA));
-			return PAGE_RECOVER_STUDENT_PASS;
+			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage(Constants.FORGET_CHECK_RECAPTCHA));
+			return Constants.PAGE_RECOVER_STUDENT_PASS;
 		}
 		// RECAPTCHA ROBO (false = robot / true = people)
 		else if(!VerifyRecaptcha.verify(userRecaptchaResponse)) {
-			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(RECAPTCHA_FAILED));
-			return PAGE_RECOVER_STUDENT_PASS;
+			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage(Constants.RECAPTCHA_FAILED));
+			return Constants.PAGE_RECOVER_STUDENT_PASS;
 		}	
 		
 		dao = new AlunoDAO();
 		String resultado = dao.recuperarSenha(aluno); 
 		
-		if(resultado.equals(SUCCESS)) { // ALUNO FOI ENCONTRADO
+		if(resultado.equals(Constants.SUCCESS)) { // ALUNO FOI ENCONTRADO
 			email.sendEmailSenha(aluno); // ENVIANDO EMAIL SENHA
-			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(EMAIL_WAS_SENT_WITH_PASS));
-		} else if(resultado.equals("nome")) 
-				ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(NAME_NOT_FOUND));
+			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage(Constants.EMAIL_WAS_SENT_WITH_PASS));
+		} else if(resultado.equals(Constants.NAME)) 
+				ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage(Constants.NAME_NOT_FOUND));
 			else
-				ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage(UNKNOWN_RGM));
+				ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage(Constants.UNKNOWN_RGM));
 
-		return PAGE_RECOVER_STUDENT_PASS;		
+		return Constants.PAGE_RECOVER_STUDENT_PASS;		
 	}
 	
 	// OBTER NOME ALUNO
@@ -208,7 +194,7 @@ public class ControllerAlunos {
 	
 	// RENDERIZADOR DE ICONE DE EMAIL
 	public boolean renderEmail(String email) {
-		return (aluno.getEmail().contains(email)) ? true : false;
+		return (aluno.getEmail().contains(email)) ? Boolean.TRUE : Boolean.FALSE;
 	}
 	
 	// GET ROW DATA
@@ -219,7 +205,7 @@ public class ControllerAlunos {
 	// LOG OFF
 	public String quit() {
 		init();
-		return PAGE_LOGIN_STUDENT;
+		return Constants.PAGE_LOGIN_STUDENT;
 	}
 	
 	// GETTERS AND SETTERS

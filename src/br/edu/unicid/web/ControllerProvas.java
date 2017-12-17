@@ -18,6 +18,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
 import br.edu.unicid.bean.Prova;
+import br.edu.unicid.constants.Constants;
 import br.edu.unicid.dao.ProvaDAO;
 
 @ManagedBean(name="controllerProvas")
@@ -40,24 +41,18 @@ public class ControllerProvas {
 	
 	@ManagedProperty(value="#{controllerQuestoes}")
 	private ControllerQuestoes questaoBean;
+
+	public final SimpleDateFormat year   = new SimpleDateFormat("yyyy");
+	public final SimpleDateFormat month  = new SimpleDateFormat("MM");
+	public final SimpleDateFormat day    = new SimpleDateFormat("dd");
+	public final SimpleDateFormat hour   = new SimpleDateFormat("HH");
+	public final SimpleDateFormat minute = new SimpleDateFormat("mm");
 	
-	// DATE FORMATS PARA CHECAR SE O ALUNO PODE OU NAO REALIZAR A PROVA
-	private final SimpleDateFormat year   = new SimpleDateFormat("yyyy");
-	private final SimpleDateFormat month  = new SimpleDateFormat("MM");
-	private final SimpleDateFormat day    = new SimpleDateFormat("dd");
-	private final SimpleDateFormat hour   = new SimpleDateFormat("HH");
-	private final SimpleDateFormat minute = new SimpleDateFormat("mm");
-	
-	private static final String FACE_MESSAGES_ID        = "messages";
-	private static final String PAGE_LIST_TESTS_PROF    = "/list/listaProvasProfessor";
-	private static final String PAGE_LIST_TESTS_STUDENT = "/list/listaProvasAluno";
-	private static final String PAGE_SHOW_TEST          = "/see/verProvaAluno";
-	private static final String PAGE_UPDATE_TEST        = "/update/alterarProva";
-	private static final Double ROUNDING_MARGIN         = 0.11; 
-	private static final int    PRECISION_SCALE         = 2;
-	private static final int    DEZ_MINUTOS             = 10;
-	private static final int    UMA_HORA_ADIANTADO      = 1;
-	private static final int    FALTANDO_DEZ_MINUTOS    = -50;
+	public static final Double ROUNDING_MARGIN      = 0.11; 
+	public static final int    PRECISION_SCALE      = 2;
+	public static final int    DEZ_MINUTOS          = 10;
+	public static final int    UMA_HORA_ADIANTADO   = 1;
+	public static final int    FALTANDO_DEZ_MINUTOS = -50;
 	
 	public ControllerProvas() {}
 
@@ -80,7 +75,7 @@ public class ControllerProvas {
 		if(this.dao.salvar(this.prova))
 			this.questions.clear();
 
-		return PAGE_LIST_TESTS_PROF;
+		return Constants.PAGE_LIST_TESTS_PROF;
 	}
 
 	/**
@@ -109,7 +104,7 @@ public class ControllerProvas {
 
 		if(this.dao.excluir(this.prova.getCodigo())) { 
 			FacesContext ctx = FacesContext.getCurrentInstance();
-			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage("Prova excluida!"));				
+			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage("Prova excluida!"));				
 		}
 	}
 	
@@ -198,11 +193,11 @@ public class ControllerProvas {
 
 		if(dao.alterarInformacoes(prova))
 		
-			return PAGE_LIST_TESTS_PROF;
+			return Constants.PAGE_LIST_TESTS_PROF;
 		
 		else
 			
-			return PAGE_UPDATE_TEST;
+			return Constants.PAGE_UPDATE_TEST;
 	}
 	
 	public boolean studentCanTakeTestNow(String testDate, boolean allowAfterDate, boolean allowMultipleAttempts, boolean jaRealizou) {
@@ -280,7 +275,7 @@ public class ControllerProvas {
 
 		setProva(this.dao.getProva(this.prova.getCodigo()));
 		
-		return (this.prova != null) ? PAGE_SHOW_TEST : PAGE_LIST_TESTS_STUDENT;
+		return (this.prova != null) ? Constants.PAGE_SHOW_TEST : Constants.PAGE_LIST_TESTS_STUDENT;
 	}
 	
 	// OBTEM TITULO DA PROVA

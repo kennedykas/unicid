@@ -14,6 +14,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
 import br.edu.unicid.bean.Questao;
+import br.edu.unicid.constants.Constants;
 import br.edu.unicid.dao.QuestaoDAO;
 
 @ManagedBean(name="controllerQuestoes")
@@ -23,11 +24,7 @@ public class ControllerQuestoes {
 	private QuestaoDAO dao;
 	private Questao questao;
 	private DataModel<Questao> listaQuestoes;
-	private static final String FACE_MESSAGES_ID     = "messages";
-	private static final String PAGE_LIST_QUESTIONS  = "/list/listaQuestoes";
-	private static final String PAGE_NEW_QUESTION    = "/create/novaQuestao";
-	private static final String PAGE_UPDATE_QUESTION = "/update/alterarQuestao";
-	
+		
 	@ManagedProperty(value="#{controllerDisciplinas}")
 	private ControllerDisciplinas disciplinaBean;
 	
@@ -45,7 +42,7 @@ public class ControllerQuestoes {
 		
 		this.dao = new QuestaoDAO();
 		
-		return (this.dao.salvar(questao)) ? PAGE_LIST_QUESTIONS : PAGE_NEW_QUESTION;
+		return (this.dao.salvar(questao)) ? Constants.PAGE_LIST_QUESTIONS : Constants.PAGE_NEW_QUESTION;
 	}
 		
 	// CHANGE
@@ -55,7 +52,7 @@ public class ControllerQuestoes {
 		
 		dao = new QuestaoDAO();
 
-		return (dao.alterar(questao)) ? PAGE_LIST_QUESTIONS : PAGE_UPDATE_QUESTION;
+		return (dao.alterar(questao)) ? Constants.PAGE_LIST_QUESTIONS : Constants.PAGE_UPDATE_QUESTION;
 	}
 	
 	// DELETE
@@ -64,7 +61,7 @@ public class ControllerQuestoes {
 
 		if(dao.excluir(questao.getCodigo())) { 
 			FacesContext ctx = FacesContext.getCurrentInstance();
-			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage("Questão excluida!"));				
+			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage("Questão excluida!"));				
 		}
 	}
 	

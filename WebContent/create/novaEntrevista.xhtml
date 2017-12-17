@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<!-- HEAD -->
+	<ui:include src="../componentes/head/head.xhtml" />
+
+<h:body class="grey lighten-4">
+	
+	<!-- NAVBAR -->
+	<ui:include src="../componentes/header/navbarSemLinks.xhtml" />
+	
+	<div class="container center">
+        <div class="center z-depth-2 white login-form" style="margin:11vh 0;padding:20px 30px 30px 30px;">
+            
+	        <div class="row">
+	            <h5 class="center">
+	            	<h:outputText value="Agende uma entrevista"/>
+	           	</h5>
+	        </div>
+            
+            <h:form class="loading row">
+				
+				<!-- SELECT CURSO -->
+				<div class="input-field row">
+					<h:selectOneMenu 
+						id="cursos"
+						value="#{controllerEntrevista.entrevista.nomeCurso}" 
+						a:required="true"
+						requiredMessage="#{msg['required.select.your.course']}">
+					    
+					    <f:selectItem itemLabel="#{msg['upper.select.course']}" noSelectionOption="true"/>
+					    <f:selectItem itemValue="Engenharia de Software" />
+						<f:selectItem itemValue="Governança em TI" />
+						<f:selectItem itemValue="Aplicações Corporativas - Java e IOT" />
+						<f:selectItem itemValue="Big Data" />
+					</h:selectOneMenu>
+				    <h:outputLabel for="cursos" value="#{msg['upper.select.course']}"/>
+				</div>
+								
+				<!-- NOME -->
+				<div class="input-field row">
+					<h:inputText 
+						id="nome" 
+						styleClass="validate"
+						value="#{controllerEntrevista.entrevista.nome}" 
+						a:required="true" 
+						a:maxlength="350" 
+						a:minlenght="4" 
+						requiredMessage="#{msg['required.name']}"/>
+					
+					<label for="nome" data-error="#{msg['invalid.name']}">
+						<h:outputText value="#{msg['upper.name']}"/>
+					</label>
+				</div>		
+				
+				<!-- EMAIL -->
+				<div class="input-field row">
+					<h:inputText 
+						id="email" 
+						styleClass="validate"
+						value="#{controllerEntrevista.entrevista.email}" 
+						a:type="email" 
+						a:required="true" 
+						requiredMessage="#{msg['required.email']}"/>
+					
+					<label for="email" data-error="#{msg['invalid.email']}">
+						<h:outputText value="#{msg['upper.email']}"/>
+					</label>
+				</div>
+		
+				<!-- CPF -->
+				<div class="input-field row">
+					<h:inputText
+						id="cpf"
+						value="#{controllerEntrevista.entrevista.cpf}"
+						a:required="true"
+						requiredMessage="#{msg['required.cpf']}"
+						styleClass="cpf validate"/>
+												
+					<label for="cpf" data-error="#{msg['invalid.cpf']}">
+						<h:outputText value="#{msg['upper.cpf']}"/>
+					</label>
+				</div>
+				
+				<!-- CELULAR -->
+				<div class="input-field row">
+					<h:inputText
+						id="celular"
+						value="#{controllerEntrevista.entrevista.celular}"
+						a:required="true"
+						requiredMessage="#{msg['required.cellphone']}"
+						styleClass="celular validate"/>
+					
+					<label for="celular" data-error="#{msg['invalid.cellphone']}">
+						<h:outputText value="#{msg['upper.cellphone']}"/>
+					</label>
+				</div>
+		
+				<!-- MENSSAGENS DE ERRO -->
+				<h:messages id="messages" class="esc red-text text-darken-2"/>
+			
+				<!-- GOOGLE CAPTCHA -->
+				<div class="input-field row">
+					<div class="g-recaptcha" id="captcha" data-sitekey="6LeCGicUAAAAAEdGDF365N0oG5n_4ATnDuqiwdPJ"/>
+				</div>		
+			
+				<!-- BOTAO ENVIAR -->
+				<div class="center"> 
+					
+					<div class="row btn waves-effect waves-light padding-zero">
+		
+						<i class="material-icons right position-absolute right-30">send</i>
+		
+						<h:commandButton
+							style="padding:8px 65px 10px 32px"
+							action="#{controllerEntrevista.save}"
+							value="#{msg['upper.ready']}"/>
+					</div>
+				</div>
+			</h:form>
+	    </div>
+	</div>
+	
+	<!-- GOOGLE CAPTCHA -->
+	<script src="https://www.google.com/recaptcha/api.js"></script>
+		
+	<!-- FOOTER -->
+	<ui:include src="../componentes/footer/footer.xhtml" />
+</h:body>
+</html>

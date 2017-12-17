@@ -14,6 +14,7 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
 import br.edu.unicid.bean.Disciplina;
+import br.edu.unicid.constants.Constants;
 import br.edu.unicid.dao.DisciplinaDAO;
 
 @ManagedBean(name="controllerDisciplinas")
@@ -23,9 +24,6 @@ public class ControllerDisciplinas {
 	private DisciplinaDAO         dao;
 	private Disciplina            disciplina;
 	private DataModel<Disciplina> listaDisciplinas;
-	private static final String   FACE_MESSAGES_ID        = "messages";
-	private static final String   PAGE_LIST_DISCIPLINES   = "/list/listaDisciplinas";
-	private static final String   PAGE_UPDATE_DISCIPLINES = "/list/alterarDisciplina";
 	
 	@ManagedProperty(value="#{controllerCursos}")
 	private ControllerCursos cursoBean;
@@ -66,9 +64,7 @@ public class ControllerDisciplinas {
 		disciplinaCursoBean.getDisciplinaCurso()
 			.setCoursesThatDisciplineBelongTo(this.cursoBean.getCurso().getCodigos());
 		
-		if(dao.alterar(disciplina))
-			return PAGE_LIST_DISCIPLINES;
-		return PAGE_UPDATE_DISCIPLINES;
+		return dao.alterar(disciplina) ? Constants.PAGE_LIST_DISCIPLINES : Constants.PAGE_UPDATE_DISCIPLINE;
 	}
 	
 	// DELETE
@@ -77,7 +73,7 @@ public class ControllerDisciplinas {
 
 		if(this.dao.excluir(this.disciplina.getCodigo())) { 
 			FacesContext ctx = FacesContext.getCurrentInstance();
-			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage("Disciplina Excluida!"));				
+			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage("Disciplina Excluida!"));				
 		}
 	}
 	

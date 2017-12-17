@@ -30,7 +30,7 @@
 		
 		<!-- LISTA AS PROVAS -->	
 		<h:panelGroup rendered="#{controllerProvas.listaProvas.getRowCount() eq 0 ? false : true}">
-			<div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
+			<div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;overflow-x: scroll;">
 				<h:form styleClass="loading">		
 				
 					<h:dataTable value="#{controllerProvas.listaProvas}" var="dados" class="striped">

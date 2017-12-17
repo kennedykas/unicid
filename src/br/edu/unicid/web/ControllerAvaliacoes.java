@@ -10,6 +10,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
 import br.edu.unicid.bean.Avaliacao;
+import br.edu.unicid.constants.Constants;
 import br.edu.unicid.dao.AvaliacaoDAO;
 
 @ManagedBean(name="controllerAvaliacoes")
@@ -29,18 +30,19 @@ public class ControllerAvaliacoes {
 	
 	/** SALVA A AVALIACAO
 	 * @param 
-	 * @return Retorna uma String com o nome da página a ser renderizada
+	 * @return Retorna uma String com o nome da pï¿½gina a ser renderizada
 	 */
 	public String responder(String nomeProfessor, int codGrupo) throws Exception {
-		// SETA NOME DO PROFESSOR QUE FEZ A AVALIACAO
+		
 		this.avaliacao.setNomeProfessor(nomeProfessor);
 		this.avaliacao.setCodGrupo(codGrupo);
 		
-		// SALVA A AVALIACAO
 		this.dao = new AvaliacaoDAO();
 		
-		// MEIO QUE DESNECESSARIA ESSA LINHA PRECISA SER AVALIADA
-		return dao.salvar(avaliacao) ? "detalhesAvaliacao" : "detalhesAvaliacao";
+		dao.salvar(avaliacao);
+		
+		
+		return Constants.PAGE_TEST_DETAILS;
 	}
 	
 	/** SALVA A AVALIACAO

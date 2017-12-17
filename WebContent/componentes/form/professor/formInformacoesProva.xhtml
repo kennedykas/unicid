@@ -12,7 +12,7 @@
 	   		value="#{controllerProvas.prova.titulo}" 
 	   		a:maxlength="70" 
 	   		a:required="true" 
-	   		requiredMessage="Dê um titulo a sua prova."/>
+	   		requiredMessage="#{required.test.title}"/>
 		<h:outputLabel value="#{msg['upper.title']}" for="title"/>
 	</div>
 						    
@@ -25,7 +25,7 @@
 	    	a:min=".1" 
 	    	a:max="10" 
 	    	a:step=".1" 
-	    	a:required="true" 
+	    	a:required="required" 
 	    	requiredMessage="#{msg['required.test.value']}"/> 
 	    <h:outputLabel value="#{msg['upper.value']}" for="value"/>
 	</div>   
@@ -39,9 +39,9 @@
 	    	a:min=".1" 
 	    	a:max="240" 
 	    	a:step=".1" 
-	    	a:required="true" 
-	    	requiredMessage="#{msg['required.test.time'].concat(' ').concat(msg['upper.in.minutes'])}"/>
-	    <h:outputLabel value="#{msg['upper.test.time']}" for="time"/>
+	    	a:required="required"
+	    	requiredMessage="#{msg['required.test.time']}"/>
+	    <h:outputLabel value="#{msg['upper.test.time'].concat(' ').concat(msg['upper.in.minutes'])}" for="time"/>
 	</div>		    	
 	     
 	
@@ -61,7 +61,7 @@
 	    </label>
 	</div>	   		
    	
-   	<!-- HIDDEN INPUT TP SET THE SELECTED DATE ON BACK BEAN -->
+   	<!-- HIDDEN INPUT TO SET THE SELECTED DATE ON BACK BEAN -->
    	<h:inputHidden 
    		id="dateAndTime"
    		value="#{controllerProvas.prova.data}"

@@ -19,6 +19,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 
 import br.edu.unicid.bean.ProvasRealizadas;
+import br.edu.unicid.constants.Constants;
 import br.edu.unicid.dao.ProvasRealizadasDAO;
 import br.edu.unicid.util.Chronometer;
 
@@ -30,16 +31,13 @@ public class ControllerProvasRealizadas {
 	private Date                date;          // TO KNOW WHEN THE USER REALIZED THE TEST
 	private boolean             saveWasCalled; // CHECK SE O TESTE JA FOI SALVO
 	private boolean             timerAlreadyStarted;
-	private Chronometer         chronometer              = new Chronometer();
-	private final DateFormat    data                     = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
 	private ProvasRealizadas    provasRealizadas;
 	private ProvasRealizadasDAO dao;
-	private static final String FACE_MESSAGES_ID         = "messages";
-	private static final String PAGE_LIST_MADE_TESTS     = "/list/listaProvasRealizadasAluno";
-	private static final String PAGE_SEE_CORRECT_ANSWERS = "/see/gabaritoAluno";
-	private static final String MINUTES                  = "m";
-	private static final String SECONDS                  = "s";
-	private static final int    PRECISION_SCALE          = 2;
+	private Chronometer         chronometer     = new Chronometer();
+	private final DateFormat    data            = new SimpleDateFormat("dd/MM/yyyy-HH:mm:ss");
+	private static final String MINUTES         = "m";
+	private static final String SECONDS         = "s";
+	private static final int    PRECISION_SCALE = 2;
 	private DataModel<ProvasRealizadas> listaProvasRealizadas;
 	
 	@ManagedProperty(value="#{controllerProvas}")
@@ -74,9 +72,9 @@ public class ControllerProvasRealizadas {
 		this.dao = new ProvasRealizadasDAO();
 
 		if (this.dao.salvar(this.provasRealizadas))  
-			return PAGE_LIST_MADE_TESTS;
+			return Constants.PAGE_LIST_MADE_TESTS;
 		else 
-			return PAGE_SEE_CORRECT_ANSWERS;
+			return Constants.PAGE_SEE_CORRECT_ANSWERS;
 	}
 	
 	public String getTempo() {
@@ -118,7 +116,7 @@ public class ControllerProvasRealizadas {
 
 		if(this.dao.excluir(this.provasRealizadas.getCodigo())) { 
 			FacesContext ctx = FacesContext.getCurrentInstance();
-			ctx.addMessage(FACE_MESSAGES_ID, new FacesMessage("ProvasRealizadas excluida!"));				
+			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage("ProvasRealizadas excluida!"));				
 		}
 	}
 	

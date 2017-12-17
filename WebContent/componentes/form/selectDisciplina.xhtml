@@ -14,9 +14,9 @@
 		<h:selectOneMenu
 			value="#{controllerDisciplinas.disciplina.codigo}" 
 			id="selectDiscipline"
-			a:required="true" 
+			a:required="required" 
 			requiredMessage="#{msg['required.select.your.discipline']}">
-		    <f:selectItem itemValue="#{msg['upper.select.discipline']}" noSelectionOption="true"/> 
+		    <f:selectItem itemValue="#{null}" itemLabel="#{msg['upper.select.discipline']}" noSelectionOption="true"/> 
 		    <f:selectItems value="#{controllerDisciplinas.disciplinas(controllerProfessores.professor.codigo)}"/>
 		</h:selectOneMenu>
 	</div>

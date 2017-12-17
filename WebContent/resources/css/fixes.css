@@ -60,6 +60,8 @@ input[type="radio"]{ margin-left: 30px }
 
 .right-30 { right: 30px }
 
+.justify { text-align: justify }
+
 /* ------- CONTAINER ------- */
 body > .container { min-height: 78vh }
 

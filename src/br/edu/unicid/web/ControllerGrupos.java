@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 
 import br.edu.unicid.bean.Grupo;
+import br.edu.unicid.constants.Constants;
 import br.edu.unicid.dao.GrupoDAO;
 import br.edu.unicid.util.VerifyRecaptcha;
 
@@ -50,7 +51,7 @@ public class ControllerGrupos {
 
 		// RECAPTCHA NAO CHECADO
 		if(this.gRecaptchaResponse.equals("")) { 
-			ctx.addMessage("messages", new FacesMessage("QUASE s� falta voc� dizer que n�o � um rob�!"));
+			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage("QUASE s� falta voc� dizer que n�o � um rob�!"));
 			return "/create/novoGrupo";
 		}
 		// RECAPTCHA ROBO (false = robot / true = people)

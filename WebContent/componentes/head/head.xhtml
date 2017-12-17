@@ -18,10 +18,7 @@
 		/>
 		
 		<!-- SESSION EXPIRED REDIRECT TO INDEX -->
-		<meta 
-			http-equiv="refresh" 
-			content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/index.jsf"
-		/>
+		<meta http-equiv="refresh" content="#{facesContext.externalContext.sessionMaxInactiveInterval};url=#{request.contextPath}/index.jsp"/>
 		
 		<title>UNICID</title>
 	
@@ -32,11 +29,21 @@
     	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     
 	 	<!-- CSS fixes -->
-	 	<h:outputStylesheet name="/css/fixes.css"/>
+	 	<!--h:outputStylesheet name="/css/fixes.css"/-->
+	 	<h:outputStylesheet name="/css/fixes.min.css"/>
 		
 		<!-- PAGE ICON -->
 		<link rel="icon" type="image/png" href="#{resource['images/icons/unicid.png']}" />
 
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-111372258-1"></script>
+		<script>
+		  	window.dataLayer = window.dataLayer || [];
+		  	function gtag(){dataLayer.push(arguments);}
+	  		gtag('js', new Date());
+	
+	  		gtag('config', 'UA-111372258-1');
+		</script>
 	</h:head>
 	
 	<!-- LOAD PROPERTIES FILE -->

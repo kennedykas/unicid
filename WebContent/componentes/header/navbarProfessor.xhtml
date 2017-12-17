@@ -74,16 +74,16 @@
 						<h:outputText value="#{msg['upper.questions']}"/>
 					</h:commandLink>
 				</li>
-<!-- 				<li class="tab"> -->
-<!-- 					<h:commandLink action="/list/listaGrupos" styleClass="navItem" a:data-page="groups"> -->
-<!-- 						<h:outputText value="#{msg['upper.groups']}"/> -->
-<!-- 					</h:commandLink> -->
-<!-- 				</li> -->
-<!-- 				<li class="tab"> -->
-<!-- 					<h:commandLink action="/list/listaCursos" styleClass="navItem" a:data-page="courses"> -->
-<!-- 						<h:outputText value="#{msg['upper.courses']}"/> -->
-<!-- 					</h:commandLink> -->
-<!-- 				</li> -->
+				<li class="tab">
+					<h:commandLink action="/list/listaEntrevistas" styleClass="navItem" a:data-page="professor-interviews">
+						<h:outputText value="#{msg['upper.interviews']}"/>
+					</h:commandLink>
+				</li>
+				<li class="tab">
+					<h:commandLink action="/list/listaCursosExtensao" styleClass="navItem" a:data-page="professor-extension-courses">
+						<h:outputText value="#{msg['upper.courses']}"/>
+					</h:commandLink>
+				</li>
 		      </ul>
 	    	</h:form>
 	    </div>

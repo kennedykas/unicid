@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+	<!-- HEAD -->
+	<ui:include src="../componentes/head/head.xhtml" />
+<h:body>
+	<!-- NAVBAR -->
+	<ui:include src="../componentes/header/navbarSemLinks.xhtml" />
+	
+	<div class="container">
+	    <div class="row center" style="margin:10vh 0 50px 0">
+	        <div class="z-depth-1 grey lighten-4 login-form">
+	            
+	            <div class="row"></div>
+	
+				<div class="loading"> 	
+			
+					<h5>
+						Obrigado por escolher um dos nossos cursos.<br/><br/> 
+						Sua solicitação foi incluída com sucesso, em breve entraremos em contato.
+					</h5>
+					
+					<br/><br/>
+					
+					<!-- BOTAO VOLTAR -->
+	    			<div class="center"> 
+	    			
+	    				<button class="row btn waves-effect waves-light" onclick="$(window).attr('location','http://posgraduacaounicid.com.br')">
+		 					<i class="material-icons right">arrow_back</i>
+							<h:outputText value="#{msg['upper.come.back']}"/>
+						</button>
+	       			</div>
+				</div>
+		    </div>
+		</div>
+	</div>
+		
+	<!-- FOOTER -->
+	<ui:include src="../componentes/footer/footer.xhtml" />
+</h:body>
+</html>
