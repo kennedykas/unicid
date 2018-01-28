@@ -12,19 +12,18 @@ public class ConnectionFactory {
 			// DRIVER I'M USING
 			Class.forName("com.mysql.jdbc.Driver");
 			// URL FOR LOCAL DB
-			return DriverManager.getConnection("jdbc:mysql://localhost:3306/wecti3", "root", "");
+			//return DriverManager.getConnection("jdbc:mysql://localhost:3306/wecti3", "root", "");
 			// URL FOR REMOTE DB
-//			return DriverManager.getConnection(
-//					"jdbc:mysql://wecti.mysql.uhserver.com:3306/wecti", 
-//					"wecti", 
-//					"Unicid@2017");
+			return DriverManager.getConnection(
+					"jdbc:mysql://wecti.mysql.uhserver.com:3306/wecti", 
+					"wecti", 
+					"Unicid@2017");
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
 	}
 
-	//fecha uma conexao de tres formas: conn, stmt, rs
-	// QUANDO UM OBJ CONN É FECHADO TODOS OS RECURSOS JDBC SÃO FECHADOS AUTOMATICAMENTE
+	// QUANDO UM OBJ CONN E FECHADO TODOS OS RECURSOS JDBC SAO FECHADOS AUTOMATICAMENTE
 	public static void closeConnection(Connection conn, Statement stmt, ResultSet rs) throws Exception {
 		close(conn, stmt, rs);
 	}

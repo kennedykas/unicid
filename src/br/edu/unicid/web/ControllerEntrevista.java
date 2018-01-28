@@ -46,22 +46,22 @@ public class ControllerEntrevista {
 	
 	public String save() throws IOException {
 								
-		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		FacesContext ctx = FacesContext.getCurrentInstance();
+//		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+//		FacesContext ctx = FacesContext.getCurrentInstance();
 		
 		// RESPOSTA DA DIV DO RECAPTCHA
-		userRecaptchaResponse = req.getParameter("g-recaptcha-response");
+//		userRecaptchaResponse = req.getParameter("g-recaptcha-response");
 
 		// RECAPTCHA NAO CHECADO
-		if(userRecaptchaResponse.isEmpty()) { 
-			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage(Constants.FORGET_CHECK_RECAPTCHA));
-			return Constants.PAGE_NEW_INTERVIEW;
-		}
+//		if(userRecaptchaResponse.isEmpty()) { 
+//			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage(Constants.FORGET_CHECK_RECAPTCHA));
+//			return Constants.PAGE_NEW_INTERVIEW;
+//		}
 		// RECAPTCHA ROBO (false = robot / true = people)
-		else if(!VerifyRecaptcha.verify(userRecaptchaResponse)) {
-			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage(Constants.RECAPTCHA_FAILED));
-			return Constants.PAGE_NEW_INTERVIEW;
-		}		
+//		else if(!VerifyRecaptcha.verify(userRecaptchaResponse)) {
+//			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage(Constants.RECAPTCHA_FAILED));
+//			return Constants.PAGE_NEW_INTERVIEW;
+//		}		
 		
 		date = new Date();
 		entrevista.setData(DATA.format(date)); // SETA DATA EM QUE O ALUNO MARCOU A ENTREVISTA

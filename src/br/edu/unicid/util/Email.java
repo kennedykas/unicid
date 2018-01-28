@@ -13,7 +13,7 @@ public class Email {
 	//LOCALHOST
 	//private String ACTIVATION = "<html><head><meta charset='utf-8'/></head><body style='font-family:Gadget,sans-serif;color:#686868;text-align:center'><br/><img src='http://www.unicid.edu.br/wp-content/uploads/2013/10/logo.png' alt='UNICID'/><h2 style='margin-bottom:30px'>Ative seu cadastro</h2><p style='margin-bottom:60px'>N�s s� precisamos confirmar o seu endere�o de email para ativar sua conta. Simplesmente clique no bot�o abaixo:</p><a style='padding:20px 40px 20px 40px;background-color:#3BB598;color:#fff;font-size:18px;text-decoration:none;border-radius:5px' href='http://localhost:8080/wecti/faces/autenticaUser.xhtml?";
 	private static final String GENERIC_HEADER = "<html><head><meta charset='utf-8'/></head><body style='font-family:Gadget,sans-serif;color:#686868;text-align:center'><br/><img src='http://www.unicid.edu.br/wp-content/uploads/2013/10/logo.png' alt='UNICID'/>";
-	private static final String ACTIVATION = "<h2 style='margin-bottom:30px'>Ative seu cadastro</h2><p style='margin-bottom:60px'>N&oacute;s s&oacute; precisamos confirmar o seu endere&ccedil;o de email para ativar sua conta. Simplesmente clique no bot&atilde;o abaixo:</p><a style='padding:20px 40px 20px 40px;background-color:#3BB598;color:#fff;font-size:18px;text-decoration:none;border-radius:5px' href='http://www.posgraduacaounicid.com.br/unicid-19-08-17/user-tools/autenticaUser.xhtml?";
+	private static final String ACTIVATION = "<h2 style='margin-bottom:30px'>Ative seu cadastro</h2><p style='margin-bottom:60px'>N&oacute;s s&oacute; precisamos confirmar o seu endere&ccedil;o de email para ativar sua conta. Simplesmente clique no bot&atilde;o abaixo:</p><a style='padding:20px 40px 20px 40px;background-color:#3BB598;color:#fff;font-size:18px;text-decoration:none;border-radius:5px' href='http://www.posgraduacaounicid.com.br/faces/user-tools/autenticaUser.xhtml?";
 	private static final String PASSWORD = "<h2 style='margin-bottom:30px'>Recupera&ccedil;&atilde;o de senha</h2><p style='margin-bottom:60px'>Est&aacute; &eacute; a sua senha:</p><a style='padding:20px 40px 20px 40px;background-color:#3BB598;color:#fff;font-size:18px;text-decoration:none;border-radius:5px'>";
 	private static final String INTERVIEW = "<h2 style='margin-bottom:30px'>Nova entrevista solicitada</h2><p style='margin-bottom:60px'>";
 	private static final String COURSE_EXTENSION = "<h2 style='margin-bottom:30px'>Um novo aluno se matriculou em um curso de extensão</h2><p style='margin-bottom:60px'>";
@@ -101,7 +101,7 @@ public class Email {
 			    email.setContent(message, "text/html; charset=utf-8");
 			    // AUTENTICANDO NO SERVIDOR
 			    email.setStartTLSEnabled(true);
-			    email.setAuthentication("kennedy0064@gmail.com", "kaskennedy");
+			    email.setAuthentication("EMAIL", "SENHA");
 			    // SENDING
 			    email.send();
 			    // AVISA QUE O(S) EMAIL(S) FORAM ENVIADOS COM SUCESSO

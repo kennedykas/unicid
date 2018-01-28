@@ -14,7 +14,7 @@
 			<div class="col-sm-8">
 
 				<div class="hgroup">
-					<h2 class="title">Aplicações Corporativas JAVA e Internet das Coisas</h2>
+					<h2 class="title">Desenvolvimento de Aplicações Corporativas e Internet das Coisas</h2>
 					<hr>
 					<hr class="down">
 				</div>
@@ -68,7 +68,7 @@
 				<div class="block-sobre">
 					<font color="black"><b>Horário: </b></font>Sábado das 08h às 17h - AULA QUINZENAIS <br />
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					Quartas das 19h às 23h - AULA SEMANAIS <br />
+					Terças das 19h às 23h - AULA SEMANAIS <br />
 					<font color="black"><b>Duração: </b></font>18 Meses<br />
 					<font color="black"><b>Carga Horária: </b></font>450 horas<br />
 					<font color="black"><b>Investimento:</b></font> 18 parcelas de R$ 700,00. <font color="blue">Desconto de 20% para Ex-Alunos</font> <br />

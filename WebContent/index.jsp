@@ -3,11 +3,9 @@
 <div class="intro-header">
 	<div class="container">
 		<div class="hgroup wow lightSpeedIn text-center" data-wow-duration="2s">
-				<h1 class="title"><span>Pós Graduação e Extensão</span></h1>
+				<h1 class="title"><span>Pós Graduação</span></h1>
 			<h2 class="subtitle"><span>Destaque-se</span> no mundo do trabalho!</h2>
-			<a class="hvr-sweep-to-right wow pulse btn btn-default" data-wow-delay="2.5s" href="create/novaEntrevista.xhtml" target="_blank">		Pós Graduação: Agende uma Entrevista
-			</a>
-			<a class="hvr-sweep-to-right wow pulse btn btn-default" data-wow-delay="2.5s" href="create/novoCursoExtensao.xhtml" target="_blank">		Cursos de Extensão: Promoção Black Friday
+			<a class="hvr-sweep-to-right wow pulse btn btn-default" data-wow-delay="2.5s" href="faces/novaEntrevista.xhtml" target="_blank">		Pós Graduação: Agende uma Entrevista
 			</a>
 		</div>
 		<div class="text-center">
@@ -25,23 +23,13 @@
 		<hr class="line">
 
 		<ul class="palestrantes-group owl-carousel owl-theme">	
-		<li class="item">
-				<a href="big-data.jsp">
-					<div class="thumbnail">
-						<img src="images/palestrantes/big-data.png" class="img-circle img-thumbnail" width="150px">
-						<h3 class="item-title">
-							Big Data<br />&nbsp;
-						</h3>
 
-					</div>
-				</a>
-			</li>
 			<li class="item">
 				<a href="iot.jsp">
 					<div class="thumbnail">
 						<img src="images/palestrantes/iot.png" class="img-circle img-thumbnail" width="150px">
 						<h3 class="item-title">
-							Aplicações Corporativas JAVA e Internet das Coisas
+							Desenvolvimento de Aplicações Corporativas e Internet das Coisas
 						</h3>
 
 					</div>
@@ -52,7 +40,7 @@
 					<div class="thumbnail">
 						<img src="images/palestrantes/es.jpg" class="img-circle img-thumbnail" width="150px">
 						<h3 class="item-title">
-							Engenharia de Software<br />&nbsp;
+							Engenharia de Software<br />&nbsp;<p>&nbsp;
 						</h3>
 					</div>
 				</a>
@@ -62,7 +50,7 @@
 					<div class="thumbnail">
 						<img src="images/palestrantes/gov.jpg" class="img-circle img-thumbnail" width="150px">
 						<h3 class="item-title">
-							Governança de TI<br />&nbsp;
+							Governança de TI<br />&nbsp;<p>&nbsp;
 						</h3>
 					</div>
 				</a>
@@ -94,7 +82,7 @@
 	</h2>
 	<div class="row">
 		<div class="card-programacao col-md-3">
-			<div class="card-image" style="background-image: url(images/calendar.jpg);">
+			<div class="card-image" style="background-image: url(images/apresentacao.jpg);">
 			</div>
 
 			<div class="card-content">
@@ -130,7 +118,7 @@
 			</div>
 		</div>
 		<div class="card-programacao col-md-3">
-			<div class="card-image" style="background-image: url(images/custo.jpg);">
+			<div class="card-image" style="background-image: url(images/hand-on.jpg);">
 			</div>
 
 			<div class="card-content">
@@ -148,7 +136,7 @@
 			</div>
 		</div>
 		<div class="card-programacao col-md-3">
-			<div class="card-image" style="background-image: url(images/hand-on.jpg);">
+			<div class="card-image" style="background-image: url(images/projetos.jpg);">
 			</div>
 
 			<div class="card-content">
@@ -221,38 +209,6 @@
 					</div>
 				</a>
 			</li>
-			<li class="item">
-				<a href="java-web.jsp">
-					<div class="thumbnail">
-						<img src="images/palestrantes/java.png" class="img-circle img-thumbnail" width="150px">
-						<h3 class="item-title">
-							Java WEB<br />&nbsp;
-						</h3>
-					</div>
-				</a>
-			</li>
-			<li class="item">
-				<a href="jsf.jsp">
-					<div class="thumbnail">
-						<img src="images/palestrantes/jsf.jpg" class="img-circle img-thumbnail" width="150px">
-						<h3 class="item-title">
-							Java Server Faces<br />&nbsp;
-						</h3>
-					</div>
-				</a>
-			</li>
-			<li class="item">
-				<a href="prime.jsp">
-					<div class="thumbnail">
-						<img src="images/palestrantes/prime.jpg" class="img-circle img-thumbnail" width="150px">
-						<h3 class="item-title">
-							PrimeFaces<br />&nbsp;
-						</h3>
-	
-					</div>
-				</a>
-			</li>
-
 		</ul>
 		<script type="text/javascript">
 			$('.palestrantes-group').owlCarousel({

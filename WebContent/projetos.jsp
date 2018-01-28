@@ -39,10 +39,10 @@
 		</div>
 		<div class="option text-center">
 			<div class="center-block">
-				<button type="button" class="btn-options btn btn-secondary" onclick="window.location.href='login/loginAluno.xhtml'">Aluno</button>
+				<button type="button" class="btn-options btn btn-secondary" onclick="window.location.href='/faces/login/loginAluno.xhtml'">Aluno</button>
 			</div>
 			<div class="center-block">
-				<button type="button" class="btn-options btn btn-secondary" onclick="window.location.href='login/loginProfessor.xhtml'">Professor</button>
+				<button type="button" class="btn-options btn btn-secondary" onclick="window.location.href='/faces/login/loginProfessor.xhtml'">Professor</button>
 			</div>
 		</div>
 	</div>

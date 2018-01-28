@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Pós Graduação</title>
+	<link rel="icon" type="image/png" href="images/favicon.png" />
+ 	
+ 	<!-- Bootstrap local -->
+	<link rel="stylesheet" href="assets/bootstrap-3.3.7/css/bootstrap.min.css" />
+	
+	<script src="assets/jquery/jquery-3.1.1.min.js"></script>
+ 
+	<style>
+		.form-signin {
+        	margin: 0 auto;
+            max-width: 330px;
+            padding: 15px;}
+	</style>
+</h:head>
+<h:body>
+	<div class="navbar navbar-default">
+		<div class="container-fluid">
+		    <div class="navbar-header">
+		    	<a class="navbar-brand" href="#">UNICID | Pós Graduação em Tecnologia da Informação</a>
+		    </div>
+		</div>
+	</div>
+
+	<!-- <div class="alert alert-danger">  -->
+	<!-- 		<p class="text-center"><strong>Atenção! </strong>Promoção Relâmpago Black Friday de 21 a 30 de novembro. Descontos de 50% em todos os cursos.</p> -->
+	<!-- </div>  -->
+	
+	<div class="container">
+		<h:form enctype="multipart/form-data" class="form-signin">
+			<div class="alert alert-danger">
+			<h3 align="center">Agende uma Entrevista</h3>
+			</div>
+			<!-- SELECIONE O CURSO  -->
+			<h:outputLabel value="Curso" for="nomeCurso"/>
+			<h:selectOneMenu id="cbmNomeCurso" value="#{controllerEntrevista.entrevista.nomeCurso}" 
+			class="form-control">
+				<f:selectItem itemValue="Selecione o Curso"  />
+				<f:selectItem itemValue="Engenharia de Software" />
+				<f:selectItem itemValue="Governança em TI" />
+				<f:selectItem itemValue="Aplicações Corporativas - Java e IOT" />
+				<f:selectItem itemValue="Big Data" />
+			</h:selectOneMenu>
+			<!-- NOME  -->
+			<h:outputLabel value="Nome" for="nome"/>
+			<h:inputText id="nome" value="#{controllerEntrevista.entrevista.nome}" 
+			required="true" class="form-control" maxlength="40" 
+			requiredMessage="Precisamos saber o seu nome."/>
+			
+			<!-- E-MAIL -->
+			<h:outputLabel value="E-mail" for="email" />
+			<h:inputText id="email" value="#{controllerEntrevista.entrevista.email}" 
+			class="emailField form-control" required="true" maxlength="40"
+			requiredMessage="Informe seu email."/>
+
+			<!-- CPF  -->
+			<h:outputLabel value="C.P.F." for="cpf"/>
+			<h:inputText id="cpf" value="#{controllerEntrevista.entrevista.cpf}" 
+			required="true" class="form-control"  maxlength="20"
+			requiredMessage="Precisamos saber o seu C.P.F."/>
+			
+			<!-- Celular -->
+			<h:outputLabel value="Celular" for="celular" />
+			<h:inputText id="celular" value="#{controllerEntrevista.entrevista.celular}" 
+			class="form-control" required="true" maxlength="20"
+			requiredMessage="Informe seu Celular."/>
+			
+			<!-- MENSSAGENS DE ERRO -->
+			<br />
+			<h:messages id="messages" class="esc alert alert-danger"/>
+				
+			<!-- BOTAO ENVIAR -->
+			<br/>
+			<h:commandButton value="Pronto" class="submit btn btn-lg btn-primary btn-block" 
+			action="#{controllerEntrevista.save}" /> 
+		</h:form>
+	</div>
+</h:body>
+</html>
