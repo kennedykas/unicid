@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+	
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>UNICID | Detalhes grupo</title>
+	<link rel="icon" type="image/png" href="images/favicon.png" />
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/assets/jquery/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/assets/jquery/util.js"></script>
+	
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" /> 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" /> 
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+ 	<!-- Bootstrap local -->
+ 	<!-- <link rel="stylesheet" href="assets/bootstrap-3.3.7/css/bootstrap.min.css"/> -->
+	
+	<style>
+		.form-signin {
+        	margin: 0 auto;
+            max-width: 330px;
+            padding: 15px;}
+         .messages {
+        	width: 90%;
+        	margin: 0 auto;
+        	background-color: #e0e0e0;
+        	padding: 20px;}
+        .message {
+        	min-width: 65%;
+        	max-width: 80%;
+        	margin-left: 10%;}
+        .message:nth-child(2n+1) {
+        	margin-left: 25%;}
+	</style>
+</h:head>
+<h:body>
+	<div class="navbar navbar-default">
+		<div class="container-fluid">
+		    <div class="navbar-header">
+		    	<a class="navbar-brand" href="#">UNICID | Avaliação de trabalhos</a>
+		    </div>
+		    <ul class="nav navbar-nav navbar-right">
+		    	<h:form style="margin: 15px 25px 0 0">
+			      	<li><h:commandLink action="#{controllerGrupos.quit}"><span class="glyphicon glyphicon-user"></span> Sair</h:commandLink></li>
+		      	</h:form>
+		    </ul>
+		</div>
+	</div>
+	<div class="container">
+		<!-- NOME DO GRUPO -->
+		<h3>Grupo:</h3>
+		<h:outputText value="#{controllerGrupos.grupo.nomeGrupo}"/>
+		
+		<!-- REPRESENTANTE -->
+		<h3>Representante:</h3>
+		<h:outputText value="#{controllerGrupos.grupo.representante}" />
+		
+		<!-- INTEGRANTES -->
+		<c:if test="#{controllerGrupos.grupo.integrantes.length() > 1}">
+			<h3>Integrantes:</h3>
+			<h:outputText value="#{controllerGrupos.grupo.integrantes}" />	
+		</c:if>
+		
+		<!-- OBSERVACOES -->
+		<c:if test="#{controllerGrupos.grupo.observacao.length() > 1}">
+			<h3>Obsevações</h3>
+			<h:outputText value="#{controllerGrupos.grupo.observacao}" />
+		</c:if>
+		
+		
+		<!-- ACOES TRABALHO -->
+		<h:form enctype="multipart/form-data">
+			<h3>Trabalho:</h3> 
+			<h:commandLink value="Visualizar" actionListener="#{controllerGrupos.download(false)}" target="_blank" class="btn btn-link"/>
+			<h:commandLink value="Baixar" actionListener="#{controllerGrupos.download(true)}" class="btn btn-link"/>
+			<span onclick="$('#alterar').toggle(500)" class="btn btn-link">Alterar</span>
+		</h:form>
+
+		<!-- DATA DA ULTIMA ATUALIZAÇÃO -->
+		<h5>Última atualização <h:outputText value="#{controllerGrupos.grupo.data}" /></h5>
+			
+		<!-- FORMULARIO PARA ATUALIZACAO DO TRABALHO -->
+		<h:form enctype="multipart/form-data" class="form-signin startHidden" id="alterar">
+			<h3>Alterar arquivo</h3>
+			<br/>
+			
+			<!-- UPLOAD DO PDF -->
+			<h:inputFile id="inputFile" value="#{controllerGrupos.grupo.arquivo}" required="true" a:accept=".pdf">
+				<f:validator validatorId="FileValidator"/> 
+			</h:inputFile>
+		
+			<!-- MENSSAGEM DE ERRO (ARQUIVO SELECIONADO INVALIDO) -->
+			<br />
+			<h:messages id="messages" class="esc alert alert-danger"/>
+		
+			<!-- CAMPO PARA QUE O ALUNO FACA OBSERVACOES -->
+			<h:outputLabel value="Observações" for="observacoes"/>
+			<h:inputTextarea id="observacoes" value="#{controllerGrupos.grupo.observacao}" a:placeholder="Observações" class="form-control"/>
+		
+			<!-- BOTAO ENVIAR -->
+			<br/>
+			<h:commandButton value="Salvar" action="#{controllerGrupos.alterar}" class="btn btn-lg btn-primary btn-block"/>
+		</h:form>
+				
+		<!-- RESPOSTAS DOS PROFESSORES -->
+		<br/>
+		<div class="messages">
+			<h3>Avaliação dos professores:</h3>
+			<c:if test="#{controllerAvaliacoes.getListaAvaliacoes(controllerGrupos.grupo.codigo).getRowCount() == 0}">
+				<h5>Até o momento nenhum professor avaliou o seu trabalho.</h5>
+			</c:if>
+			<ui:repeat var="dados" value="#{controllerAvaliacoes.getListaAvaliacoes(controllerGrupos.grupo.codigo)}">
+				<div class="alert alert-info message">
+					<h:outputText value="Professor(a) #{dados.nomeProfessor}, disse: "/><br/>
+					<h:outputText value="#{dados.avaliacao}" /><br/>
+					<small><h:outputText value="#{dados.data}"/></small>
+				</div>
+			</ui:repeat>
+		</div>
+	</div>
+</h:body>
+</html>

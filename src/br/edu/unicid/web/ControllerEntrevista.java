@@ -66,17 +66,23 @@ public class ControllerEntrevista {
 		date = new Date();
 		entrevista.setData(DATA.format(date)); // SETA DATA EM QUE O ALUNO MARCOU A ENTREVISTA
 		
-		dao = new EntrevistaDAO();
+//		dao = new EntrevistaDAO();
 		
-		if(dao.salvar(entrevista)) {
-			
+//		if(dao.salvar(entrevista)) {
+//			
+//			email.sendEmailEntrevista(entrevista);
+//
+//			return Constants.PAGE_SUCCESS_INTERVIEW;
+//			
+//		}
+//		
+//		return Constants.PAGE_NEW_INTERVIEW;
+		
+		if (new EntrevistaDAO().salvar(entrevista)){
 			email.sendEmailEntrevista(entrevista);
-
-			return Constants.PAGE_SUCCESS_INTERVIEW;
-			
+			return "sucessoEntrevista";
 		}
-		
-		return Constants.PAGE_NEW_INTERVIEW;
+		return "erroEntrevista";
 	}
 	
 	public void excluir() {

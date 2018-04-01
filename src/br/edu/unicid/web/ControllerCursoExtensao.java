@@ -45,39 +45,16 @@ public class ControllerCursoExtensao {
 		email = new Email();
 	}
 	
-	public String save() throws IOException {
-								
-		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-		FacesContext ctx = FacesContext.getCurrentInstance();
-		
-		// RESPOSTA DA DIV DO RECAPTCHA
-		userRecaptchaResponse = req.getParameter("g-recaptcha-response");
-
-		// RECAPTCHA NAO CHECADO
-		if(userRecaptchaResponse.isEmpty()) { 
-			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage(Constants.FORGET_CHECK_RECAPTCHA));
-			return Constants.PAGE_NEW_COURSE_EXTENSIVE;
-		}
-		// RECAPTCHA ROBO (false = robot / true = people)
-		else if(!VerifyRecaptcha.verify(userRecaptchaResponse)) {
-			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage(Constants.RECAPTCHA_FAILED));
-			return Constants.PAGE_NEW_COURSE_EXTENSIVE;
-		}		
-		
+	public String save() {
+				
 		date = new Date();
 		cursoExtensao.setData(DATA.format(date));
 		
-		dao = new CursoExtensaoDAO();
-		
-		if(dao.salvar(cursoExtensao)) {
-			
+		if (new CursoExtensaoDAO().salvar(cursoExtensao)){
 			email.sendEmailCursoExtensao(cursoExtensao);
-
-			return Constants.PAGE_SUCCESS_COURSE_EXTENSION;
-			
+			return "sucessoCurso";
 		}
-		
-		return Constants.PAGE_SUCCESS_COURSE_EXTENSION;
+		return "erroCurso";
 	}
 	
 	public void excluir() {

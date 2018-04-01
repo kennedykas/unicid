@@ -16,7 +16,7 @@
 				<h3 align="center">Contato</h3>
 				<hr />
 				<img src="images/email.png" /><br />
-				<small>jadir.mendonca@unicid.edu.br</small><br />
+				<small>jadir@unicid.edu.br</small><br />
 				<img src="images/whats.png" /><br />
 				<small>(11)9.6611-2062</small>
 			</div>
@@ -59,8 +59,6 @@
 				<h3><font color="black">Certificações:</font></h3>  
 
     			PMP - Project Management Professional  <br />
-    			PSM - Professional Scrum Master<br />
-    			Cobit - Foundation Certified   <br /> 
     			SCPJ - Sun Certified Program Java <br />     
     			ITIL - Foundation Certified<br />
 

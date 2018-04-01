@@ -34,15 +34,27 @@
 				Medidas da norma ISO/IEC 27002<br />
 				Legislação e Regulamentos da norma<br />
 				<p>
-	 			<h3><font color="black">Investimento</font></h3>
+ 				<h3><font color="black">Investimento</font></h3>
 				<p>
-				R$ 400,00
-				<p>				
+				R$ 500,00
+				<p>	
+				<p>
+ 				<h3><font color="black">Estão Inclusos</font></h3>
+				<p>Apostila e simulados oficiais;
+				<p>Materiais de apoio (caneta, lápis, marca texto);
+				<p>Certificado de participação.
  				<h3><font color="black">Carga Horária</font></h3>
 				<p>
-				20 horas
-
+				18 horas
 				<p>
+				<h3><font color="black">Formas de Pagamento</font></h3>
+				<p>Cartão de Crédito em até 10x;
+				<p>Boleto em até 4x;
+				<p>Dinheiro;
+				<p>Cartão de Débito.
+				<h3><font color="black">Itens não inclusos</font></h3>
+				<p>Refeição e estacionamento;
+				<p>Exame de certificação.
 				</div>
 			</div>
 		</div>

@@ -41,6 +41,8 @@
  				<h3><font color="black">Certificações</font></h3>
 				<p>
 				ITIL Foundation<br />
+				VeriSM Gerenciamento de Serviços na era Digital<br />
+				ISO 20.000 Gerenciamento de Serviços <br />
 				ISO 27002 Foundation - Segurança da Informação<br />
 				Agile Scrum - PSM<br />
 				Gerenciamento de Projetos - PMP<br />
@@ -67,9 +69,9 @@
 				<div class="block-sobre">
 					<font color="black"><b>Horário: </b></font>Sábado das 08h às 17h - AULA QUINZENAIS <br />
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					Terças das 19h às 23h - AULA SEMANAIS <br />
+					Terças das 19h20 às 23h - AULA SEMANAIS <br />
 					<font color="black"><b>Duração: </b></font>18 Meses<br />
-					<font color="black"><b>Carga Horária: </b></font>450 horas<br />
+					<font color="black"><b>Carga Horária: </b></font>360 horas<br />
 					<font color="black"><b>Investimento:</b></font> 18
 					 parcelas de R$ 700,00. <font color="blue">Desconto de 20% para Ex-Alunos</font> <br />
 					<font color="black"><b>Taxa de Inscrição: </b></font>R$ 0,00<br />

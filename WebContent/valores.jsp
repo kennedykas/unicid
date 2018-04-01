@@ -25,25 +25,16 @@
 					</p>
 					<h3><font color="black">EXIN® PORTFOLIO</font></h3>
 					EXIN® Agile Scrum Foundation<br />
+					EXIN® Agile Scrum Master<br />
+					EXIN® Agile Product Owner<br />
 					EXIN® Green IT Citizen<br />
 					EXIN® Information Security, based on ISO 27000 Foundation<br />
 					EXIN® IT Service Management, based on ISO/IEC 20000 <br />
 					ITIL® Foundation<br />
+					Cobit 5 Foundation<br />
 				</div>
 				<p>
-				<div class="block-sobre">
-					<h3><font color="black">Valores das provas de certificação</font></h3>
-					<table border="0" width="70%">
-					<tr  bgcolor="#ccffdd"><td  align="center">Exame</td><td  align="center">Valor</td></tr>
-					<tr><td>EXIN® ISO 20000</td><td align="right">R$ 500,00</td></tr> 
-					<tr><td>EXIN® Agile Scrum Foundation</td><td align="right">R$ 1.200,00 </td></tr>
-					<tr><td>EXIN® Information Security</td><td align="right">R$ 1.200,00 </td></tr>
-					<tr><td>ITIL® Foundation</td><td align="right">R$ 1.400,00 </td></tr>
-					<tr><td>EXIN® Green IT Citizen</td><td align="right">R$ 500,00 </td></tr>
-					<tr bgcolor="#ccffdd"><td colspan="2" align="center">Parcelamento em até 6 vezes no cartão de crédito</td></tr>
-					</table>
-				</div>
-				
+					
 				<div class="block-sobre">
 					<h3><font color="black">Treinamento para grupo de amigos</font></h3>
 					<p align="justify">
@@ -54,8 +45,8 @@
 					</p>					
 					
 					
-					<font color="black">Para mais Informações entre em contato:</font><br />
-					<font color="#002699">Email: Jadir.mendonca@unicid.edu.br</font><br />     
+					<h3><font color="black">Solicite um Orçamento</font></h3>
+					<font color="#002699">Email: Jadir@unicid.edu.br</font><br />     
 					<font color="#002699">Whatsapp: (11) 9.6611-2062</font><br />
 					</p>
 				</div>

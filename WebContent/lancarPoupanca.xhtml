@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Pós Graduação</title>
+	<link rel="icon" type="image/png" href="images/favicon.png" />
+ 	
+ 	<!-- Bootstrap local -->
+	<link rel="stylesheet" href="assets/bootstrap-3.3.7/css/bootstrap.min.css" />
+	
+	<script src="assets/jquery/jquery-3.1.1.min.js"></script>
+ 
+	<style>
+		.form-signin {
+        	margin: 0 auto;
+            max-width: 330px;
+            padding: 15px;}
+	</style>
+</h:head>
+<h:body>
+	<div class="navbar navbar-default">
+		<div class="container-fluid">
+		    <div class="navbar-header">
+		    	<a class="navbar-brand" href="#">UNICID | Faça um Curso de Extensão e Alavanque sua Carreira</a>
+		    </div>
+		</div>
+	</div>
+
+	<div class="container">
+		<h:form enctype="multipart/form-data" class="form-signin">
+			<div class="alert alert-danger">
+				<h3 align="center">Lançar Poupança</h3>
+			</div>
+
+			<!-- RGM  -->
+			<h:outputLabel value="Rgm" for="rgm"/>
+			<h:inputText id="rgm" value="#{controllerPoupanca.poupanca.rgm}" 
+			required="true" class="form-control" maxlength="10" 
+			requiredMessage="Precisamos saber o seu RGM."/>
+
+			<!-- NOME  -->
+			<h:outputLabel value="Nome" for="nome"/>
+			<h:inputText id="nome" value="#{controllerPoupanca.poupanca.nome}" 
+			required="true" class="form-control" maxlength="100" 
+			requiredMessage="Precisamos saber o seu nome."/>
+			
+			<!-- VALOR -->
+			<h:outputLabel value="valor" for="valor" />
+			<h:inputText id="valor" value="#{controllerPoupanca.poupanca.valor}" 
+			class="emailField form-control" required="true" maxlength="20"
+			requiredMessage="Informe o Valor."/>
+
+			<!-- DEPOSITO / SAQUE  -->
+			<h:outputLabel value="Tipo de Lançamento" for="tipoLancamento"/>
+			<h:selectOneMenu id="cmbTipoLancamento" 
+			value="#{controllerPoupanca.poupanca.tipoLancamento}" 
+			class="form-control">
+				<f:selectItem itemValue="Depósito"  />
+				<f:selectItem itemValue="Saque" />
+			</h:selectOneMenu>			
+
+			<!-- DATA -->
+			<h:outputLabel value="dataLancamento" for="dataLancamento" />
+			<h:inputText id="celular" value="#{controllerPoupanca.poupanca.dataLancamento}" 
+			class="form-control" required="true" maxlength="20"
+			requiredMessage="Informe a Data."/>
+			
+			<!-- MENSSAGENS DE ERRO -->
+			<br />
+			<h:messages id="messages" class="esc alert alert-danger"/>
+				
+			<!-- BOTAO ENVIAR -->
+			<br/>
+			<h:commandButton value="Salvar" class="submit btn btn-lg btn-primary btn-block" 
+			action="#{controllerCurso.save}" /> 
+		</h:form>
+	</div>
+</h:body>
+</html>

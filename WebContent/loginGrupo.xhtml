@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+	
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>UNICID | Grupo</title>
+	<link rel="icon" type="image/png" href="images/favicon.png" />
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/assets/jquery/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/assets/jquery/util.js"></script>
+	
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" /> 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" /> 
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+ 	<!-- Bootstrap local -->
+ 	<!-- <link rel="stylesheet" href="assets/bootstrap-3.3.7/css/bootstrap.min.css"/> -->
+	
+	<style>
+		.form-signin {
+        	margin: 0 auto;
+            max-width: 330px;
+            padding: 15px;}
+	</style>
+</h:head>
+<h:body>
+	<div class="navbar navbar-default">
+		<div class="container-fluid">
+		    <div class="navbar-header">
+		    	<a class="navbar-brand" href="#">UNICID | Grupo</a>
+		    </div>
+		   	<ul class="nav navbar-nav navbar-right">
+		    	<h:form style="margin: 15px 25px 0 0">
+			      	<li><h:commandLink action="index.jsp"><span class="glyphicon glyphicon-user"></span> Sair</h:commandLink></li>
+		      	</h:form>
+		    </ul>
+		</div>
+	</div>
+	<div class="container">
+		<h:form enctype="multipart/form-data" class="form-signin"> 
+			<h2>Acompanhar trabalho</h2>
+			<br/>
+			
+			<!-- NOME DA EQUIPE -->
+			<h:outputLabel value="Nome do grupo" for="nome"/>
+			<h:inputText id="nome" value="#{controllerGrupos.grupo.nomeGrupo}" required="true" class="form-control" a:placeholder="Nome do grupo" requiredMessage="Informe o nome da sua equipe."/>
+			
+			<!-- SENHA EQUIPE -->
+			<h:outputLabel value="Senha" for="senha"/>
+			<h:inputSecret id="senha" value="#{controllerGrupos.grupo.senhaGrupo}" a:minlength="4" class="form-control" required="true" a:placeholder="senha" requiredMessage="Digite sua senha."/>
+				
+			<!-- MENSSAGENS DE ERRO -->
+			<br />
+			<h:messages id="messages" class="esc alert alert-danger"/>
+				
+			<!-- BOTAO ENVIAR -->
+			<br/>
+			<h:commandButton value="Entrar" class="submit btn btn-lg btn-primary btn-block" action="#{controllerGrupos.login}" />
+			
+			<br/>
+			<a href="novoGrupo.xhtml"><span class="glyphicon glyphicon-plus"></span> Ainda não enviei o meu projeto.</a> 
+		</h:form>
+	</div>
+</h:body>
+</html>

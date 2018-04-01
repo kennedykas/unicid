@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+      
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>UNICID | Grupos</title>
+	<link rel="icon" type="image/png" href="images/favicon.png" />
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/assets/jquery/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/assets/jquery/util.js"></script>
+	
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous" /> 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous" /> 
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+ 	<!-- Bootstrap local -->
+ 	<!-- <link rel="stylesheet" href="assets/bootstrap-3.3.7/css/bootstrap.min.css"/> -->
+	
+</h:head>
+
+<h:body>
+	<div class="navbar navbar-default">
+		<div class="container-fluid">
+		    <div class="navbar-header">
+		    	<a class="navbar-brand" href="#">UNICID | Avaliação de trabalhos</a>
+		    </div>
+		    <ul class="nav navbar-nav navbar-right">
+		    	<h:form style="margin: 15px 25px 0 0">
+			      	<li><h:commandLink action="#{controllerProfessores.quit}"><span class="glyphicon glyphicon-user"></span> Sair</h:commandLink></li>
+		      	</h:form>
+		    </ul>
+		</div>
+	</div>
+	<div class="container">
+		<h:form class="form-signin">
+			<h2>Trabalhos Submetidos</h2>
+			<h:dataTable value="#{controllerGrupos.listaGrupos}" var="dados" class="table table-striped">
+				<!-- NOME GRUPO -->
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="NOME DO GRUPO" />
+					</f:facet>
+					<h:outputText value="#{dados.nomeGrupo}" />
+				</h:column>
+	
+				<!-- OBSERVACOES -->
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="OBSERVAÇÕES" />
+					</f:facet>
+					<h:outputText value="#{dados.observacao}" />
+				</h:column>
+	
+				<!-- DATA DA ULTIMA ATUALIZAÇÃO -->
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="ULTIMA ATUALIZAÇÃO" />
+					</f:facet>
+					<h:outputText value="#{dados.data}" />
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="AVALIAR" />
+					</f:facet>
+					<h:commandLink value="Avaliar" actionListener="#{controllerGrupos.selecionarRegistro}" action="detalhesGrupo" class="btn btn-link"/>
+				</h:column>
+			</h:dataTable>	
+		</h:form>
+	</div>
+</h:body>
+</html>

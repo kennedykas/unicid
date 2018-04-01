@@ -40,7 +40,19 @@
 					competências específicas da área e tendências Tecnológicas Associadas ao Big Data e o quinto e 
 					último módulo o aluno desenvolve o trabalho de conclusão de curso voltado para criação de uma Startup.
 					</p>
+										<h3><font color="black">Certificações</font></h3>
+					<p>
+						ITIL Foundation<br /> 
+						VeriSM Gerenciamento de Serviços na era Digital<br />
+						ISO 20.000 Gerenciamento de Serviços <br />
+						Agile Scrum<br /> Gerenciamento de
+						Projetos - PMP<br />
+	
+				<p>	
 					<h3><font color="black">Conteúdo Programático</font></h3>
+					Gestão de Projetos PMI	 <br /> 
+					Metodologias Ágeis	 <br /> 
+					Gerenciamento de Serviços de TI na era Digital	 <br />
 					Fundamentos de Big Data <br />
 					Análise Estatística de Dados<br />
 					Descoberta de Conhecimento com Big Data Analytics <br />
@@ -61,9 +73,9 @@
 				<div class="block-sobre">
 					<font color="black"><b>Horário: </b></font>Sábado das 08h às 17h - AULA QUINZENAIS <br />
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					Quartas das 19h às 23h - AULA SEMANAIS <br />
+					Terças das 19h20 às 23h - AULA SEMANAIS <br />
 					<font color="black"><b>Duração: </b></font>18 Meses<br />
-					<font color="black"><b>Carga Horária: </b></font>450 horas<br />
+					<font color="black"><b>Carga Horária: </b></font>360 horas<br />
 					<font color="black"><b>Investimento:</b></font> 18 parcelas de R$ 700,00. <font color="blue">Desconto de 20% para Ex-Alunos</font> <br />
 					<font color="black"><b>Taxa de Inscrição: </b></font>R$ 0,00<br />
 				</div>

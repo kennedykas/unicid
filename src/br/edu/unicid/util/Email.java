@@ -66,7 +66,7 @@ public class Email {
 		return send(
 				"jadircmj@hotmail.com", entrevista.getNome(),
 				GENERIC_HEADER.concat(
-				INTERVIEW.concat(entrevista.getNomeCurso() +"<br/>"+ entrevista.getNome() +"<br/>"+ entrevista.getEmail() +"<br/>"+ entrevista.getCpf() +"<br/>"+ entrevista.getCelular() +"<br/>"+ entrevista.getData() + "</p>").concat(
+				INTERVIEW.concat(entrevista.getNomeCurso() +"<br/>"+ entrevista.getNome() +"<br/>"+ entrevista.getEmail() +"<br/>"+ entrevista.getCpf() +"<br/>"+ entrevista.getCelular() +"<br/>"+ "</p>").concat(
 				ADRESS.concat(
 				REASON_NEW_INTERVIEW.concat(
 				GENERIC_FOOTER)))));
@@ -75,7 +75,7 @@ public class Email {
 		return send(
 				"jadircmj@hotmail.com", cursoExtensao.getNome(),
 				GENERIC_HEADER.concat(
-				COURSE_EXTENSION.concat(cursoExtensao.getNomeCurso() +"<br/>"+ cursoExtensao.getNome() +"<br/>"+ cursoExtensao.getEmail() +"<br/>"+ cursoExtensao.getCpf() +"<br/>"+ cursoExtensao.getCelular() +"<br/>"+ cursoExtensao.getData() + "</p>").concat(
+				COURSE_EXTENSION.concat(cursoExtensao.getNomeCurso() +"<br/>"+ cursoExtensao.getNome() +"<br/>"+ cursoExtensao.getEmail() +"<br/>"+ cursoExtensao.getCpf() +"<br/>"+ cursoExtensao.getCelular() +"<br/>"+ "</p>").concat(
 				ADRESS.concat(
 				REASON_COURSE_EXTENSION.concat(
 				GENERIC_FOOTER)))));

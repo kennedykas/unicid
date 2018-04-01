@@ -47,14 +47,20 @@
 				Utilizando Componentes para Validação de Entrada; <br />
 				Criando Conversores Personalizados; Conversores e Validadores X Ciclo de Vida.<br />
 				<p>
-				<h3><font color="black">Investimento</font></h3>
+ 				<h3><font color="black">Investimento</font></h3>
 				<p>
-				R$ 400,00
+				R$ 500,00
 				<p>	
+				<p>
  				<h3><font color="black">Carga Horária</font></h3>
 				<p>
-				20 horas
-
+				18 horas
+				<p>
+				<h3><font color="black">Formas de Pagamento</font></h3>
+				<p>Cartão de Crédito em até 10x;
+				<p>Boleto em até 4x;
+				<p>Dinheiro;
+				<p>Cartão de Débito.
 				<p>
 				</div>
 			</div>

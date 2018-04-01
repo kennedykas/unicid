@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Pós Graduação</title>
+	<link rel="icon" type="image/png" href="images/favicon.png" />
+ 	
+ 	<!-- Bootstrap local -->
+	<link rel="stylesheet" href="assets/bootstrap-3.3.7/css/bootstrap.min.css" />
+	
+	<script src="assets/jquery/jquery-3.1.1.min.js"></script>
+ 
+	<style>
+		.form-signin {
+        	margin: 0 auto;
+            max-width: 330px;
+            padding: 15px;}
+	</style>
+</h:head>
+<h:body>
+	<div class="navbar navbar-default">
+		<div class="container-fluid">
+		    <div class="navbar-header">
+		    	<a class="navbar-brand" href="#">UNICID | Faça um Curso de Extensão e Alavanque sua Carreira</a>
+		    </div>
+		</div>
+	</div>
+
+	<div class="container">
+		<h:form enctype="multipart/form-data" class="form-signin">
+			<div class="alert alert-danger">
+				<h3 align="center">Faça sua Inscrição</h3>
+			</div>
+		
+			<!-- SELECIONE O CURSO  -->
+			<h:outputLabel value="Agenda de Cursos 2018" for="nomeCurso"/>
+			<h:selectOneMenu id="cmbNomeCurso" 
+			value="#{controllerCursoExtensao.cursoExtensao.nomeCurso}" 
+			class="form-control">
+				<f:selectItem itemValue="Selecione o Curso de Interesse"  />
+				<f:selectItem itemValue="Abril 07 e 09 das 09h às 17h - ITIL®" />
+				<f:selectItem itemValue="Maio 05 e 12 das 09h às 17h - Scrum Foundation" />
+				<f:selectItem itemValue="Maio 19 e 26 das 09h às 17h - Scrum Master " />
+				<f:selectItem itemValue="Maio 19 e 26 das 09h às 17h - ISO 27001 Segurança da Informação" />
+				<f:selectItem itemValue="Junho 02 e 09 das 09h às 17h - ISO 20.000 Gerenciamento de Serviços" />
+				<f:selectItem itemValue="Junho 16 e 23 das 09h às 17h - ITIL®" />
+				<f:selectItem itemValue="Junho 16 e 23 das 09h às 17h - Cobit 5" />
+				<f:selectItem itemValue="Julho 16 a 20 das 19h às 23h - C# Básico"/>
+				<f:selectItem itemValue="Julho 16 a 20 das 19h às 23h - ITIL Foudation V3"/>
+				<f:selectItem itemValue="Julho 16 a 20 das 19h às 23h - Cobit Foundation"/>
+				<f:selectItem itemValue="Julho 23 a 27 das 19h às 23h - Scrun Foundation"/>
+				<f:selectItem itemValue="Julho 23 a 27 das 19h às 23h - Java WEB"/>
+				<f:selectItem itemValue="Julho 23 a 27 das 19h às 23h - Spring + Hibernate"/>
+				<f:selectItem itemValue="Julho 21 e 28 das 09h às 17h - Scrum Master"/>
+				<f:selectItem itemValue="Julho 21 e 28 das 09h às 17h - Java Server Page"/>
+				<f:selectItem itemValue="Julho 21 e 28 das 09h às 17h - Spring + Hibernate"/>
+			</h:selectOneMenu>
+			<!-- NOME  -->
+			<h:outputLabel value="Nome" for="nome"/>
+			<h:inputText id="nome" value="#{controllerCursoExtensao.cursoExtensao.nome}" 
+			required="true" class="form-control" maxlength="100" 
+			requiredMessage="Precisamos saber o seu nome."/>
+			
+			<!-- E-MAIL -->
+			<h:outputLabel value="E-mail" for="email" />
+			<h:inputText id="email" value="#{controllerCursoExtensao.cursoExtensao.email}" 
+			class="emailField form-control" required="true" maxlength="100"
+			requiredMessage="Informe seu email."/>
+
+			<!-- CPF  -->
+			<h:outputLabel value="C.P.F." for="cpf"/>
+			<h:inputText id="cpf" value="#{controllerCursoExtensao.cursoExtensao.cpf}" 
+			required="true" class="form-control"  maxlength="20"
+			requiredMessage="Precisamos saber o seu C.P.F."/>
+			
+			<!-- Celular -->
+			<h:outputLabel value="Celular" for="celular" />
+			<h:inputText id="celular" value="#{controllerCursoExtensao.cursoExtensao.celular}" 
+			class="form-control" required="true" maxlength="20"
+			requiredMessage="Informe seu Celular."/>
+			
+			<!-- MENSSAGENS DE ERRO -->
+			<br />
+			<h:messages id="messages" class="esc alert alert-danger"/>
+				
+			<!-- BOTAO ENVIAR -->
+			<br/>
+			<h:commandButton value="Salvar" class="submit btn btn-lg btn-primary btn-block" 
+			action="#{controllerCursoExtensao.save}" /> 
+		</h:form>
+	</div>
+</h:body>
+</html>

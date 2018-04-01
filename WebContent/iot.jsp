@@ -24,7 +24,7 @@
 				
 				Gerenciamento de Serviços<br />
 				Projeto e Modelagem de Sistemas<br />
-				Desenvolvimento e Implementação de Aplicações Corporativas JAVA<br />
+				Desenvolvimento e Implementação de Aplicações Corporativas<br />
 				Desenvolvimento de Aplicações usando Internet das Coisas<br />
     			Empreendedorismo, Inovação e Metodologia Científica <br />
 			
@@ -32,18 +32,20 @@
 				<h3><font color="black">Ementa</font></h3>
 
 				<p align="justify">
-				O curso de Especialização em Desenvolvimento de Aplicações Corporativas JAVA e Internet das Coisas é composto por 5 módulos. 
+				O curso de Especialização em Desenvolvimento de Aplicações Corporativas e Internet das Coisas é composto por 5 módulos. 
 				Os dois primeiros concentram um conjunto de disciplinas onde o aluno desenvolve as competências e habilidades para lidar com 
 				processos de desenvolvimento ágil, arquitetura de sistemas e metodologias de desenvolvimento de sistema, aliando conceitos sólidos de
 				modelagem sob o paradigma da orientado a objeto. 
 				No terceiro e quarto Módulo do curso, as disciplinas e atividades propõe-se a trabalhar as bases técnicas e práticas 
-				exigidas para o desenvolvimento de aplicações Java que engloba os conceitos de arquitetura de software, paradigma de programação 
-				orientado a objetos e domínio da linguagem Java e o hardware do Arduino e Raspberry, bem como os conceitos de Internet das Coisas  
+				exigidas para o desenvolvimento de aplicações Java e .NET que engloba os conceitos de arquitetura de software, paradigma de programação 
+				orientado a objetos e domínio da linguagem Java/.NET e o hardware do Arduino e Raspberry, bem como os conceitos de Internet das Coisas  
 				e o quinto e último módulo o aluno desenvolve o trabalho de conclusão de curso voltado para criação de uma Startup.</p>
 				</p>
  				<h3><font color="black">Certificações</font></h3>
 				<p>
 				ITIL Foundation<br />
+				VeriSM Gerenciamento de Serviços na era Digital<br />
+				ISO 20.000 Gerenciamento de Serviços <br />
 				Agile Scrum<br />
 				Gerenciamento de Projetos - PMP<br />
 				<p>
@@ -53,7 +55,7 @@
 					Gerência de Requisitos	 <br /> 
 					Gestão de Projetos PMI	 <br /> 
 					Metodologias Ágeis	 <br /> 
-					Programação Java Core, Java WEB, Primefaces, JSF, Hibernate, JPA.<br />
+					Programação Java e .NET<br />
 					Arquitetura de Tecnologias de Conectividade<br />
 					Arduino e Raspberry<br />
 					Arquitetura Internet das Coisas<br />
@@ -68,9 +70,9 @@
 				<div class="block-sobre">
 					<font color="black"><b>Horário: </b></font>Sábado das 08h às 17h - AULA QUINZENAIS <br />
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					Terças das 19h às 23h - AULA SEMANAIS <br />
+					Terças das 19h20 às 23h - AULA SEMANAIS <br />
 					<font color="black"><b>Duração: </b></font>18 Meses<br />
-					<font color="black"><b>Carga Horária: </b></font>450 horas<br />
+					<font color="black"><b>Carga Horária: </b></font>360 horas<br />
 					<font color="black"><b>Investimento:</b></font> 18 parcelas de R$ 700,00. <font color="blue">Desconto de 20% para Ex-Alunos</font> <br />
 					<font color="black"><b>Taxa de Inscrição: </b></font>R$ 0,00<br />
 				</div>
