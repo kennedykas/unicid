@@ -39,10 +39,10 @@ public class ControllerQuestoes {
 	public String save(int codProfessor) {
 		this.questao.setCodProfessor(codProfessor);
 		this.questao.setDisciplina(this.disciplinaBean.getDisciplina().getCodigo());
-		
-		this.dao = new QuestaoDAO();
-		
-		return (this.dao.salvar(questao)) ? Constants.PAGE_LIST_QUESTIONS : Constants.PAGE_NEW_QUESTION;
+				
+		return (new QuestaoDAO().salvar(questao)) ? 
+				Constants.PAGE_LIST_QUESTIONS + Constants.SAVED_WITH_SUCCESS : 
+				Constants.PAGE_NEW_QUESTION + Constants.TOAST_SOMETHING_WENT_WRONG;
 	}
 		
 	// CHANGE

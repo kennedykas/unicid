@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      	
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+      
+	<!-- HEAD -->
+	<ui:include src="../componentes/head/head.xhtml" />
+<h:body class="grey lighten-4">
+
+	<!-- NAVBAR -->
+	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
+	
+	<!-- SEARCHING FOR DEPOSITS IN DATABASE -->
+	<f:event listener="#{depositController.findDepositsByProfessorCode()}" type="preRenderView"/>
+	
+	<div class="container mainContent" data-content="professor-deposits">
+	
+		<!-- EMPTY LIST -->
+  		<h:panelGroup 
+  			rendered="#{depositController.depositsList.getRowCount() eq 0 ? true : false}">
+ 			
+ 			<h:outputText
+ 				class="grey-text" 
+ 				value="#{msg['deposits.not.found']}" 
+ 				style="font-size:1.5em"/>
+  		</h:panelGroup>
+		
+		<!-- DEPOSITS LIST -->
+		<h:panelGroup rendered="#{depositController.depositsList.getRowCount() eq 0 ? false : true}">
+			<div class="center z-depth-2 white card">
+				<h:form id="deposits-form" styleClass="loading">	
+						
+					<h:dataTable id="deposits-table"
+						value="#{depositController.depositsList}" 
+						var="data" 
+						class="striped responsive-table">
+						
+						<!-- STUDENT -->
+						<ui:param name="studentName" value="#{controllerAlunos.getNameByRgm(data.student)}" />
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.student']}"/>
+							</f:facet>
+							<h:outputText value="#{studentName}" styleClass="hide"/>
+						</h:column>
+																		
+						<!-- DATE -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.date']}" />
+							</f:facet>
+							<h:outputText value="#{data.date}"/>
+						</h:column>
+						
+						<!-- VALUE -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.value']}" />
+							</f:facet>
+						
+							<h:outputText value="#{data.type eq 1 ? -(data.value) : data.value}" 
+								styleClass="#{data.type eq 1 ? 'red-text' : 'green-text'}">
+								<f:convertNumber currencyCode="BRL" type="currency" minFractionDigits="2" />
+							</h:outputText>
+						</h:column>
+						
+						<!-- COMMENTS -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.comments']}" />
+							</f:facet>
+							<h:outputText value="#{data.comments}" />
+						</h:column>
+			
+						<!-- ACTIONS -->
+						<h:column>
+							<!-- DELETE -->
+							<span class="tooltipped" data-position="left" 
+								data-delay="50" data-tooltip="#{msg['upper.delete']}">
+								
+								<h:commandLink 
+										actionListener="#{depositController.getRowData()}" 
+									action="#{depositController.delete()}"
+									onclick="return confirm('Tem certeza que deseja excluir este depósito? Ela não poderá ser recuperado depois!')">
+  									<i class="material-icons right">delete</i>
+  								</h:commandLink>
+							</span>
+
+							<!-- EDIT -->
+							<span class="tooltipped" data-position="left" 
+								data-delay="50" data-tooltip="#{msg['upper.edit']}">
+								<h:commandLink 
+									action="/update/updateDeposit">
+									
+									<f:actionListener binding="#{depositController.getRowData()}"/>
+									<f:actionListener binding="#{controllerAlunos.aluno.setRgm(data.student)}"/>
+									<f:actionListener binding="#{controllerAlunos.aluno.setNome(studentName)}"/>
+									<f:actionListener binding="#{controllerTipoDeposito.tipoDeposito.setCodigo(data.type)}"/>
+		    												
+									<i class="material-icons right">mode_edit</i>
+								</h:commandLink>
+							</span>
+						</h:column>
+					</h:dataTable>	
+				</h:form>
+			</div>
+		</h:panelGroup>
+		
+		<!-- NEW DEPOSIT -->
+		<div class="fixed-action-btn tooltipped" 
+			data-position="left" data-delay="50" data-tooltip="#{msg['upper.new.deposit']}">
+			<h:link
+				outcome="/create/newDeposit" 
+				class="btn-floating btn-large waves-effect waves-light light-green accent-4 pulse">
+				<i class="material-icons right">add</i>
+			</h:link>
+		</div>
+	</div>
+		
+	<!-- FOOTER -->
+	<ui:include src="../componentes/footer/footer.xhtml" />
+	
+	<h:outputScript library="js" name="DepositListController.js" />
+	
+	<script>
+		$(document).ready(function(){
+			unicid.DepositList.controller.init();	
+		});
+	</script>
+</h:body>
+</html>

@@ -22,7 +22,7 @@
 	            </div>
 	            <div class="row"></div>
 	            
-	            <h:form class="loading">
+	            <h:form id="professor" class="loading">
 					
 					<ui:include src="../componentes/form/professor/formProfessor.xhtml"/>
 					
@@ -43,6 +43,7 @@
 
 							<h:commandButton
 								style="padding:8px 65px 10px 32px"
+								styleClass="white-text"
 								action="#{controllerProfessores.save}"
 								value="#{msg['upper.ready']}"/>
 						</div>

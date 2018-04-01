@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:f="http://java.sun.com/jsf/core" 
+      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+      
+	<!-- HEAD -->
+	<ui:include src="../componentes/head/head.xhtml" />
+<h:body class="grey lighten-4">
+
+	<!-- NAVBAR -->
+	<ui:include src="../componentes/header/navbarAluno.xhtml" />
+	
+	<!-- SEARCHING FOR DEPOSITS IN DATABASE -->
+	<f:event listener="#{depositController.findDepositsByStudentRgm()}" type="preRenderView"/>
+	
+	<div class="container mainContent" data-content="student-deposits">
+	
+		<!-- EMPTY LIST -->
+  		<h:panelGroup 
+  			rendered="#{depositController.depositsList.getRowCount() eq 0 ? true : false}">
+ 			
+ 			<div class="row center-align" style="margin-top:20vh;">
+	 			<h:outputText
+	 				styleClass="blue-grey-text col s12" 
+	 				value="#{msg['deposits.not.found.talk.to.your.professor']}" 
+	 				style="font-size:1.5em"/>
+ 			</div>
+  		</h:panelGroup>
+  		
+		<h:panelGroup rendered="#{depositController.depositsList.getRowCount() eq 0 ? false : true}">
+
+	  		<!-- BALANCE -->
+	  		<div class="row">
+		  		<h4 class="teal-text balance"></h4>
+	  		</div>
+	  		
+	  		<p class="blue-grey-text"><h:outputText value="#{msg['details']}" />:</p>
+			
+			<!-- DEPOSITS LIST -->
+			<div class="center z-depth-2 white card">
+				<h:form id="student-deposits-form" styleClass="loading">	
+						
+					<h:dataTable id="deposits-table"
+						value="#{depositController.depositsList}" 
+						var="data" 
+						class="striped responsive-table">
+																								
+						<!-- DATE -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.date']}" />
+							</f:facet>
+							<h:outputText value="#{data.date}"/>
+						</h:column>
+						
+						<!-- DEPOSIT TYPE -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.operation']}" />
+							</f:facet>
+							<h:outputText value="#{controllerTipoDeposito.getDepositTypeNameByCode(data.type)}"/>
+						</h:column>
+						
+						<!-- VALUE -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.value']}" />
+							</f:facet>
+						
+							<h:outputText value="#{data.type eq 1 ? -data.value : data.value}" 
+								styleClass="#{data.type eq 1 ? 'red-text' : 'green-text'}">
+								<f:convertNumber currencyCode="BRL" type="currency" minFractionDigits="2" />
+							</h:outputText>
+						</h:column>
+						
+						<!-- COMMENTS -->
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg['upper.comments']}" />
+							</f:facet>
+							<h:outputText value="#{data.comments}" />
+						</h:column>
+					</h:dataTable>	
+				</h:form>
+			</div>
+		</h:panelGroup>
+	</div>
+		
+	<!-- FOOTER -->
+	<ui:include src="../componentes/footer/footer.xhtml" />
+	
+	<h:outputScript library="js" name="DepositListController.js" />
+	
+	<script>
+		$(document).ready(function(){
+			unicid.DepositList.controller.init();	
+		});
+	</script>
+</h:body>
+</html>

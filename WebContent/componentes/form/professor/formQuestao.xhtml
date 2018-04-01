@@ -3,6 +3,7 @@
     xmlns:f="http://java.sun.com/jsf/core" 
     xmlns:h="http://xmlns.jcp.org/jsf/html" 
     xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
     xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     
 	<div class="col s12 m12 l6">
@@ -50,7 +51,7 @@
 				class="materialize-textarea" 
 				rows="5" 
 				a:maxlength="1500"/> 
-			<h:outputLabel value="#{msg['upper.alternative.c']}" for="alternativeC"/>
+			<h:outputLabel value="#{msg['upper.alternative.c']}" for="alternativaC"/>
 		</div>
 		
 		<!-- ALTERNATIVA D -->
@@ -61,7 +62,7 @@
 				class="materialize-textarea"  
 				rows="5" 
 				a:maxlength="1500"/> 
-			<h:outputLabel value="#{msg['upper.alternative.d']}" for="alternativeD"/>
+			<h:outputLabel value="#{msg['upper.alternative.d']}" for="alternativaD"/>
 		</div>
 		
 		<!-- ALTERNATIVA E -->
@@ -77,30 +78,49 @@
 	</div>
 	
 	<!-- GAMBS NEED TO BE FIXED -->
-	<div class="hide-on-med-and-down col l5" style="width:200px;height:300px"></div>
+	<div class="hide-on-med-and-down col l5" style="width:200px;height:150px"></div>
 	
 	<!-- FORM RIGHT SIDE CONTAINER -->
 	<div class="col s12 m12 l5 right">
 	
 		<!-- ALTERNATICA CORRETA -->
 		<div class="row">
-			<h:selectOneRadio 
+			<h:inputHidden 
 				id="alternativaCorreta" 
-				onclick="return checkNull(this)" 
 				value="#{controllerQuestoes.questao.alternativaCorreta}" 
 				a:required="true" 
-				requiredMessage="#{msg['required.right.alternative']}">
-			   	
-			   	<f:selectItem itemValue="A" itemLabel="A" id="A"/>
-			   	<f:selectItem itemValue="B" itemLabel="B" id="B"/>
-			   	<f:selectItem itemValue="C" itemLabel="C" id="C"/>
-			   	<f:selectItem itemValue="D" itemLabel="D" id="D"/>
-			   	<f:selectItem itemValue="E" itemLabel="E" id="E"/>
-				<h:outputLabel value="#{msg['upper.right.alternative']}" for="alternativaCorreta"/>	
-			</h:selectOneRadio>
+				requiredMessage="#{msg['required.right.alternative']}" />
+				
+
+			<h:outputLabel value="#{msg['upper.right.alternative']}" styleClass="col s12"/>
+						   	
+		   	<label>
+		   		<input type="radio" value="A" name="right-alternative" 
+		   			class="check-answer" required="required" />
+		   		<span>A</span>
+		   	</label>
+		   	<label>
+		   		<input type="radio" value="B" name="right-alternative" 
+		   			class="check-answer" required="required" />
+		   		<span>B</span>
+		   	</label>
+		   	<label>
+		   		<input type="radio" value="C" name="right-alternative" 
+		   			class="check-answer" required="required" />
+		   		<span>C</span>
+		   	</label>
+		   	<label>
+		   		<input type="radio" value="D" name="right-alternative" 
+		   			class="check-answer" required="required" />
+		   		<span>D</span>
+		   	</label>
+		   	<label>
+		   		<input type="radio" value="E" name="right-alternative" 
+		   			class="check-answer" required="required" />
+		   		<span>E</span>
+		   	</label>
 		</div>
-		
-		
+				
 		<!-- SELECT DISCIPLINA -->
 		<ui:include src="../selectDisciplina.xhtml">
 			<ui:param name="label" value="#{msg['upper.discipline.question.belong']}"/>

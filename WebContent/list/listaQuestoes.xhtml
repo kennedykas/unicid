@@ -72,16 +72,22 @@
 									data-delay="50" 
 									data-tooltip="#{msg['upper.add.question.to.test']}"
 									onclick="updateCounter()">
-									<h:selectBooleanCheckbox
-										id="#{'checkbox'.concat(table.rowIndex + 2)}" 
-										styleClass="filled-in">
-										<f:ajax listener="#{controllerProvas.manageSelectedQuestions(dados.codigo)}"/>
-									</h:selectBooleanCheckbox>
+
 									<!-- DISCIPLINA -->
 									<h:outputLabel 
 										for="#{'checkbox'.concat(index.rowIndex + 1)}" 
-										styleClass="disciplina grey-text text-darken-1 truncate" 
-										value="#{controllerDisciplinas.nomeDisciplina(dados.disciplina)}"/>
+										styleClass="disciplina grey-text text-darken-1 truncate">
+										
+										<h:selectBooleanCheckbox
+											id="#{'checkbox'.concat(table.rowIndex + 2)}" 
+											styleClass="filled-in">
+											<f:ajax listener="#{controllerProvas.manageSelectedQuestions(dados.codigo)}"/>
+										</h:selectBooleanCheckbox>
+										
+										<span>
+											<h:outputText value="#{controllerDisciplinas.nomeDisciplina(dados.disciplina)}" />
+										</span>
+									</h:outputLabel>
 								</span>
 								<br/>
 								
@@ -231,10 +237,10 @@
 			<div class="modal-content">
 				<h5><h:outputText value="#{msg['upper.filter.questions.by.discipline']}"/></h5>
 				<div>
-					<h:selectManyCheckbox layout="pageDirection" id="disciplines">
+					<h:selectManyListbox id="disciplines">
 					    <f:selectItems
 							value="#{controllerDisciplinas.disciplinas(controllerProfessores.professor.codigo)}"/>
-					</h:selectManyCheckbox>
+					</h:selectManyListbox>
 				</div>
 			</div>
 		    <div class="modal-footer">

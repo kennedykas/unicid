@@ -4,14 +4,14 @@
     xmlns:h="http://xmlns.jcp.org/jsf/html" 
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
-    
+       
 <footer class="page-footer teal lighten-1">
 	<div class="container">
 		<div class="row text-bold">
 			<div class="col l6 s12" style="padding-top:35px">
 				<h5 class="white-text"><h:outputText value="#{msg['upper.unicid']}"/></h5>
 			</div>
-			<div class="col l4 offset-l2 s12" style="padding-top:50px">
+			<div class="col offset-l1 l5 s12" style="padding-top:50px">
 				<a class="grey-text text-lighten-3" href="https://unicid.cruzeirodosulvirtual.com.br/webapps/login/?new_loc=%2Fwebapps%2Fportal%2Fexecute%2FdefaultTab">
 					<h:outputText value="#{msg['blackboard']}"/>
 				</a>
@@ -38,8 +38,8 @@
 	<h:outputScript name="/js/mask.min.js"/>
 
 	<!-- SOME FUNCTIONS -->
-	<!--h:outputScript name="/js/util.js"/-->
 	<h:outputScript name="/js/util.min.js"/>
+	<!-- h:outputScript name="/js/util.js"/-->
 
 	<!-- MATERIALIZE -->
 	<h:outputScript name="/materialize/js/materialize.min.js"/>

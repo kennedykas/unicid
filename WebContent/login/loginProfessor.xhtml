@@ -34,9 +34,10 @@
 							a:required="true" 
 							requiredMessage="#{msg['required.email']}"/>
 						
-						<label for="email" data-error="#{msg['invalid.email']}">
+						<label for="login-form:email">
 							<h:outputText value="#{msg['upper.email']}"/>
 						</label>
+						<span class="helper-text" data-error="#{msg['invalid.email']}"></span>
 					</div>
 					
 					<!-- SENHA -->
@@ -49,9 +50,10 @@
 							styleClass="validate" 
 							requiredMessage="#{msg['required.password']}"/>
 						
-						<label for="senha" data-error="#{msg['invalid.password']}">
+						<label for="login-form:senha">
 							<h:outputText value="#{msg['upper.password']}"/>
 						</label>
+						<span class="helper-text" data-error="#{msg['invalid.password']}"></span>
 					</div>
 					
 					<!-- MENSAGENS DE ERRO -->
@@ -66,6 +68,7 @@
 
 							<h:commandButton
 								style="padding:8px 65px 10px 32px"
+								styleClass="white-text"
 								action="#{controllerProfessores.login}"
 								value="#{msg['upper.get.in']}"/>
 						</div>
@@ -80,9 +83,9 @@
 					<br/>
 					
 					<!-- NOVO PROFESSOR --> 
-					<h:link outcome="/create/novoProfessor">
+					<!-- h:link outcome="/create/novoProfessor">
 						<h:outputText value="#{msg['new.user']}"/>
-					</h:link>
+					</h:link -->
 				</div>
 		    </div>
 		</div>

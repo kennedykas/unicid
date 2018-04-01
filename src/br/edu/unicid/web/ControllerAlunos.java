@@ -178,14 +178,23 @@ public class ControllerAlunos {
 		return Constants.PAGE_RECOVER_STUDENT_PASS;		
 	}
 	
-	// OBTER NOME ALUNO
 	public String getNome(int codAluno) {
-		dao = new AlunoDAO();
-		// RETORNA O NOME, CASO NAO SEJA ECONTRADO RETORNA 'NAO FOI ENCONTRADO'
-		return dao.getNome(codAluno);  
+	
+		return new AlunoDAO().getNome(codAluno);  
+	}
+	
+	public void getNameByRgm() {
+		
+		if (aluno.getRgm() != 0)
+			aluno.setNome(new AlunoDAO().getNameByRgm(aluno.getRgm()));
+		
+		//FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().add("deposit-form:name");
+	}
+	
+	public String getNameByRgm(int rgm) {
+		return new AlunoDAO().getNameByRgm(rgm);
 	}
 
-	// OBTER RGM ALUNO
 	public int getRgm(int codAluno) {
 		dao = new AlunoDAO();
 		// RETORNA O RGM, CASO NAO SEJA ENCONTRADO RETORNA 0
@@ -202,7 +211,6 @@ public class ControllerAlunos {
 		this.aluno = listaAluno.getRowData();
 	}
 	
-	// LOG OFF
 	public String quit() {
 		init();
 		return Constants.PAGE_LOGIN_STUDENT;

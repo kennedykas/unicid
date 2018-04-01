@@ -5,11 +5,11 @@ public class Constants {
 	public static final String WRONG_EMAIL              = "EMAIL incorreto.";
 	public static final String WRONG_PASS               = "SENHA incorreta.";
 	public static final String WRONG_RGM                = "RGM incorreto.";
-	public static final String FORGET_CHECK_RECAPTCHA   = "QUASE sÃ³ falta vocÃª dizer que nÃ£o Ã© um robÃ´!";
-	public static final String RECAPTCHA_FAILED         = "CLIQUE EM: 'nÃ£o sou um robÃ´', para confirmar que vocÃª Ã© uma pessoa!";
-	public static final String EMAIL_WAS_SENT_WITH_PASS = "ENVIAMOS um email com a sua senha, para o endereÃ§o cadastrado. dÃºvidas entre em contato conosco: jadircmj@hotmail.com";
-	public static final String NAME_NOT_FOUND           = "NOME nÃ£o encontrado (maiÃºsculas e minÃºsculas nÃ£o interferem), dÃºvidas entre em contato conosco: jadircmj@hotmail.com";
-	public static final String SOMETHING_WENT_WRONG     = "Algo nÃ£o aconteceu como o esperado!";
+	public static final String FORGET_CHECK_RECAPTCHA   = "QUASE só falta você dizer que não é um robó!";
+	public static final String RECAPTCHA_FAILED         = "CLIQUE EM: 'não sou um robô', para confirmar que você é uma pessoa!";
+	public static final String EMAIL_WAS_SENT_WITH_PASS = "ENVIAMOS um email com a sua senha, para o endereço cadastrado. dúvidas entre em contato conosco: jadircmj@hotmail.com";
+	public static final String NAME_NOT_FOUND           = "NOME não encontrado (maiúsculas e minúsculas não interferem), dúvidas entre em contato conosco: jadircmj@hotmail.com";
+	public static final String SOMETHING_WENT_WRONG     = "Algo não aconteceu como o esperado!";
 	public static final String FACE_MESSAGES_ID         = "messages";
 	public static final String SUCCESS                  = "ok";
 	public static final String READY                    = "Pronto!";
@@ -18,8 +18,12 @@ public class Constants {
 	public static final String NAME                     = "nome";
 	public static final String RGM                      = "rgm";
 	public static final String UNVERIFIED               = "unverified";
-	public static final String UNKNOWN_RGM              = "RGM nÃ£o coincide com o nome, dÃºvidas entre em contato conosco: jadircmj@hotmail.com";
-	
+	public static final String UNKNOWN_RGM              = "RGM não coincide com o nome, dúvidas entre em contato conosco: jadircmj@hotmail.com";
+	public static final String URL_PARAMETER            = ".xhtml?faces-redirect=true&toast=";
+	public static final String SAVED_WITH_SUCCESS       = URL_PARAMETER + "Salvo com sucesso";
+	public static final String CHANGES_HAVE_BEEN_SAVED  = URL_PARAMETER + "Suas alterações foram salvas";
+	public static final String DELETED_WITH_SUCCESS     = URL_PARAMETER + "Excluído com sucesso!";
+	public static final String TOAST_SOMETHING_WENT_WRONG = URL_PARAMETER + "Algo não aconteceu como o esperado!";
 	
 	public static final String PAGE_EMAIL_SENT          = "/user-tools/emailEnviado";
 	
@@ -55,6 +59,8 @@ public class Constants {
 	
 	public static final String PAGE_NEW_QUESTION        = "/create/novaQuestao";
 	public static final String PAGE_UPDATE_QUESTION     = "/update/alterarQuestao";
-
+	
+	public static final String PAGE_LIST_DEPOSITS_PROFESSOR = "/list/listDepositsProfessor";
+	public static final String PAGE_NEW_DEPOSIT             = "/create/newDeposit";
 	
 }

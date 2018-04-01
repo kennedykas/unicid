@@ -1,0 +1,22 @@
+<ui:composition
+	xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:f="http://java.sun.com/jsf/core" 
+    xmlns:h="http://xmlns.jcp.org/jsf/html" 
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    
+   	<!-- LOAD PROPERTIES FILE -->
+	<f:loadBundle basename="br.edu.unicid.i18n.unicid-i18n" var="msg"/>
+		
+	<div class="row left-align">
+		<h:outputLabel value="#{label}" for="deposit-form:deposit-type" />
+		<h:selectOneMenu
+			id="deposit-type"
+			value="#{controllerTipoDeposito.tipoDeposito.codigo}" 
+			a:required="required" 
+			requiredMessage="#{msg['required.select.operation']}">
+		    <f:selectItem itemValue="#{null}" itemLabel="#{msg['upper.select.operation']}" noSelectionOption="true"/> 
+		    <f:selectItems value="#{controllerTipoDeposito.getDepositTypes()}"/>
+		</h:selectOneMenu>
+	</div>
+</ui:composition>

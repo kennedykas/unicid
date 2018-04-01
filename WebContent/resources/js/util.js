@@ -5,7 +5,7 @@ $(document).ready(function(){
 	init();	
 });
 
-//---------------------------------------------------------------
+
 //   AFTER CONTENT LOAD RECALL INIT FOR MATERIALIZE COMPONENTS 
 //---------------------------------------------------------------
 function loadContent(content) {
@@ -16,23 +16,41 @@ function loadContent(content) {
 
 function init(){
 	
-	// inicialize the mobile menu
-	$(".button-collapse").sideNav();
-	// inicialize selects
-	$('select').material_select();
-	//initialize all modals           
-	$('.modal').modal();
+	$('.sidenav')   .sidenav();
+	$('select')     .formSelect();        
+	$('.modal')     .modal();
+	$('.tooltipped').tooltip();
+	 
+	$('.loaderContainer').hide();
 	
+	$('.number') .val(null); // the null here is to prevent the default value 0
 
-	// HIDE PAGE LOADING ANIMATION 
-	document.getElementsByClassName('loaderContainer')[0].style.display = 'none';
-
-	// masking the fields
-	$(".cpf")    .mask("999.999.999-99");
-	$(".date")   .mask("99/99/9999-99:99",{placeholder:"DD/MM/AAAA-HH:MM"});
-	$(".number") .val(null); // the null here is to prevent the default value 0
-	$(".celular").mask("(99) 99999-9999");
+	$('.cpf')    .mask('999.999.999-99');
+	$('.date')   .mask('99/99/9999-99:99',{placeholder:'DD/MM/AAAA-HH:MM'});
+	$('.celular').mask('(99) 99999-9999');
+	$('.money').on( "keyup", function( event ) {
+            
+		// When user select text in the document, also abort.
+		var selection = window.getSelection().toString();
+		if ( selection !== '' )
+			return;
+		
+		// When the arrow keys are pressed, abort.
+		if ( $.inArray( event.keyCode, [38,40,37,39] ) !== -1 )
+			return;
 	
+		var $this = $( this );
+		
+		var input = $this.val();
+		
+		var input = input.replace(/[\D\s\._\-]+/g, "");
+		input = input ? parseInt( input, 10 ) : 0;
+
+		$this.val( function() {
+			return ( input === 0 ) ? "" : input.toLocaleString( "pt-BR" );
+		});
+	});
+		
 	// facemessage links (making they work)
 	$(".esc").each(function(i) {
 		var h = $(this).html();                
@@ -42,61 +60,101 @@ function init(){
 	});
 	
 	// email field (.emailField)
-	var testEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-	$('.emailField').bind('input propertychange', function() {
-		if (testEmail.test(jQuery(this).val())) {
-			$(this).css({ 'border':'1px solid green'}); // valid
+	var emailRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	$('.emailField').on('change', function() {
+		if (emailRegex.test($(this).val())) {
+			$(this).addClass('valid').removeClass('invalid');
 			$('button.validate').prop("disabled", false);
 		} else 
-			$(this).css({ 'border':'1px solid red'}); // invalid
+			$(this).addClass('invalid').removeClass('valid');
 	});
 	
 	// DATE PICKER
-	$('.datepicker').pickadate({
-	    selectMonths: true, // Creates a dropdown to control month
-	    selectYears: 15, // Creates a dropdown of 15 years to control year,
-	    min: true,
-	    today: 'Hoje',
-	    clear: 'Limpar',
-	    close: 'OK',
-	    closeOnSelect: true // Close upon selecting a date,
-	});
+	var options = {
+		format   : 'dd/mm/yyyy',
+		onSelect : 'instance.close()',
+		i18n     : {
+			'cancel' : 'CANCELAR',
+			'months' : [
+				'Janeiro',
+				'Fevereiro',
+				'Março',
+				'Abril',
+				'Maio',
+				'Junho',
+				'Julho',
+				'Agosto',
+				'Setembro',
+				'Outubro',
+				'Novembro',
+				'Dezembro'
+			],
+			'monthsShort' : [
+				'Jan',
+				'Fev',
+				'Mar',
+				'Abr',
+				'Mai',
+				'Jun',
+				'Jul',
+				'Ago',
+				'Set',
+				'Out',
+				'Nov',
+				'Dez'
+			],
+			'weekdaysShort' : [						
+				'Dom',
+				'Seg',
+				'Ter',
+				'Qua',
+				'Qui',
+				'Sex',
+				'Sab'
+			],
+			'weekdaysAbbrev' : ['D','S','T','Q','Q','S','S']
+		}
+	};
+	var elem = document.querySelector('.datepicker');
+	var instance = M.Datepicker.init(elem, options);
 	
 	// TIME PICKER
-	$('.timepicker').pickatime({
-	    default: 'now', // Set default time: 'now', '1:30AM', '16:30'
-	    fromnow: 0,       // set default time to * milliseconds from now (using with default = 'now')
-	    twelvehour: false, // Use AM/PM or 24-hour format
-	    donetext: 'OK',
-	    cleartext: 'Limpar',
-	    canceltext: 'Cancelar',
-	    autoclose: true,
-	    ampmclickable: true // make AM PM clickable
+	$('.timepicker').timepicker({
+	    default      : 'now',
+	    fromnow      : 0,         // set default time to * milliseconds from now (using with default = 'now')
+	    twelvehour   : false,     // Use AM/PM or 24-hour format
+	    donetext     : 'OK',
+	    cleartext    : 'Limpar',
+	    canceltext   : 'Cancelar',
+	    autoclose    : true,
+	    ampmclickable: true
 	});
 	
 	// SET THE CURRENT PAGE AS SELECTED ON NAVBAR
-	var activeWindow = document.getElementsByClassName('mainContent')[0].getAttribute("data-content");
-	
 	$('.navItem').find('.active').removeClass('active');
 	
-	var links = document.getElementsByClassName('navItem');
+	var activeWindow = $('.mainContent').data('content');
 
-	for(var i = 0; i < links.length; i++) {
-		 
-		if (document.getElementsByClassName('navItem')[i].getAttribute('data-page') == activeWindow)
-			document.getElementsByClassName('navItem')[i].classList.add('active');
-	}
+	$('.navItem').each(function(){
+		
+		if ($(this).data('page') == activeWindow)
+			$(this).addClass('active');
+	});
+	
+	// SUCCESS MESSAGES
+	var toastMessage = new URL(window.location.href).searchParams.get("toast");
+	M.toast({html: toastMessage});
+	 
+	M.updateTextFields();
 }
 
-
-//---------------------------------------------
 //        SHOW PAGE LOADING ANIMATION
 //---------------------------------------------
 $(".loading").on("submit", function() {
 	$('.loaderContainer').fadeIn(2800);
 });
 
-//---------------------------------------------
+
 //          UPDATE QUESTIONS COUNTER
 //
 //	@usedIn listaQuestoes.xhtml
@@ -206,7 +264,7 @@ function getMonthFromString(mon){
    return -1;
 }
 
-//--------------------------------------------------------------------------- 
+
 //     CHECA SE PASSWORDS CORRESPONDEM NOS DOIS CAMPOS (newUsers)
 //---------------------------------------------------------------------------
 $(".password").on("keyup", function(){
@@ -219,7 +277,7 @@ $(".password").on("keyup", function(){
 	}
 });
 
-//--------------------------------------------------------------
+
 //         MOSTRAR CAMPO INTEGRANTE (novoGrupo.xhtml)
 //--------------------------------------------------------------
 $(".showNextMemberField").on("click", function(){
@@ -234,19 +292,6 @@ $(".showNextMemberField").on("click", function(){
 	$("." + $(this).data("next")).show();
 });
 
-//---------------------------------------------------------------------------------
-//   CHECK IF SELECTED ANSWER IS EMPTY (novaQuestao.xhtml, alterarQuestao.xhtml)
-//---------------------------------------------------------------------------------
-function checkNull(alternativa) {
-	var aux = ($('#questao\\:' + "alternativa" + alternativa.value).val());
-	if(aux == "") {
-		alert("A alternativa selecionada está vazia!");
-		return false;
-	}
-	return true;
-}
-
-//---------------------------------------------------------------------------------
 //     CHECKING IF AT LEAST ONE ALTERNATIVE WAS SELECTED (listaQuestoes.xhtml)
 //---------------------------------------------------------------------------------
 function checkQuestions() {
@@ -258,7 +303,6 @@ function checkQuestions() {
 	}
 }
 
-//---------------------------------------------------------
 //             TIMER (listaProvaAluno.xhtml)
 //---------------------------------------------------------
 var seconds = 0;
@@ -283,7 +327,6 @@ function display() {
 } 
 display(); 
 
-//---------------------------------------------------------
 //        PAGE AUTO RELOAD (listaProvasAluno.xhtml)
 //---------------------------------------------------------
 setInterval(function() {
@@ -291,8 +334,7 @@ setInterval(function() {
 	}, 55000
 );
 
-//----------------------------------------------------------------------
-//             FILTRO DISCIPLINAS (listaQuestoes.xhtml)
+//        FILTRO DISCIPLINAS (listaQuestoes.xhtml)
 //----------------------------------------------------------------------
 $(".filterQuestionsByDiscipline").on('click', function(){
 
@@ -330,7 +372,6 @@ $('.clearFilter').on('click', function(){
 		disciplinesAvailableToChoose[i].checked = false
 });
 
-//----------------------------------------------------------------------
 //               FILTRO CURSOS (listaDisciplinas.xhtml)               MANUTENCAO
 //----------------------------------------------------------------------
 $(".filtrarCurso").on("click", function(){
@@ -342,7 +383,6 @@ $(".filtrarCurso").on("click", function(){
 	});
 });
 
-//----------------------------------------------------------------------
 //      LIMPAR FILTRO (listaDisciplinas.xhtml, listaCursos.xhtml)
 //----------------------------------------------------------------------
 $(".limparFiltros").on("click", function(){

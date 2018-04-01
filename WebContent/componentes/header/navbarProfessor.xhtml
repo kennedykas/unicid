@@ -16,25 +16,26 @@
 				<h:outputText value="#{msg['upper.unicid']}"/>
 			</a>
 			
-			<a href="#" data-activates="mobile-demo" class="button-collapse">
-				<i class="material-icons">menu</i>
-			</a>
-			
-			<ul id="nav-mobile" class="right hide-on-med-and-down">
+			<ul class="right hide-on-med-and-down">
 				<h:form>
-					<li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="#{msg['upper.settings']}">
+					<li class="tooltipped" data-position="left" data-delay="50" data-tooltip="#{msg['upper.settings']}">
 						<h:commandLink action="/update/alterarProfessor">
 							<i class="material-icons">settings</i>
 						</h:commandLink>
 					</li>
-					<li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="#{msg['upper.quit']}">
+					<li class="tooltipped" data-position="left" data-delay="50" data-tooltip="#{msg['upper.quit']}">
 						<h:commandLink action="#{controllerProfessores.quit()}">
 							<i class="material-icons">exit_to_app</i>
 						</h:commandLink>
 					</li>
 				</h:form>
 			</ul>
-			<ul class="side-nav" id="mobile-demo">
+
+			<a href="#" data-target="mobile-menu" class="sidenav-trigger">
+				<i class="material-icons">menu</i>
+			</a>
+			
+			<ul class="sidenav" id="mobile-menu">
 				<h:form>
 					<li class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="#{msg['upper.settings']}">
 						<h:commandLink action="/update/alterarProfessor">
@@ -51,6 +52,7 @@
 				</h:form>
 			</ul>
 	    </div>
+	    
 	    <div class="nav-content">
 	    	<h:form>
 		      <ul class="tabs tabs-transparent">
@@ -82,6 +84,11 @@
 				<li class="tab">
 					<h:commandLink action="/list/listaCursosExtensao" styleClass="navItem" a:data-page="professor-extension-courses">
 						<h:outputText value="#{msg['upper.courses']}"/>
+					</h:commandLink>
+				</li>
+				<li class="tab">
+					<h:commandLink action="/list/listDepositsProfessor" styleClass="navItem" a:data-page="professor-deposits">
+						<h:outputText value="#{msg['upper.deposits']}"/>
 					</h:commandLink>
 				</li>
 		      </ul>

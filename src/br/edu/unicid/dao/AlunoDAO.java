@@ -4,7 +4,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import br.edu.unicid.bean.Aluno;
-import br.edu.unicid.bean.Professor;
 import br.edu.unicid.util.TransactionManager;
 
 public class AlunoDAO {
@@ -12,7 +11,6 @@ public class AlunoDAO {
 	private PreparedStatement ps;
 	private ResultSet rs;
 
-	// CHECA SE ALUNO EXISTE 
 	public boolean existe(int codigo) {
 	    TransactionManager txManager = new TransactionManager();
 	    return txManager.doInTransactionWithReturn((connection) -> {
@@ -25,7 +23,6 @@ public class AlunoDAO {
 	    });
 	}
 	
-	// EXCLUIR
 	public boolean excluir(int codigo) {
 	    TransactionManager txManager = new TransactionManager();
 	    return txManager.doInTransactionWithReturn((connection) -> {
@@ -37,7 +34,6 @@ public class AlunoDAO {
 	    });
 	}
 		
-	// SAVE
 	public boolean salvar(Aluno aluno) {
     	TransactionManager txManager = new TransactionManager();
     	return txManager.doInTransactionWithReturn((connection) -> {
@@ -78,7 +74,6 @@ public class AlunoDAO {
 	    });
 	}
 		
-	// LOGIN
 	public String login(Aluno aluno) {
 		TransactionManager txManager = new TransactionManager();
     	return txManager.doInTransactionWithReturn((connection) -> {
@@ -110,7 +105,6 @@ public class AlunoDAO {
 		}); 
 	}
 	
-	// RECUPERAR SENHA
 	public String recuperarSenha(Aluno aluno) {
 		TransactionManager txManager = new TransactionManager();
     	return txManager.doInTransactionWithReturn((connection) -> {
@@ -136,7 +130,6 @@ public class AlunoDAO {
 		});
 	}
 	
-	// AUTENTICAR
 	public boolean autentica(Aluno aluno) {
 		TransactionManager txManager = new TransactionManager();
 	    return txManager.doInTransactionWithReturn((connection) -> {
@@ -150,7 +143,6 @@ public class AlunoDAO {
 	    });
 	}
 			
-	// RETURN NAME
 	public String getNome(int codigo) {
 		TransactionManager txManager = new TransactionManager();
     	return txManager.doInTransactionWithReturn((connection) -> {
@@ -159,11 +151,22 @@ public class AlunoDAO {
 			ps.setInt(1, codigo);
 			rs = ps.executeQuery();
 			
-			return (rs.next()) ? rs.getString(2) : "Nome nï¿½o encontrado";  			
+			return (rs.next()) ? rs.getString(2) : "Nome não encontrado";  			
+		});
+	}
+	
+	public String getNameByRgm(int rgm) {
+		TransactionManager txManager = new TransactionManager();
+    	return txManager.doInTransactionWithReturn((connection) -> {
+
+    		ps = connection.prepareStatement("SELECT rgm, nome FROM aluno WHERE rgm=?");
+			ps.setInt(1, rgm);
+			rs = ps.executeQuery();
+			
+			return (rs.next()) ? rs.getString(2) : "Nome não encontrado";  			
 		});
 	}
 
-	// RETURN RGM
 	public int getRgm(int codigo) {
 		TransactionManager txManager = new TransactionManager();
     	return txManager.doInTransactionWithReturn((connection) -> {
@@ -176,7 +179,6 @@ public class AlunoDAO {
 		});
 	}
 	
-	// ALTERAR
 	public boolean alterar(Aluno aluno) {
 	    TransactionManager txManager = new TransactionManager();
 	    return txManager.doInTransactionWithReturn((connection) -> {

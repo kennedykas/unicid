@@ -25,7 +25,7 @@
 	    	a:min=".1" 
 	    	a:max="10" 
 	    	a:step=".1" 
-	    	a:required="required" 
+	    	a:required="true" 
 	    	requiredMessage="#{msg['required.test.value']}"/> 
 	    <h:outputLabel value="#{msg['upper.value']}" for="value"/>
 	</div>   
@@ -39,11 +39,10 @@
 	    	a:min=".1" 
 	    	a:max="240" 
 	    	a:step=".1" 
-	    	a:required="required"
+	    	a:required="true"
 	    	requiredMessage="#{msg['required.test.time']}"/>
 	    <h:outputLabel value="#{msg['upper.test.time'].concat(' ').concat(msg['upper.in.minutes'])}" for="time"/>
 	</div>		    	
-	     
 	
   	<!-- DATA EM QUE SERA POSSIVEL REALIZA LA -->
    	<div class="input-field row">
@@ -51,7 +50,7 @@
 	    <label for="date">
 	    	<h:outputText value="#{msg['upper.date']}"/>
 	    </label>
-	</div>	   		
+	</div>	   	  		
 	
   	<!-- HORARIO EM QUE SERA POSSIVEL REALIZA LA -->
    	<div class="input-field row">
@@ -68,28 +67,31 @@
    		a:required="true"
    		requiredMessage="#{msg['required.test.date']}"/>
 
-   	<!-- PERMITIR REALIZACAO APOS ESSE PERIODO -->
-	<span class="row"> 
-		<h:selectBooleanCheckbox 
-			id="allowAfterDate" 
-			value="#{controllerProvas.prova.allowAfterDate}"
-			styleClass="filled-in">
-		</h:selectBooleanCheckbox>
-		<h:outputLabel for="allowAfterDate"	value="#{msg['info.allow.after.date']}"/>
-	</span>
-
-	<!-- GAMBIARRA PARA QUE O ALINHAMENTO DOS CHECKBOXES NAO QUEBRE -->
-	<div></div>
-
-   	<!-- PERMITIR MULTIPLAS TENTATIVAS -->
-	<span class="row"> 
-		<h:selectBooleanCheckbox 
-	   		id="allowMultipleAttempts" 
-			value="#{controllerProvas.prova.allowMultipleAttempts}"
-			styleClass="filled-in">
-		</h:selectBooleanCheckbox>
-		<h:outputLabel for="allowMultipleAttempts" value="#{msg['info.allow.multiple.attempts']}"/>
-	</span>      	
+	<div class="row">
+	   	<!-- PERMITIR REALIZACAO APOS ESSE PERIODO -->
+		<span class="row"> 
+			<label>
+				<h:selectBooleanCheckbox 
+					id="allowAfterDate" 
+					value="#{controllerProvas.prova.allowAfterDate}"
+					styleClass="filled-in" />
+	
+				<span><h:outputText value="#{msg['info.allow.after.date']}" /></span>
+			</label>
+		</span>
+	
+	   	<!-- PERMITIR MULTIPLAS TENTATIVAS -->
+		<span class="row">
+			<label>
+				<h:selectBooleanCheckbox 
+			   		id="allowMultipleAttempts" 
+					value="#{controllerProvas.prova.allowMultipleAttempts}"
+					styleClass="filled-in" />
+				
+				<span><h:outputText value="#{msg['info.allow.multiple.attempts']}" /></span>
+			</label> 
+		</span>      	
+   	</div>
    	
    	<!-- SELECT DISCIPLINA -->
 	<ui:include src="../selectDisciplina.xhtml">

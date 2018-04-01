@@ -15,7 +15,7 @@
 			a:minlength="4" 
 			a:required="true" 
 			requiredMessage="#{msg['required.teacher.name']}"/>
-		<label for="nome" data-error="#{msg['invalid.name']}">
+		<label for="professor:nome" data-error="#{msg['invalid.name']}">
 			<h:outputText value="#{msg['upper.name']}"/>
 		</label>
 	</div>
@@ -29,7 +29,7 @@
 			a:required="true" 
 			a:type="email" 
 			requiredMessage="#{msg['required.email']}"/>
-		<label for="email" data-error="#{msg['invalid.email']}">
+		<label for="professor:email" data-error="#{msg['invalid.email']}">
 			<h:outputText value="#{msg['upper.email']}"/>
 		</label>
 	</div>			
@@ -43,7 +43,7 @@
 			a:minlength="4" 
 			a:required="true" 
 			requiredMessage="#{msg['required.password']}"/>
-		<label for="senha" data-error="#{msg['invalid.password']}">
+		<label for="professor:senha" data-error="#{msg['invalid.password']}">
 			<h:outputText value="#{msg['upper.password']}"/>
 		</label>
 	</div>
@@ -56,7 +56,7 @@
 			a:minlength="4" 
 			a:required="true" 
 			requiredMessage="#{msg['required.confirm.password']}"/>
-		<label for="senha2" data-error="#{msg['invalid.password']}">
+		<label for="professor:senha2" data-error="#{msg['invalid.password']}">
 			<h:outputText value="#{msg['upper.confirm.password']}"/>
 		</label>
 	</div>

@@ -19,7 +19,7 @@
 				a:minlenght="4" 
 				requiredMessage="#{msg['required.name']}"/>
 			
-			<label for="nome" data-error="#{msg['invalid.name']}">
+			<label for="student:nome" data-error="#{msg['invalid.name']}">
 				<h:outputText value="#{msg['upper.name']}"/>
 			</label>
 		</div>		
@@ -36,7 +36,7 @@
 				a:type="number" 
 				requiredMessage="#{msg['required.rgm']}"/>
 			
-			<label for="rgm" data-error="#{msg['invalid.rgm']}">
+			<label for="student:rgm" data-error="#{msg['invalid.rgm']}">
 				<h:outputText value="#{msg['upper.rgm']}"/>
 			</label>
 		</div>
@@ -51,7 +51,7 @@
 				a:required="true" 
 				requiredMessage="#{msg['required.email']}"/>
 			
-			<label for="email" data-error="#{msg['invalid.email']}">
+			<label for="student:email" data-error="#{msg['invalid.email']}">
 				<h:outputText value="#{msg['upper.email']}"/>
 			</label>
 		</div>
@@ -68,7 +68,7 @@
 				<f:validator validatorId="PasswordValidator" />
 			</h:inputSecret>
 			
-			<label for="senha1" data-error="#{msg['invalid.password']}">
+			<label for="student:senha1" data-error="#{msg['invalid.password']}">
 				<h:outputText value="#{msg['upper.password']}"/>
 			</label>
 		</div>
@@ -82,7 +82,7 @@
 				a:required="true" 
 				requiredMessage="#{msg['required.confirm.password']}"/>
 			
-			<label for="senha2" data-error="#{msg['invalid.password']}">
+			<label for="student:senha2" data-error="#{msg['invalid.password']}">
 				<h:outputText value="#{msg['upper.confirm.password']}"/>
 			</label>
 		</div>		
@@ -94,7 +94,7 @@
 				value="#{controllerAlunos.aluno.cpf}"
 				styleClass="cpf validate"/>
 										
-			<label for="cpf" data-error="#{msg['invalid.cpf']}">
+			<label for="student:cpf" data-error="#{msg['invalid.cpf']}">
 				<h:outputText value="#{msg['upper.cpf'].concat(' ').concat(msg['upper.not.required'])}"/>
 			</label>
 		</div>
@@ -106,14 +106,14 @@
 				value="#{controllerAlunos.aluno.celular}"
 				styleClass="celular validate"/>
 			
-			<label for="celular" data-error="#{msg['invalid.cellphone']}">
+			<label for="student:celular" data-error="#{msg['invalid.cellphone']}">
 				<h:outputText value="#{msg['upper.cellphone'].concat(' ').concat(msg['upper.not.required'])}"/>
 			</label>
 		</div>
 	</div>
 	
 	<!-- GAMBS NEED TO BE FIXED -->
-	<div class="hide-on-med-and-down col l5" style="width:200px;height:200px"></div>
+	<div class="hide-on-med-and-down col l5" style="width:200px;height:150px"></div>
 
 	<!-- FORM RIGHT SIDE CONTAINER -->
 	<div class="col s12 m12 l5 right">
@@ -140,6 +140,7 @@
 	
 					<h:commandButton
 						style="padding:8px 65px 10px 32px"
+						styleClass="white-text"
 						action="#{controllerAlunos.save}"
 						value="#{msg['upper.ready']}"/>
 				</div>
@@ -157,6 +158,7 @@
 
 					<h:commandButton
 						style="padding:8px 65px 10px 32px"
+						styleClass="white-text"
 						action="#{controllerAlunos.updateStudent}"
 						value="#{msg['upper.save']}"/>
 				</div>

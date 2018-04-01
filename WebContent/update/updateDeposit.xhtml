@@ -13,24 +13,19 @@
 	<!-- NAVBAR -->
 	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
 	
-	<div class="container" data-content="questions">
-        <div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
-	        	          
-		    <div class="row">
-		        <h5 class="center">
-		        	<h:outputText value="#{msg['new.question']}"/>
-		       	</h5>
-		    </div>
-		          
-		    <h:form id="questao" class="loading row">
-		          
-			  	<!-- LIMPA O BEAN DE QUESTOES -->
-				<f:event listener="#{controllerQuestoes.init()}" type="preRenderView"/>
-			
-				<!-- FORMULARIO DE QUESTAO -->
-				<ui:include src="../componentes/form/professor/formQuestao.xhtml" />
+	<div class="container">
+	    <div class="center z-depth-2 white card">
+	        	            
+            <div class="row">
+                <h5 class="center"><h:outputText value="#{msg['savings.deposit']}"/></h5>
+            </div>
+	            	            
+            <h:form id="deposit-form" class="loading row">
 				
-				<!-- BOTAO SALVAR -->
+				<!-- DEPOSIT FORM -->  
+				<ui:include src="../componentes/form/professor/depositForm.xhtml" />
+		
+				<!-- SAVE -->
     			<div class="fixed-action-btn tooltipped" 
     				 data-position="left" 
     				 data-delay="50" 
@@ -42,9 +37,9 @@
 
 						<h:commandButton
 							style="padding: 21px 28px"
-							styleClass="position-absolute" 
-							action="#{controllerQuestoes.save(controllerProfessores.professor.getCodigo())}"/>
-					</div>
+							styleClass="position-absolute"
+							action="#{depositController.change()}"/>			 
+					</div>	
        			</div>
 			</h:form>
 		</div>
@@ -52,13 +47,5 @@
 		
 	<!-- FOOTER -->
 	<ui:include src="../componentes/footer/footer.xhtml" />
-	
-	<h:outputScript library="js" name="IssueController.js" />
-	
-	<script>
-		$(document).ready(function() {
-			unicid.Issue.controller.init();
-		});
-	</script>
 </h:body>
 </html>

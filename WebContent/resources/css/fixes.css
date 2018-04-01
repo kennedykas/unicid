@@ -82,3 +82,8 @@ body > .container { min-height: 78vh }
 	z-index: 1000;
 	background-color: #fff;
 }
+
+.card {
+	margin:11vh 0;
+	padding:20px 30px 30px 30px;
+}

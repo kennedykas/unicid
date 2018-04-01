@@ -12,12 +12,12 @@ public class ConnectionFactory {
 			// DRIVER I'M USING
 			Class.forName("com.mysql.jdbc.Driver");
 			// URL FOR LOCAL DB
-			//return DriverManager.getConnection("jdbc:mysql://localhost:3306/wecti3", "root", "");
+			return DriverManager.getConnection("jdbc:mysql://localhost:3306/wecti3", "root", "root");
 			// URL FOR REMOTE DB
-			return DriverManager.getConnection(
-					"jdbc:mysql://wecti.mysql.uhserver.com:3306/wecti", 
-					"wecti", 
-					"Unicid@2017");
+			//return DriverManager.getConnection(
+			//		"jdbc:mysql://wecti.mysql.uhserver.com:3306/wecti", 
+			//		"wecti", 
+			//		"Unicid@2017");
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}

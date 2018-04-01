@@ -4,7 +4,6 @@
       xmlns:f="http://java.sun.com/jsf/core" 
       xmlns:h="http://xmlns.jcp.org/jsf/html" 
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
 	<!-- HEAD -->
@@ -22,7 +21,7 @@
 	            </div>
 	            <div class="row"></div>
 	            
-	            <h:form class="loading">
+	            <h:form class="loading" id="login-form">
 		          
 		            <!-- RGM -->
 		            <div class="input-field row">
@@ -35,9 +34,10 @@
 							a:minlength="5" 
 							requiredMessage="#{msg['required.rgm']}"/>
 						
-						<label for="rgm" data-error="#{msg['invalid.rgm']}">
+						<label for="login-form:rgm">
 							<h:outputText value="#{msg['upper.rgm']}"/>
 						</label>
+						<span class="helper-text" data-error="#{msg['invalid.rgm']}"></span>
 					</div>
 					
 					<!-- SENHA -->
@@ -50,9 +50,10 @@
 							a:required="true" 
 							requiredMessage="#{msg['required.password']}"/>
 						
-						<label for="senha" data-error="#{msg['invalid.password']}">
+						<label for="login-form:senha">
 							<h:outputText value="#{msg['upper.password']}"/>
 						</label>
+						<span class="helper-text" data-error="#{msg['invalid.password']}"></span>
 					</div>
 					
 					<!-- MENSSAGENS DE ERRO -->
@@ -67,6 +68,7 @@
 
 							<h:commandButton
 								style="padding:8px 65px 10px 32px"
+								styleClass="white-text"
 								action="#{controllerAlunos.login}"
 								value="#{msg['upper.get.in']}"/>
 						</div>
