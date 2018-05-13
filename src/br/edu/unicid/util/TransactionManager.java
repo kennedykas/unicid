@@ -27,13 +27,15 @@ public class TransactionManager {
         } catch (Exception e) {
         	if (connection != null) 
         		// desfaz alteracoes enviadas pro banco
-        		try { connection.rollback(); } catch (SQLException e1) { e1.printStackTrace(); } 
+        		try { connection.rollback(); } 
+        		catch (SQLException e1) { e1.printStackTrace();	} 
         	
             throw new RuntimeException(e); // relanca excecao
+        	
         } finally {
             if (connection != null) 
             	// fecha conexao e todos seus recursos
-                try { connection.close(); } catch (SQLException e) {} 
+                try { connection.close(); }	catch (SQLException e) {} 
         }
     }
 	

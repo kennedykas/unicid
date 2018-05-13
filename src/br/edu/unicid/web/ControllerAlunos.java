@@ -55,10 +55,10 @@ public class ControllerAlunos {
 		FacesContext ctx = FacesContext.getCurrentInstance();
 		
 		// RESPOSTA DA DIV DO RECAPTCHA
-		this.userRecaptchaResponse = req.getParameter("g-recaptcha-response");
+		userRecaptchaResponse = req.getParameter("g-recaptcha-response");
 
 		// RECAPTCHA NAO CHECADO
-		if(this.userRecaptchaResponse.isEmpty()) { 
+		if(userRecaptchaResponse.isEmpty()) { 
 			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage(Constants.FORGET_CHECK_RECAPTCHA));
 			return Constants.PAGE_LOGIN_STUDENT;
 		}
@@ -68,14 +68,15 @@ public class ControllerAlunos {
 			return Constants.PAGE_LOGIN_STUDENT;
 		}		
 		
-		this.date = new Date();
-		this.aluno.setData(DATA.format(date)); // SETA DATA EM QUE O ALUNO ESTA SENDO SALVO
+		date = new Date();
+		aluno.setData(DATA.format(date));
 		
-		this.dao = new AlunoDAO();
-		this.aluno.setCodCurso(this.cursosBean.getCurso().getCodigo()); // SET COD CURSO SELECIONADO NO BEAN
-		if(this.dao.salvar(this.aluno)) { // IF ALUNO SALVO COM SUCESSO ENTAO ELE RECEBE UM EMAIL
-			this.email.sendEmailVerificacao(this.aluno); // PASSANDO O ALUNO PARA Q ELE RECEBA O EMAIL
-			this.renderEmailAluno = true; // MSG SERA RENDERIZADA PARA O ALUNO
+		dao = new AlunoDAO();
+		aluno.setCodCurso(cursosBean.getCurso().getCodigo());
+		
+		if (dao.salvar(aluno)) {
+			email.sendEmailVerificacao(aluno);
+			renderEmailAluno = true;
 			return Constants.PAGE_EMAIL_SENT;
 		}
 		return Constants.PAGE_NEW_STUDENT;

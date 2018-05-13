@@ -1,6 +1,5 @@
 package br.edu.unicid.web;
 
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,15 +12,11 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
-import javax.servlet.http.HttpServletRequest;
 
-import br.edu.unicid.bean.Curso;
 import br.edu.unicid.bean.CursoExtensao;
-import br.edu.unicid.bean.Entrevista;
 import br.edu.unicid.constants.Constants;
 import br.edu.unicid.dao.CursoExtensaoDAO;
 import br.edu.unicid.util.Email;
-import br.edu.unicid.util.VerifyRecaptcha;
 
 @ManagedBean(name="controllerCursoExtensao")
 @SessionScoped

@@ -5,7 +5,7 @@ public class Constants {
 	public static final String WRONG_EMAIL              = "EMAIL incorreto.";
 	public static final String WRONG_PASS               = "SENHA incorreta.";
 	public static final String WRONG_RGM                = "RGM incorreto.";
-	public static final String FORGET_CHECK_RECAPTCHA   = "QUASE só falta você dizer que não é um robó!";
+	public static final String FORGET_CHECK_RECAPTCHA   = "QUASE só falta você dizer que não é um robô!";
 	public static final String RECAPTCHA_FAILED         = "CLIQUE EM: 'não sou um robô', para confirmar que você é uma pessoa!";
 	public static final String EMAIL_WAS_SENT_WITH_PASS = "ENVIAMOS um email com a sua senha, para o endereço cadastrado. dúvidas entre em contato conosco: jadircmj@hotmail.com";
 	public static final String NAME_NOT_FOUND           = "NOME não encontrado (maiúsculas e minúsculas não interferem), dúvidas entre em contato conosco: jadircmj@hotmail.com";
@@ -22,16 +22,19 @@ public class Constants {
 	public static final String URL_PARAMETER            = ".xhtml?faces-redirect=true&toast=";
 	public static final String SAVED_WITH_SUCCESS       = URL_PARAMETER + "Salvo com sucesso";
 	public static final String CHANGES_HAVE_BEEN_SAVED  = URL_PARAMETER + "Suas alterações foram salvas";
-	public static final String DELETED_WITH_SUCCESS     = URL_PARAMETER + "Excluído com sucesso!";
+	public static final String TOAST_DELETED_WITH_SUCCESS = URL_PARAMETER + "Excluído com sucesso!";
+	
 	public static final String TOAST_SOMETHING_WENT_WRONG = URL_PARAMETER + "Algo não aconteceu como o esperado!";
+	public static final String TOAST_GENERIC_ERROR        = URL_PARAMETER + "Erro! Tente novamente mais tarde.";
 	
 	public static final String PAGE_EMAIL_SENT          = "/user-tools/emailEnviado";
 	
 	public static final String PAGE_TEST_DETAILS        = "detalhesAvaliacao";
 	
 	public static final String PAGE_SUCCESS_INTERVIEW        = "/success/sucessoEntrevista";
-	public static final String PAGE_SUCCESS_COURSE_EXTENSION = "/success/sucessoCursoExtensao";
 	public static final String PAGE_NEW_INTERVIEW            = "/create/novaEntrevista";
+	public static final String PAGE_LIST_INTERVIEWS          = "/list/listaEntrevistas";
+	public static final String PAGE_SUCCESS_COURSE_EXTENSION = "/success/sucessoCursoExtensao";
 	public static final String PAGE_NEW_COURSE_EXTENSIVE     = "/create/novoCursoExtensao";
 
 	public static final String PAGE_NEW_PROFSSOR         = "/create/novoProfessor";

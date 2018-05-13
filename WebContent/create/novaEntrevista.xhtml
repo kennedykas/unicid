@@ -16,7 +16,7 @@
 	<ui:include src="../componentes/header/navbarSemLinks.xhtml" />
 	
 	<div class="container center">
-        <div class="center z-depth-2 white login-form" style="margin:11vh 0;padding:20px 30px 30px 30px;">
+        <div class="center z-depth-2 white card login-form">
             
 	        <div class="row">
 	            <h5 class="center">
@@ -24,7 +24,7 @@
 	           	</h5>
 	        </div>
             
-            <h:form class="loading row">
+            <h:form class="loading row" id="new-interview">
 				
 				<!-- SELECT CURSO -->
 				<div class="input-field row">
@@ -33,9 +33,9 @@
 						value="#{controllerEntrevista.entrevista.nomeCurso}" 
 						a:required="true"
 						requiredMessage="#{msg['required.select.your.course']}">
-					    
+						
 					    <f:selectItem itemLabel="#{msg['upper.select.course']}" noSelectionOption="true"/>
-					    <f:selectItem itemValue="Engenharia de Software" />
+						<f:selectItem itemValue="Engenharia de Software" />
 						<f:selectItem itemValue="Governança em TI" />
 						<f:selectItem itemValue="Aplicações Corporativas - Java e IOT" />
 						<f:selectItem itemValue="Big Data" />
@@ -54,7 +54,7 @@
 						a:minlenght="4" 
 						requiredMessage="#{msg['required.name']}"/>
 					
-					<label for="nome" data-error="#{msg['invalid.name']}">
+					<label for="new-interview:nome" data-error="#{msg['invalid.name']}">
 						<h:outputText value="#{msg['upper.name']}"/>
 					</label>
 				</div>		
@@ -69,7 +69,7 @@
 						a:required="true" 
 						requiredMessage="#{msg['required.email']}"/>
 					
-					<label for="email" data-error="#{msg['invalid.email']}">
+					<label for="new-interview:email" data-error="#{msg['invalid.email']}">
 						<h:outputText value="#{msg['upper.email']}"/>
 					</label>
 				</div>
@@ -83,11 +83,11 @@
 						requiredMessage="#{msg['required.cpf']}"
 						styleClass="cpf validate"/>
 												
-					<label for="cpf" data-error="#{msg['invalid.cpf']}">
+					<label for="new-interview:cpf" data-error="#{msg['invalid.cpf']}">
 						<h:outputText value="#{msg['upper.cpf']}"/>
 					</label>
 				</div>
-				
+								
 				<!-- CELULAR -->
 				<div class="input-field row">
 					<h:inputText
@@ -97,7 +97,7 @@
 						requiredMessage="#{msg['required.cellphone']}"
 						styleClass="celular validate"/>
 					
-					<label for="celular" data-error="#{msg['invalid.cellphone']}">
+					<label for="new-interview:celular" data-error="#{msg['invalid.cellphone']}">
 						<h:outputText value="#{msg['upper.cellphone']}"/>
 					</label>
 				</div>
@@ -115,10 +115,11 @@
 					
 					<div class="row btn waves-effect waves-light padding-zero">
 		
-						<i class="material-icons right position-absolute right-30">send</i>
+						<i class="material-icons right position-absolute right-30">check</i>
 		
 						<h:commandButton
 							style="padding:8px 65px 10px 32px"
+							styleClass="white-text"
 							action="#{controllerEntrevista.save}"
 							value="#{msg['upper.ready']}"/>
 					</div>

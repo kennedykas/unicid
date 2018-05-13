@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.unicid.bean.Deposit;
+import br.edu.unicid.util.TransactionException;
 import br.edu.unicid.util.TransactionManager;
 
 public class DepositDAO {

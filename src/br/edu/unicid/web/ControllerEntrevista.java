@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import br.edu.unicid.bean.Entrevista;
 import br.edu.unicid.constants.Constants;
 import br.edu.unicid.dao.EntrevistaDAO;
-import br.edu.unicid.dao.ProvaDAO;
 import br.edu.unicid.util.Email;
 import br.edu.unicid.util.VerifyRecaptcha;
 
@@ -46,52 +45,45 @@ public class ControllerEntrevista {
 	
 	public String save() throws IOException {
 								
-//		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-//		FacesContext ctx = FacesContext.getCurrentInstance();
+		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+		FacesContext ctx = FacesContext.getCurrentInstance();
 		
 		// RESPOSTA DA DIV DO RECAPTCHA
-//		userRecaptchaResponse = req.getParameter("g-recaptcha-response");
+		userRecaptchaResponse = req.getParameter("g-recaptcha-response");
 
 		// RECAPTCHA NAO CHECADO
-//		if(userRecaptchaResponse.isEmpty()) { 
-//			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage(Constants.FORGET_CHECK_RECAPTCHA));
-//			return Constants.PAGE_NEW_INTERVIEW;
-//		}
+		if(userRecaptchaResponse.isEmpty()) { 
+			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage(Constants.FORGET_CHECK_RECAPTCHA));
+			return Constants.PAGE_NEW_INTERVIEW;
+		}
 		// RECAPTCHA ROBO (false = robot / true = people)
-//		else if(!VerifyRecaptcha.verify(userRecaptchaResponse)) {
-//			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage(Constants.RECAPTCHA_FAILED));
-//			return Constants.PAGE_NEW_INTERVIEW;
-//		}		
+		else if(!VerifyRecaptcha.verify(userRecaptchaResponse)) {
+			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage(Constants.RECAPTCHA_FAILED));
+			return Constants.PAGE_NEW_INTERVIEW;
+		}		
 		
 		date = new Date();
 		entrevista.setData(DATA.format(date)); // SETA DATA EM QUE O ALUNO MARCOU A ENTREVISTA
 		
-//		dao = new EntrevistaDAO();
+		dao = new EntrevistaDAO();
 		
-//		if(dao.salvar(entrevista)) {
-//			
-//			email.sendEmailEntrevista(entrevista);
-//
-//			return Constants.PAGE_SUCCESS_INTERVIEW;
-//			
-//		}
-//		
-//		return Constants.PAGE_NEW_INTERVIEW;
-		
-		if (new EntrevistaDAO().salvar(entrevista)){
+		if(dao.salvar(entrevista)) {
+			
 			email.sendEmailEntrevista(entrevista);
-			return "sucessoEntrevista";
+
+			return Constants.PAGE_SUCCESS_INTERVIEW;
 		}
-		return "erroEntrevista";
+		
+		return Constants.PAGE_NEW_INTERVIEW.concat(Constants.TOAST_GENERIC_ERROR);
 	}
 	
-	public void excluir() {
+	public String excluir() {
 		dao = new EntrevistaDAO();
 
-		if(dao.excluir(entrevista.getCodigo())) { 
-			FacesContext ctx = FacesContext.getCurrentInstance();
-			ctx.addMessage(Constants.FACE_MESSAGES_ID, new FacesMessage("Prova excluida!"));				
-		}
+ 		if(!dao.excluir(entrevista.getCodigo()))
+			return Constants.PAGE_LIST_INTERVIEWS.concat(Constants.TOAST_DELETED_WITH_SUCCESS);		
+		else
+			return Constants.PAGE_LIST_INTERVIEWS.concat(Constants.TOAST_GENERIC_ERROR);
 	}
 	
 	public void findInterviews() {
@@ -102,7 +94,7 @@ public class ControllerEntrevista {
 		
 		listaEntrevistas = new ListDataModel<>(lista);
 	}
-
+	
 	// GET ROW DATA
 	public void selecionarRegistro() {
 		entrevista = listaEntrevistas.getRowData();

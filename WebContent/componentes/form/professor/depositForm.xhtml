@@ -35,14 +35,14 @@
 				value="#{controllerAlunos.aluno.nome}" 
 				disabled="true" />
 			
-			<span class="helper-text left-align">#{msg['check.name']}</span>
+			<span class="helper-text left-align"><h:outputText value="#{msg['check.name']}" /></span>
 		</div>	
 				
 	  	<!-- DATA DEPOSITO -->
 	   	<div class="input-field row">
 			<h:inputText
 				id="date" 
-				class="datepicker validate"
+				styleClass="datepicker validate"
 				value="#{depositController.deposit.date}"
 				a:required="true"
 				converter="utilDateToLocalDateConverter"
@@ -60,7 +60,7 @@
 			<h:inputText
 				id="value" 
 				value="#{depositController.deposit.value}" 
-				class="validate money" 
+				styleClass="validate money" 
 				a:required="true" 
 				a:type="number"
 				requiredMessage="#{msg['required.deposit.value']}"/>
@@ -77,7 +77,7 @@
 	<div class="col s12 m12 l5 right">
 				
 		<!-- TIPO DE DEPOSITO -->
-		<ui:include src="../selectDepositType.xhtml">
+		<ui:include src="/componentes/form/selectDepositType.xhtml">
 			<ui:param name="label" value="#{msg['upper.select.operation']}"/>
 		</ui:include>   	
 	   	
@@ -86,7 +86,7 @@
 			<h:inputTextarea 
 				id="comments"
 				value="#{depositController.deposit.comments}" 
-				class="materialize-textarea" 
+				styleClass="materialize-textarea" 
 				a:maxlength="200" />
 			<h:outputLabel value="#{msg['upper.comments']} #{msg['upper.not.required']}" for="deposit-form:comments"/>
 		</div>

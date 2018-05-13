@@ -25,10 +25,10 @@
 		    <h:form id="deposit-form" class="loading row">
 		          
 			  	<!-- CLEAN DEPOSIT BEAN -->
-				<f:event listener="#{depositController.init()}" type="preRenderView"/>
+				<f:event listener="#{depositController.init()}" type="preRenderView" />
 			
 				<!-- DEPOSIT FORM -->
-				<ui:include src="../componentes/form/professor/depositForm.xhtml" />
+				<ui:include src="/componentes/form/professor/depositForm.xhtml" />
 				
     			<div class="fixed-action-btn tooltipped" 
     				 data-position="left" 	

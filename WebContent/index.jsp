@@ -5,7 +5,7 @@
 		<div class="hgroup wow lightSpeedIn text-center" data-wow-duration="2s">
 				<h1 class="title"><span>Pós Graduação e Extensão</span></h1>
 			<h2 class="subtitle"><span>Destaque-se</span> no mundo do trabalho!</h2>
-			<a class="hvr-sweep-to-right wow pulse btn btn-default" data-wow-delay="2.5s" href="faces/novaEntrevista.xhtml" target="_blank">		Pós Graduação: Agende uma Entrevista
+			<a class="hvr-sweep-to-right wow pulse btn btn-default" data-wow-delay="2.5s" href="faces/create/novaEntrevista.xhtml" target="_blank">		Pós Graduação: Agende uma Entrevista
 			</a>
 			<a class="hvr-sweep-to-right wow pulse btn btn-default" data-wow-delay="2.5s" href="faces/novoCurso.xhtml" target="_blank">		Extensão: Faça sua inscrição
 			</a>

@@ -27,7 +27,10 @@ unicid.DepositList = {};
 				
 				if (lastStudent !== currentStudent) {
 					
-					$(this).before('<tr class="details-toggler"><td>'+ currentStudent +'</td><td></td><td></td><td></td><td><i class="material-icons right">expand_more</i></td></tr>');
+					$(this).before(
+							'<tr class="details-toggler pointer"><td>'+ currentStudent +
+							'</td><td></td><td></td><td></td><td><i class="material-icons right">expand_more</i></td></tr>'
+					);
 					lastStudent = currentStudent;
 				} 
 				

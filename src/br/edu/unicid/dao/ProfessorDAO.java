@@ -67,13 +67,13 @@ public class ProfessorDAO {
 				professor.setNomeProfessor(rs.getString(2));
 				professor.setData(rs.getString(3));
 				
-				return (rs.getBoolean(4) == false) ? "unverified" : "ok";
+				return (!rs.getBoolean(4)) ? "unverified" : "ok";
 			} else {
 				ps = connection.prepareStatement("SELECT codigo FROM professor WHERE email=?");
 				ps.setString(1, professor.getEmailProfessor());
 				rs = ps.executeQuery();
 
-				return (rs.next()) ? "senha" : "email"; 
+				return (rs.next()) ? "senha" : "email";
 			}				
 		});
 	}

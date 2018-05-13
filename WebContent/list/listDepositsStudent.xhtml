@@ -73,7 +73,8 @@
 						
 							<h:outputText value="#{data.type eq 1 ? -data.value : data.value}" 
 								styleClass="#{data.type eq 1 ? 'red-text' : 'green-text'}">
-								<f:convertNumber currencyCode="BRL" type="currency" minFractionDigits="2" />
+								
+								<f:convertNumber pattern="¤#,##0.00" currencySymbol="R$ " />
 							</h:outputText>
 						</h:column>
 						
@@ -93,7 +94,7 @@
 	<!-- FOOTER -->
 	<ui:include src="../componentes/footer/footer.xhtml" />
 	
-	<h:outputScript library="js" name="DepositListController.js" />
+	<h:outputScript name="/js/DepositListController.js"/>
 	
 	<script>
 		$(document).ready(function(){
