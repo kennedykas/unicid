@@ -19,14 +19,8 @@
 					<hr class="down">
 				</div>
 				<div class="block-sobre">
-					<h3><font color="black">Maio</font></h3>
-					<font color="black">Dias 05 e 12</font> - <a href="scrum.jsp">Scrum Foundation</a> &nbsp;&nbsp;&nbsp;&nbsp;<font color="orange">Turma Confirmada</font><br />
-					<font color="black">Dia 19</font> - <a href="scrumMaster.jsp">Scrum Master</a> &nbsp;&nbsp;&nbsp;&nbsp;<font color="orange">Turma Confirmada</font><br />
-					<font color="black">Dia 26</font> - <a href="seguranca.jsp">ISO 20.000 Gerenciamento de Serviços</a> &nbsp;&nbsp;&nbsp;&nbsp;<font color="orange">Turma Confirmada</font><br />
 					<h3><font color="black">Junho</font></h3>
-					<font color="black">Dias 02 e 09</font> - <a href="iso20000.jsp">Segurança da Informação</a> &nbsp;&nbsp;&nbsp;&nbsp;<font color="orange">Novas Turmas</font><br />
-					<font color="black">Dias 16 e 23</font> - <a href="itil.jsp">ITIL Foundation V3</a> &nbsp;&nbsp;&nbsp;&nbsp;<font color="orange">Novas Turmas</font><br />
-					<font color="black">Dias 16 e 23</font> - <a href="cobit.jsp">Cobit Foundation</a> &nbsp;&nbsp;&nbsp;&nbsp;<font color="orange">Novas Turmas</font><br />
+					<font color="black">Dias 16 e 23</font> - <a href="itil.jsp">ITIL Foundation V3</a> &nbsp;&nbsp;&nbsp;&nbsp;<font color="orange">Confirmada</font><br />
 					<h3><font color="black">Julho</font></h3>
 					<font color="black">Dias 16 a 20</font> - <a href="cBasico.jsp">C# Básico</a> &nbsp;&nbsp;&nbsp;&nbsp;<font color="orange">Novas Turmas</font><br />
 					<font color="black">Dias 16 a 20</font> - <a href="itil.jsp">ITIL Foudation V3</a> &nbsp;&nbsp;&nbsp;&nbsp;<font color="orange">Novas Turmas</font><br />

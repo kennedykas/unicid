@@ -37,7 +37,6 @@ public class ControllerProfessores {
 		this.email = new Email();
 	}
 	
-	// SAVE
 	public String save() throws IOException {
 
 		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -59,15 +58,14 @@ public class ControllerProfessores {
 				
 		dao = new ProfessorDAO();
 		
-		if(dao.salvar(professor)) { // IF PROFESSOR SALVO COM SUCESSO ELE RECEBE UM EMAIL
+		if (dao.salvar(professor)) { // IF PROFESSOR SALVO COM SUCESSO ELE RECEBE UM EMAIL
 			this.email.sendEmailVerificacao(this.professor); // PASSANDO O PROFESSOR PARA Q ELE RECEBA O EMAIL
 			this.renderEmailProfessor = true; // MSG SERA RENDERIZADA PARA O PROFESSOR
 			return Constants.PAGE_EMAIL_SENT; 
 		}
-		return Constants.PAGE_NEW_PROFSSOR;
+		return Constants.PAGE_NEW_PROFSSOR.concat(Constants.TOAST_GENERIC_ERROR);
 	}
 	
-	// LOGIN
 	public String login() {
 
 		this.dao = new ProfessorDAO();
@@ -98,7 +96,6 @@ public class ControllerProfessores {
 						return Constants.PAGE_LOGIN_PROFSSOR;
 	}
 	
-	// AUTENTICA 
 	public String autenticaProfessor(String info) {
 		String[] infos = info.split(" ");
 		this.professor.setData(infos[0]);
@@ -119,7 +116,6 @@ public class ControllerProfessores {
 		return (dao.updateProfessor(professor)) ? Constants.PAGE_LIST_QUESTIONS : Constants.PAGE_UPDATE_PROFESSOR;		
 	}
 	
-	// RECUPERAR SENHA 
 	public String recuperarSenha() throws IOException {
 		
 		HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
@@ -151,13 +147,11 @@ public class ControllerProfessores {
 		return Constants.PAGE_RECOVER_PROF_PASS;		
 	}
 	
-	// QUIT FROM APP
 	public String quit() {
 		init();
 		return Constants.PAGE_LOGIN_PROFSSOR;
 	}
 	
-	// RENDERIZADOR DE ICONE DE EMAIL 
 	public boolean renderEmail(String email) {
 		return (this.professor.getEmailProfessor().contains(email)) ? true : false;
 	}

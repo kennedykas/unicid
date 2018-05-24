@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.edu.unicid.bean.TipoDeposito;
+import br.edu.unicid.bean.DepositType;
 import br.edu.unicid.util.TransactionManager;
 
 public class TipoDepositoDAO {
@@ -13,7 +13,7 @@ public class TipoDepositoDAO {
 	private PreparedStatement ps;
 	private ResultSet rs;
 
-	public List<TipoDeposito> getDepositTypes() {
+	public List<DepositType> getDepositTypes() {
 		TransactionManager txManager = new TransactionManager();
 	    return txManager.doInTransactionWithReturn((connection) -> {
 			
@@ -21,10 +21,10 @@ public class TipoDepositoDAO {
 			
 			rs = ps.executeQuery();
 			
-			List<TipoDeposito> list = new ArrayList<TipoDeposito>();
+			List<DepositType> list = new ArrayList<DepositType>();
 			
 			while(rs.next())
-				list.add(new TipoDeposito(rs.getInt(1), rs.getString(2)));
+				list.add(new DepositType(rs.getInt(1), rs.getString(2)));
 			
 			return list;
 		});

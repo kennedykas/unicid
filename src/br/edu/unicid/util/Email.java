@@ -125,7 +125,7 @@ public class Email extends Thread {
 		    email.setContent(message, "text/html; charset=utf-8");
 		    // AUTENTICANDO NO SERVIDOR
 		    email.setStartTLSEnabled(true);
-		    email.setAuthentication("EMAIL", "PASS");
+		    email.setAuthentication("contatoposgraduacaounicid@gmail.com", "posunicid@#$");
 		    email.send();
 		} catch (EmailException e) {} 
 		finally {

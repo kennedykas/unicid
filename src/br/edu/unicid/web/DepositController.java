@@ -15,7 +15,6 @@ import br.edu.unicid.dao.DepositDAO;
 @SessionScoped
 public class DepositController {
 
-	private DepositDAO         dao;
 	private Deposit            deposit;
 	private DataModel<Deposit> depositsList;
 	
@@ -39,27 +38,27 @@ public class DepositController {
 		
 		deposit.setProfessor(professorBean.getProfessor().getCodigo());
 		deposit.setStudent(studentBean.getAluno().getRgm());
-		deposit.setType(depositTypeBean.getTipoDeposito().getCodigo());
+		deposit.setType(depositTypeBean.getDepositType().getCodigo());
 		
 		return new DepositDAO().save(deposit) ?
-			Constants.PAGE_LIST_DEPOSITS_PROFESSOR + Constants.SAVED_WITH_SUCCESS :
-			Constants.PAGE_NEW_DEPOSIT;
+			Constants.PAGE_LIST_DEPOSITS_PROFESSOR.concat(Constants.TOAST_SAVED_WITH_SUCCESS) :
+			Constants.PAGE_NEW_DEPOSIT.concat(Constants.TOAST_SOMETHING_WENT_WRONG);
 	}
 			
 	public String change() {
 		
-		deposit.setType(depositTypeBean.getTipoDeposito().getCodigo());
+		deposit.setType(depositTypeBean.getDepositType().getCodigo());
 		
-		dao = new DepositDAO();
-		
-		return dao.change(deposit) ? 
-				Constants.PAGE_LIST_DEPOSITS_PROFESSOR + Constants.CHANGES_HAVE_BEEN_SAVED : 
-				Constants.PAGE_UPDATE_DISCIPLINE;
+		return new DepositDAO().change(deposit) ? 
+			Constants.PAGE_LIST_DEPOSITS_PROFESSOR.concat(Constants.TOAST_CHANGES_HAVE_BEEN_SAVED) : 
+			Constants.PAGE_UPDATE_DISCIPLINE.concat(Constants.TOAST_GENERIC_ERROR);
 	}
 	
-	public void delete() {
+	public String delete() {
 		
-		new DepositDAO().delete(deposit.getCode());
+		return (new DepositDAO().delete(deposit.getCode())) ?
+			Constants.PAGE_LIST_DEPOSITS_PROFESSOR.concat(Constants.TOAST_CHANGES_HAVE_BEEN_SAVED) :
+			Constants.PAGE_LIST_DEPOSITS_PROFESSOR.concat(Constants.TOAST_DELETED);
 	}
 	
 	public void findDepositsByStudentRgm() {

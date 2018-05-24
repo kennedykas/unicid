@@ -2,40 +2,40 @@ package br.edu.unicid.util;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import br.edu.unicid.util.ConnectionFactory;
 
 public class TransactionManager {
 
 	/**
      * Executa uma logica de negocio (callback) dentro de um contexto transacional
-     *  e retorna o resultado da operação.
+     *  e retorna o resultado da operacao.
      */
+//	@SuppressWarnings("unchecked")
 	public <T> T doInTransactionWithReturn(final TransactionCallback<T> callback) throws TransactionException {
     	
     	Connection connection = null;
         
         try {
         	connection = ConnectionFactory.getConnection(); // abre conexao
-        	connection.setAutoCommit(false); // inicia a transacao
+        	connection.setAutoCommit(false);                // inicia a transacao
             
-            T result = callback.execute(connection); // logica executada aqui
+            T result = callback.execute(connection);        // executa a logica
 
-            connection.commit(); // comita transacao
+            connection.commit();                            // comita a transacao
             
             return result;
             
         } catch (Exception e) {
         	if (connection != null) 
-        		// desfaz alteracoes enviadas pro banco
-        		try { connection.rollback(); } 
+        		
+        		try { connection.rollback(); } // desfaz alteracoes enviadas pro banco
+        		
         		catch (SQLException e1) { e1.printStackTrace();	} 
         	
-            throw new RuntimeException(e); // relanca excecao
+            throw new RuntimeException(e);
         	
         } finally {
             if (connection != null) 
-            	// fecha conexao e todos seus recursos
-                try { connection.close(); }	catch (SQLException e) {} 
+            	try { connection.close(); }	catch (SQLException e) {} 
         }
     }
 	

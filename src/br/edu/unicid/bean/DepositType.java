@@ -1,13 +1,13 @@
 package br.edu.unicid.bean;
 
-public class TipoDeposito {
+public class DepositType {
 
 	private int    codigo;
 	private String nome;
 		
-	public TipoDeposito() {}
+	public DepositType() {}
 	
-	public TipoDeposito(int codigo, String nome) {
+	public DepositType(int codigo, String nome) {
 		super();
 		this.codigo = codigo;
 		this.nome = nome;

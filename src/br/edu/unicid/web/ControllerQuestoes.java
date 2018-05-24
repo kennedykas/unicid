@@ -29,7 +29,7 @@ public class ControllerQuestoes {
 	private ControllerDisciplinas disciplinaBean;
 	
 	public ControllerQuestoes() {}
-
+	
 	@PostConstruct
 	public void init() {
 		this.questao = new Questao();
@@ -41,10 +41,10 @@ public class ControllerQuestoes {
 		this.questao.setDisciplina(this.disciplinaBean.getDisciplina().getCodigo());
 				
 		return (new QuestaoDAO().salvar(questao)) ? 
-				Constants.PAGE_LIST_QUESTIONS + Constants.SAVED_WITH_SUCCESS : 
+				Constants.PAGE_LIST_QUESTIONS + Constants.TOAST_SAVED_WITH_SUCCESS : 
 				Constants.PAGE_NEW_QUESTION + Constants.TOAST_SOMETHING_WENT_WRONG;
 	}
-		
+
 	// CHANGE
 	public String alterar() {
 		// SETA O CODIGO DA DISCIPLINA CASO OUTRA TENHA SIDO ESCOLHIDA

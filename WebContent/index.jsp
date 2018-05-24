@@ -68,6 +68,16 @@
 					</div>
 				</a>
 			</li>
+			<li class="item">
+				<a href="seguranca-informacao.jsp">
+					<div class="thumbnail">
+						<img src="images/palestrantes/si.jpg" class="img-circle img-thumbnail" width="150px">
+						<h3 class="item-title">
+							Segurança da Informação<br />&nbsp;<p>&nbsp;
+						</h3>
+					</div>
+				</a>
+			</li>
 		</ul>
 		<script type="text/javascript">
 			$('.palestrantes-group').owlCarousel({

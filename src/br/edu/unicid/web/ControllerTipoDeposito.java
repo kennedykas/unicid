@@ -8,22 +8,19 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.model.SelectItem;
 
-import br.edu.unicid.bean.TipoDeposito;
+import br.edu.unicid.bean.DepositType;
 import br.edu.unicid.dao.TipoDepositoDAO;
 
 @ManagedBean(name="controllerTipoDeposito")
 @SessionScoped
 public class ControllerTipoDeposito {
 
-	private TipoDepositoDAO dao;
-	private TipoDeposito tipoDeposito;
+	private DepositType depositType;
 		
 	public ControllerTipoDeposito() {}
 
 	@PostConstruct
-	public void init() {
-		this.tipoDeposito = new TipoDeposito();
-	}
+	public void init() {}
 	
 	public String getDepositTypeNameByCode(int code) {
 		 
@@ -32,22 +29,23 @@ public class ControllerTipoDeposito {
 	 	
 	public List<SelectItem> getDepositTypes() {
 		
-		dao = new TipoDepositoDAO();
-		
 		List<SelectItem> items = new ArrayList<>();
-		List<TipoDeposito> depositTypesList = dao.getDepositTypes();
-
-		for(TipoDeposito tipoDeposito: depositTypesList)
-	    	items.add(new SelectItem(tipoDeposito.getCodigo(), tipoDeposito.getNome()));
-
-		return items;
+		
+		try {
+			List<DepositType> depositTypesList = new TipoDepositoDAO().getDepositTypes();
+			
+			for (DepositType tipoDeposito: depositTypesList)
+				items.add(new SelectItem(tipoDeposito.getCodigo(), tipoDeposito.getNome()));
+			
+			return items;
+		} catch (Exception e) { return items; }
 	}
 	
 	// GETTERS AND SETTERS
-	public TipoDeposito getTipoDeposito() {
-		return tipoDeposito;
+	public DepositType getDepositType() {
+		return depositType;
 	}
-	public void setTipoDeposito(TipoDeposito tipoDeposito) {
-		this.tipoDeposito = tipoDeposito;
+	public void setDepositType(DepositType depositType) {
+		this.depositType = depositType;
 	}	
 }
