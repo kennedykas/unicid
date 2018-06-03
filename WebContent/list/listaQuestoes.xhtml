@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:f="http://java.sun.com/jsf/core" 
-      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
-      
+
 	<!-- HEAD -->
 	<ui:include src="../componentes/head/head.xhtml" />
 <h:body class="grey lighten-4">
@@ -19,265 +18,278 @@
 
   	<div class="container mainContent" data-content="questions">
 
-		<!-- LISTA VAZIA -->
-  		<h:panelGroup 
+		<!-- EMPTY LIST -->
+  		<h:panelGroup
   			rendered="#{controllerQuestoes.listaQuestoes.getRowCount() eq 0 ? true : false}">
- 			
- 			<h:outputText
- 				class="grey-text" 
- 				value="#{msg['questions.not.found']}" 
- 				style="font-size:1.5em"/>
+
+			<div class="row center-align" style="margin-top:20vh;">
+				<h:outputText
+					class="blue-grey-text col s12"
+					value="#{msg['questions.not.found']}"
+					style="font-size:1.5em"/>
+			</div>
+
+			<!-- CREATE QUESTION -->
+			<div class="fixed-action-btn tooltipped"
+				data-position="left" data-delay="50" data-tooltip="#{msg['upper.new.question']}">
+				<h:link
+					outcome="/create/novaQuestao"
+					class="btn-floating btn-large waves-effect waves-light light-green accent-4">
+					<i class="material-icons right">add</i>
+				</h:link>
+			</div>
+
   		</h:panelGroup>
-  		
+
 		<!-- LISTA DE QUESTOES -->
   		<h:panelGroup rendered="#{controllerQuestoes.listaQuestoes.getRowCount() eq 0 ? false : true}">
-	       	<div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
+	       	<div class="center z-depth-2 white" style="margin:11vh 0;">
 				<h:form id="questionList" styleClass="loading">
-					
+
 					<h:dataTable
-						value="#{controllerQuestoes.listaQuestoes}" 
-						var="dados" 
-						binding="#{table}"
-						class="bordered">
-					
+						value="#{controllerQuestoes.listaQuestoes}"
+						var="dados"	binding="#{table}" class="striped">
+
 						<h:column>
-							<div class="#{dados.disciplina} questionContainer flow-text justify">
+							<div class="#{dados.disciplina} issues-container justify" style="padding: 10px">
 								<!-- ACOES -->
 								<div class="right">
 									<!-- EXCLUIR -->
-									<span class="tooltipped" data-position="left" 
+									<span class="tooltipped" data-position="left"
 										data-delay="50" data-tooltip="#{msg['upper.delete']}">
-										<h:commandLink 
-											actionListener="#{controllerQuestoes.selecionarRegistro}" 
+										<h:commandLink
+											actionListener="#{controllerQuestoes.selecionarRegistro}"
 											action="#{controllerQuestoes.excluir}"
-											onclick="return confirm('Tem certeza que deseja remover está questão? Ela não poderá ser recuperada depois!')"> 
+											onclick="return confirm('Tem certeza que deseja remover está questão? Ela não poderá ser recuperada depois!')">
 											<i class="material-icons right">delete</i>
 										</h:commandLink>
 									</span>
-		
+
 									<!-- EDITAR -->
-									<span class="tooltipped" data-position="left" 
+									<span class="tooltipped" data-position="left"
 										data-delay="50" data-tooltip="#{msg['upper.edit']}">
-										<h:commandLink 
+										<h:commandLink
 											actionListener="#{controllerQuestoes.selecionarRegistro()}"
 											action="/update/alterarQuestao">
 											<i class="material-icons right">mode_edit</i>
 										</h:commandLink>
 									</span>
 								</div>
-				
-								<!-- CHECKBOX (QUANDO UMA QUESTAO E SELECIONADA O COD DELA E ARMAZENADO NO MANAGEDBEAN)-->
-								<span class="tooltipped" 
-									data-position="top" 
-									data-delay="50" 
-									data-tooltip="#{msg['upper.add.question.to.test']}"
-									onclick="updateCounter()">
+
+								<!-- ADD/REMOVE QUESTION OF THE TEST-->
+								<span class="tooltipped question-status"
+									data-position="top"
+									data-delay="50"
+									data-tooltip="#{msg['upper.add.question.to.test']}">
 
 									<!-- DISCIPLINA -->
-									<h:outputLabel 
-										for="#{'checkbox'.concat(index.rowIndex + 1)}" 
+									<h:outputLabel
+										for="#{'checkbox'.concat(index.rowIndex + 1)}"
 										styleClass="disciplina grey-text text-darken-1 truncate">
-										
+
 										<h:selectBooleanCheckbox
-											id="#{'checkbox'.concat(table.rowIndex + 2)}" 
-											styleClass="filled-in">
+											id="#{'checkbox'.concat(table.rowIndex + 2)}" styleClass="filled-in">
+
 											<f:ajax listener="#{controllerProvas.manageSelectedQuestions(dados.codigo)}"/>
 										</h:selectBooleanCheckbox>
-										
+
 										<span>
 											<h:outputText value="#{controllerDisciplinas.nomeDisciplina(dados.disciplina)}" />
 										</span>
 									</h:outputLabel>
 								</span>
 								<br/>
-								
+
 								<!-- PERGUNTA -->
 								<h:outputText value="#{dados.pergunta}" />
 								<br/>
-								
+
 								<div style="margin:10px 0 0 0">
 									<!-- ALTERNATIVA A -->
-									<h:outputText 
-										value="A) " 
+									<h:outputText
+										value="A) "
 										styleClass="#{dados.alternativaCorreta eq 'A'? 'green-text' : 'red-text'}"/>
-									<h:outputText 
-										value="#{dados.alternativaA}" 
+									<h:outputText
+										value="#{dados.alternativaA}"
 										styleClass="#{dados.alternativaCorreta eq 'A'? 'green-text' : ''}"/>
 									<br/>
-									
+
 									<!-- ALTERNATIVA B -->
-									<h:outputText 
-										value="B) " 
+									<h:outputText
+										value="B) "
 										styleClass="#{dados.alternativaCorreta eq 'B'? 'green-text' : 'red-text'}"/>
-									<h:outputText 
-										value="#{dados.alternativaB}" 
+									<h:outputText
+										value="#{dados.alternativaB}"
 										styleClass="#{dados.alternativaCorreta eq 'B'? 'green-text' : ''}"/>
 									<br/>
-									
+
 									<!-- ALTERNATIVA C -->
-									<h:outputText 
-										value="C) " 
+									<h:outputText
+										value="C) "
 										styleClass="#{dados.alternativaCorreta eq 'C'? 'green-text' : 'red-text'}"/>
-									<h:outputText 
-										value="#{dados.alternativaC}" 
+									<h:outputText
+										value="#{dados.alternativaC}"
 										styleClass="#{dados.alternativaCorreta eq 'C'? 'green-text' : ''}"/>
 									<br/>
-		
-									
+
 									<!-- ALTERNATIVA D -->
-									<h:outputText 
-										value="D) " 
+									<h:outputText
+										value="D) "
 										styleClass="#{dados.alternativaCorreta eq 'D'? 'green-text' : 'red-text'}"/>
-									<h:outputText 
-										value="#{dados.alternativaD}" 
+									<h:outputText
+										value="#{dados.alternativaD}"
 										styleClass="#{dados.alternativaCorreta eq 'D'? 'green-text' : ''}"/>
 									<br/>
-																
+
 									<!-- ALTERNATIVA E -->
-									<h:outputText 
-										value="E) " 
+									<h:outputText
+										value="E) "
 										styleClass="#{dados.alternativaCorreta eq 'E'? 'green-text' : 'red-text'}"/>
-									<h:outputText 
-										value="#{dados.alternativaE}" 
+									<h:outputText
+										value="#{dados.alternativaE}"
 										styleClass="#{dados.alternativaCorreta eq 'E'? 'green-text' : ''}"/>
-									<br/>							
+									<br/>
 								</div>
 							</div>
 						</h:column>
 					</h:dataTable>
-				</h:form>	
+				</h:form>
 			</div>
 
 			<!-- NUMERO DE QUESTOES SELECIONADAS PARA O TESTE -->
-			<div class="fixed-action-btn btn-floating teal tooltipped center startHidden" 
-				id="selectedQuestionsCounter"	
-				data-position="right" 
-				data-delay="50" 
+			<div class="fixed-action-btn btn-floating teal tooltipped center scale-transition scale-out"
+				id="counter"
+				data-position="right"
+				data-delay="50"
 				data-tooltip="#{msg['upper.number.selected.questions']}">
-			
 			</div>
-		</h:panelGroup>
-		
-		<!-- LARGE SCREEN ACTION BUTTONS -->
-		<div class="hide-on-med-and-down">
-			<!-- LIMPA OS FILTROS -->
-			<div class="fixed-action-btn clearFilter" style="bottom:240px;right:32px">
-				<a class="btn-floating waves-effect waves-light red tooltipped"
-					data-position="left" 
-					data-delay="50" 
-					data-tooltip="#{msg['upper.clear.filter']}">
-					<i class="material-icons right">clear</i>
-				</a>
-			</div>
-	
-			<!-- TOGGLE FILTER MODAL -->
-			<div class="fixed-action-btn" style="bottom:181px;right:32px">
-				<a class="btn-floating waves-effect waves-light blue tooltipped"
-					data-position="left" 
-					data-delay="50" 
-					data-tooltip="#{msg['upper.filter.questions.by.discipline']}" 
-					onclick="$('#filterModal').modal('open');">
-					<i class="material-icons right">filter_list</i>
-				</a>
-			</div>
-	
-			<!-- TOGGLE FORMULARIO PARA GERAR A PROVA -->
-			<div class="fixed-action-btn" style="bottom:102px">
-				<a class="btn-floating btn-large waves-effect waves-light deep-purple tooltipped"
-					data-position="left" data-delay="50" data-tooltip="#{msg['upper.generate.test']}" 
-					onclick="return checkQuestions() ? $('#testInfoModal').modal('open') : '';">
-					<i class="material-icons right">save</i>
-				</a>
-			</div>
-		
-			<!-- CRIAR QUESTAO -->
-			<div class="fixed-action-btn tooltipped" 
-				data-position="left" data-delay="50" data-tooltip="#{msg['upper.new.question']}">
-				<h:link
-					outcome="/create/novaQuestao" 
-					class="btn-floating btn-large waves-effect waves-light light-green accent-4">
-					<i class="material-icons right">add</i>
-				</h:link>
-			</div>
-		</div>
 
-		<!-- MOBILE ACTION BUTTONS -->
-		<div class="fixed-action-btn horizontal click-to-toggle hide-on-large-only">
-			<a class="btn-floating btn-large red">
-				<i class="material-icons">menu</i>
-			</a>
-			<ul>
-				<li>
-					<a class="btn-floating red clearFilter">
-						<i class="material-icons right">clear</i>
-					</a>
-				</li>
-				<li>
-					<a class="btn-floating blue" onclick="$('#filterModal').modal('open');">
-						<i class="material-icons right">filter_list</i>
-					</a>
-				</li>
-				<li>
-					<a class="btn-floating deep-purple" 
-						onclick="return checkQuestions() ? $('#testInfoModal').modal('open') : '';">
-						<i class="material-icons right">save</i>
-					</a>
-				</li>
-				<li>
-					<a class="btn-floating light-green accent-4"
-						onclick="$('.mainContent').load('/unicid/create/novaQuestao.xhtml')">
-						<i class="material-icons">add</i>
-					</a>
-				</li>
-			</ul>
-		</div>
-		
-		<!-- MODAL DE FILTROS -->
-		<div id="filterModal" class="modal bottom-sheet">
-			<div class="modal-content">
-				<h5><h:outputText value="#{msg['upper.filter.questions.by.discipline']}"/></h5>
-				<div>
-					<h:selectManyListbox id="disciplines">
-					    <f:selectItems
-							value="#{controllerDisciplinas.disciplinas(controllerProfessores.professor.codigo)}"/>
-					</h:selectManyListbox>
-				</div>
-			</div>
-		    <div class="modal-footer">
-      			<a href="#!" 
-      				class="modal-action modal-close waves-effect waves-green btn-flat filterQuestionsByDiscipline">
-					<h:outputText value="#{msg['upper.filter']}"/>
-				</a>
-    		</div>
-		</div>
-		
-		<!-- TEST INFO MODAL -->
-		<div id="testInfoModal" class="modal modal-fixed-footer">
-			<h:form id="testInfo" class="loading">
+			<!-- MODAL DE FILTROS -->
+			<div id="filterModal" class="modal modal-fixed-footer">
 				<div class="modal-content">
-					<h4><h:outputText value="#{msg['test.informations']}"/></h4>
-					<p class="lime-text text-darken-2">
-						<i class="material-icons left">info</i>
-	         			<h:outputText value="#{msg['info.student.test.begin']}"/>
-					</p>			  
-			        <!-- FORM INFORMACOES PROVA -->
-					<ui:include src="../componentes/form/professor/formInformacoesProva.xhtml" />
+					<h5><h:outputText value="#{msg['upper.filter.questions.by.discipline']}"/></h5>
+					<div>
+						<h:selectManyListbox id="disciplines">
+							<f:selectItem itemValue="#{null}" itemLabel="#{msg['upper.select.disciplines']}" itemDisabled="true" />
+							<f:selectItems
+								value="#{controllerDisciplinas.disciplinas(controllerProfessores.professor.codigo)}"/>
+						</h:selectManyListbox>
+					</div>
 				</div>
 				<div class="modal-footer">
-					<!-- CANCEL -->
-		        	<a class="modal-action modal-close waves-effect waves-red btn-flat">
-		        		<h:outputText value="#{msg['upper.cancel']}"/>
-		        	</a>
-					<!-- SUBMIT -->
-		        	<h:commandButton 
-		        		action="#{controllerProvas.save}" 
-		        		class="modal-action waves-effect waves-green btn-flat" 
-		        		value="#{msg['upper.save']}"/>
+						<a href="#!"
+							class="modal-action modal-close waves-effect waves-red btn-flat">
+						<h:outputText value="#{msg['upper.cancel']}"/>
+					</a>
+					<a href="#!"
+							class="modal-action modal-close waves-effect waves-green btn-flat filter-issues-btn">
+						<h:outputText value="#{msg['upper.filter']}"/>
+					</a>
 				</div>
-    		</h:form>
-		</div>
-	</div>			
+			</div>
+
+			<!-- TEST INFO -->
+			<h:form id="test-info" styleClass="loading scale-transition scale-out">
+				<h4><h:outputText value="#{msg['test.informations']}"/></h4>
+				<p class="lime-text text-darken-2">
+					<i class="material-icons left">info</i>
+					<h:outputText value="#{msg['info.student.test.begin']}"/>
+				</p>
+
+				<!-- FORM INFORMACOES PROVA -->
+				<ui:include src="../componentes/form/professor/formInformacoesProva.xhtml" />
+
+				<div class="center-align row">
+					<a class="btn waves-effect waves-light red" style="margin-right: 10px">
+						<h:outputText value="#{msg['upper.cancel']}"/>
+					</a>
+
+					<h:commandLink
+						action="#{controllerProvas.save}"
+						styleClass="btn waves-effect waves-light deep-purple white-text"
+						value="#{msg['upper.save']}" />
+				</div>
+			</h:form>
+
+			<!-- MOBILE ACTION BUTTONS -->
+			<div class="fixed-action-btn click-to-toggle hide-on-large-only">
+				<a class="btn-floating btn-large red">
+					<i class="material-icons">menu</i>
+				</a>
+				<ul>
+					<li>
+						<a class="btn-floating red clear-filter-btn">
+							<i class="material-icons right">clear</i>
+						</a>
+					</li>
+					<li>
+						<a class="btn-floating blue" onclick="$('#filterModal').modal('open');">
+							<i class="material-icons right">filter_list</i>
+						</a>
+					</li>
+					<li>
+						<a class="btn-floating deep-purple save-test-btn">
+							<i class="material-icons right">save</i>
+						</a>
+					</li>
+					<li>
+						<a class="btn-floating light-green accent-4"
+							onclick="$('.mainContent').load('/unicid/create/novaQuestao.xhtml')">
+							<i class="material-icons">add</i>
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<!-- LARGE SCREEN ACTION BUTTONS -->
+			<div class="hide-on-med-and-down">
+				<!-- LIMPA OS FILTROS -->
+				<div class="fixed-action-btn clear-filter-btn" style="bottom:240px;right:32px">
+					<a class="btn-floating waves-effect waves-light red tooltipped"
+						data-position="left"
+						data-delay="50"
+						data-tooltip="#{msg['upper.clear.filter']}">
+						<i class="material-icons right">clear</i>
+					</a>
+				</div>
+
+				<!-- TOGGLE FILTER MODAL -->
+				<div class="fixed-action-btn" style="bottom:181px;right:32px">
+					<a class="btn-floating waves-effect waves-light blue tooltipped"
+						data-position="left"
+						data-delay="50"
+						data-tooltip="#{msg['upper.filter.questions.by.discipline']}"
+						onclick="$('#filterModal').modal('open');">
+						<i class="material-icons right">filter_list</i>
+					</a>
+				</div>
+
+				<!-- TOGGLE FORMULARIO PARA GERAR A PROVA -->
+				<div class="fixed-action-btn" style="bottom:102px">
+					<a class="btn-floating btn-large waves-effect waves-light deep-purple tooltipped save-test-btn"
+						data-position="left" data-delay="50" data-tooltip="#{msg['upper.generate.test']}">
+						<i class="material-icons right">save</i>
+					</a>
+				</div>
+
+				<!-- CRIAR QUESTAO -->
+				<div class="fixed-action-btn tooltipped"
+					data-position="left" data-delay="50" data-tooltip="#{msg['upper.new.question']}">
+					<h:link
+						outcome="/create/novaQuestao"
+						class="btn-floating btn-large waves-effect waves-light light-green accent-4">
+						<i class="material-icons right">add</i>
+					</h:link>
+				</div>
+			</div>
+		</h:panelGroup>
+	</div>
+
 	<!-- FOOTER -->
 	<ui:include src="../componentes/footer/footer.xhtml" />
+
+	<h:outputScript name="/js/IssueController.js"/>
+
+	<script>$(document).ready(function(){ Issue.init();	});</script>
 </h:body>
 </html>

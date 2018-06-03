@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:f="http://java.sun.com/jsf/core" 
-      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
 	<!-- HEAD -->
@@ -12,46 +11,49 @@
 <h:body class="grey lighten-4">
 	<!-- NAVBAR -->
 	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
-	
+
   	<!-- SETA A DISCIPLINA SELECIONADA -->
 	<f:event listener="#{controllerDisciplinas.disciplina.setCodigo(controllerQuestoes.questao.disciplina)}" type="preRenderView"/>
 
 	<div class="container" data-content="questions">
         <div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
-	        	          
+
 		    <div class="row">
 		        <h5 class="center">
 		        	<h:outputText value="#{msg['upper.update.question']}"/>
 		       	</h5>
 		    </div>
-		          
-		    <h:form id="questao" class="loading row">
-		          
-			
+
+		    <h:form id="questao" styleClass="loading row">
+
 				<!-- FORMULARIO DE QUESTAO -->
 				<ui:include src="../componentes/form/professor/formQuestao.xhtml" />
-				
+
 				<!-- BOTAO SALVAR -->
-    			<div class="fixed-action-btn tooltipped" 
-    				 data-position="left" 
-    				 data-delay="50" 
+    			<div class="fixed-action-btn tooltipped"
+    				 data-position="left"
+    				 data-delay="50"
     				 data-tooltip="#{msg['upper.save']}">
-					
+
 					<div class="btn-floating btn-large waves-effect waves-light deep-purple pulse">
 
 						<i class="material-icons right">save</i>
 
 						<h:commandButton
 							style="padding: 21px 28px"
-							styleClass="position-absolute" 
+							styleClass="position-absolute"
 							action="#{controllerQuestoes.alterar()}"/>
 					</div>
        			</div>
 			</h:form>
 		</div>
 	</div>
-		
+
 	<!-- FOOTER -->
 	<ui:include src="../componentes/footer/footer.xhtml" />
+
+	<h:outputScript name="/js/IssueController.js"/>
+
+	<script>$(document).ready(function(){ Issue.init();	});</script>
 </h:body>
-</html> 
+</html>

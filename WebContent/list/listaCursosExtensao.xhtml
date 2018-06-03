@@ -1,43 +1,43 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:f="http://java.sun.com/jsf/core" 
-      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
-      
+
 	<!-- HEAD -->
 	<ui:include src="../componentes/head/head.xhtml" />
 <h:body class="grey lighten-4">
 
 	<!-- NAVBAR -->
 	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
-	
+
 	<!-- SEARCHING FOR MADE TESTS IN DATABASE -->
 	<f:event listener="#{controllerCursoExtensao.findExtensionCourses}" type="preRenderView"/>
-	
+
 	<div class="container mainContent" data-content="professor-extension-courses">
-	
+
 		<!-- LISTA VAZIA -->
   		<h:panelGroup rendered="#{controllerCursoExtensao.listaCursosExtensao.getRowCount() eq 0 ? true : false}">
- 			
+
  			<h:outputText
- 				class="grey-text" 
- 				value="#{msg['nothing.found']}" 
+ 				class="grey-text"
+ 				value="#{msg['nothing.found']}"
  				style="font-size:1.5em"/>
   		</h:panelGroup>
-		
-		<!-- LISTA DE ALUNOS QUE JA REALIZARAM OS TESTES -->		
+
+		<!-- LISTA DE ALUNOS QUE JA REALIZARAM OS TESTES -->
 		<h:panelGroup rendered="#{controllerCursoExtensao.listaCursosExtensao.getRowCount() eq 0 ? false : true}">
-			<div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;overflow-x:scroll;">
-				<h:form styleClass="loading">		
-		
-					<h:dataTable 
-						value="#{controllerCursoExtensao.listaCursosExtensao}" 
-						var="dados" 
+			<div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;overflow-x:auto;">
+				<h:form styleClass="loading">
+
+					<h:dataTable
+						value="#{controllerCursoExtensao.listaCursosExtensao}"
+						var="dados"
 						class="striped">
-				
+
 						<!-- CURSO -->
 						<h:column>
 							<f:facet name="header">
@@ -45,7 +45,7 @@
 							</f:facet>
 							<h:outputText value="#{dados.nomeCurso}"/>
 						</h:column>
-			
+
 						<!-- NOME ALUNO -->
 						<h:column>
 							<f:facet name="header">
@@ -53,15 +53,15 @@
 							</f:facet>
 							<h:outputText value="#{dados.nome}"/>
 						</h:column>
-						
-						<!-- EMAIl --> 
+
+						<!-- EMAIl -->
 						<h:column>
 							<f:facet name="header">
 								<h:outputText value="#{msg['upper.email']}" />
 							</f:facet>
 							<h:outputText value="#{dados.email}" />
 						</h:column>
-			
+
 						<!-- CPF -->
 						<h:column>
 							<f:facet name="header">
@@ -69,7 +69,7 @@
 							</f:facet>
 							<h:outputText value="#{dados.cpf}" />
 						</h:column>
-		
+
 						<!-- CELULAR -->
 						<h:column>
 							<f:facet name="header">
@@ -77,7 +77,7 @@
 							</f:facet>
 							<h:outputText value="#{dados.celular}"/>
 						</h:column>
-		
+
 						<!-- DATA -->
 						<h:column>
 							<f:facet name="header">
@@ -85,29 +85,29 @@
 							</f:facet>
 							<h:outputText value="#{dados.data}"/>
 						</h:column>
-			
+
 						<!-- ACOES -->
 						<h:column>
 
 							<!-- EXCLUIR -->
-							<span class="tooltipped" data-position="left" 
+							<span class="tooltipped" data-position="left"
 								data-delay="50" data-tooltip="#{msg['upper.delete']}">
-								
-								<h:commandLink 
-									actionListener="#{controllerCursoExtensao.selecionarRegistro}" 
+
+								<h:commandLink
+									actionListener="#{controllerCursoExtensao.selecionarRegistro}"
 									action="#{controllerCursoExtensao.excluir()}"
-									onclick="return confirm('Tem certeza que deseja remover este item da lista? Você não vai recuperar esses dados novamente!')">
-  									
+									onclick="return confirm('Tem certeza que deseja remover este item da lista? Vocï¿½ nï¿½o vai recuperar esses dados novamente!')">
+
   									<i class="material-icons right">delete</i>
   								</h:commandLink>
 							</span>
 						</h:column>
 					</h:dataTable>
 				</h:form>
-			</div>	
+			</div>
 		</h:panelGroup>
 	</div>
-		
+
 	<!-- FOOTER -->
 	<ui:include src="../componentes/footer/footer.xhtml" />
 </h:body>

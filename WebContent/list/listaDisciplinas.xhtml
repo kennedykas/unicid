@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 
-      xmlns:f="http://java.sun.com/jsf/core" 
-      xmlns:h="http://xmlns.jcp.org/jsf/html" 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
-      
+
 	<!-- HEAD -->
 	<ui:include src="../componentes/head/head.xhtml" />
 <h:body class="grey lighten-4">
 
 	<!-- NAVBAR -->
 	<ui:include src="../componentes/header/navbarProfessor.xhtml" />
-	
+
 	<!-- SEARCHING FOR DISCIPLINES IN DATABASE -->
 	<f:event listener="#{controllerDisciplinas.findDisciplinesByTeachersCode(controllerProfessores.professor.codigo)}" type="preRenderView"/>
-	
+
 	<div class="container mainContent" data-content="disciplines">
-	
+
 		<!-- LISTA VAZIA -->
-  		<h:panelGroup 
+  		<h:panelGroup
   			rendered="#{controllerDisciplinas.listaDisciplinas.getRowCount() eq 0 ? true : false}">
- 			
+
  			<h:outputText
- 				class="grey-text" 
- 				value="#{msg['disciplines.not.found']}" 
+ 				class="grey-text"
+ 				value="#{msg['disciplines.not.found']}"
  				style="font-size:1.5em"/>
   		</h:panelGroup>
-		
+
 		<!-- LISTA DE DISCIPLINAS -->
 		<h:panelGroup rendered="#{controllerDisciplinas.listaDisciplinas.getRowCount() eq 0 ? false : true}">
-			<div class="center z-depth-2 white" style="margin:11vh 0;padding:20px 30px 30px 30px;">
-				<h:form styleClass="loading">		
-			
-					<h:dataTable 
-						value="#{controllerDisciplinas.listaDisciplinas}" 
-						var="dados" 
-						class="striped">
-						
+			<div class="center z-depth-2 white" style="margin:11vh 0;">
+				<h:form styleClass="loading">
+
+					<h:dataTable
+						value="#{controllerDisciplinas.listaDisciplinas}"
+						var="dados"
+						class="striped centered">
+
 						<!-- NOME DISCIPLINA -->
 						<h:column>
 							<f:facet name="header">
@@ -46,17 +45,16 @@
 							</f:facet>
 							<h:outputText value="#{dados.nomeDisciplina}" />
 						</h:column>
-						
+
 						<!-- CURSO -->
 						<h:column>
 							<f:facet name="header">
 								<h:outputText value="CURSO" />
 							</f:facet>
-
-							<h:outputText 
+							<h:outputText
 								value="#{controllerCursos.findCoursesNamesByCodes(controllerDisciplinaCurso.findCoursesThatBelongToDisciplineByDisciplineCode(dados.codigo))}"/>
 						</h:column>
-						
+
 						<!-- OBSERVACOES -->
 						<h:column>
 							<f:facet name="header">
@@ -64,50 +62,50 @@
 							</f:facet>
 							<h:outputText value="#{dados.observacoes}" />
 						</h:column>
-			
+
 						<!-- ACOES -->
 						<h:column>
 							<!-- EXCLUIR -->
-							<span class="tooltipped" data-position="left" 
+							<span class="tooltipped" data-position="left"
 								data-delay="50" data-tooltip="#{msg['upper.delete']}">
-								
-								<h:commandLink 
-									actionListener="#{controllerDisciplinas.selecionarRegistro}" 
+
+								<h:commandLink
+									actionListener="#{controllerDisciplinas.selecionarRegistro}"
 									action="#{controllerDisciplinas.excluir}"
-									onclick="return confirm('Tem certeza que deseja remover est� disciplina? Ela n�o poder� ser recuperada depois!')">
+									onclick="return confirm('Quer realmente excluir essa disciplina?')">
   									<i class="material-icons right">delete</i>
   								</h:commandLink>
 							</span>
 
 							<!-- EDITAR -->
-							<span class="tooltipped" data-position="left" 
+							<span class="tooltipped" data-position="left"
 								data-delay="50" data-tooltip="#{msg['upper.edit']}">
-								<h:commandLink 
+								<h:commandLink
 									action="/update/alterarDisciplina">
-									
+
 									<f:actionListener binding="#{controllerDisciplinas.selecionarRegistro()}"/>
 		    						<f:actionListener binding="#{controllerDisciplinaCurso.justFindCoursesThatBelongToDisciplineByDisciplineCode(dados.codigo)}"/>
-									
+
 									<i class="material-icons right">mode_edit</i>
 								</h:commandLink>
 							</span>
 						</h:column>
-					</h:dataTable>	
+					</h:dataTable>
 				</h:form>
 			</div>
 		</h:panelGroup>
-		
+
 		<!-- CRIAR DISCIPLINA -->
-		<div class="fixed-action-btn tooltipped" 
+		<div class="fixed-action-btn tooltipped"
 			data-position="left" data-delay="50" data-tooltip="#{msg['upper.new.discipline']}">
 			<h:link
-				outcome="/create/novaDisciplina" 
+				outcome="/create/novaDisciplina"
 				class="btn-floating btn-large waves-effect waves-light light-green accent-4 pulse">
 				<i class="material-icons right">add</i>
 			</h:link>
 		</div>
 	</div>
-		
+
 	<!-- FOOTER -->
 	<ui:include src="../componentes/footer/footer.xhtml" />
 </h:body>
